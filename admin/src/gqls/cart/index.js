@@ -37,17 +37,10 @@ export const FIND_UNIQUE_CART = gql`
 					links
 					images
 					categories
-					admins
-					schedule
-					stocks
-					orders
 					_count
 				}
 				organizationId
 				type
-				_count{
-					carts
-				}
 			}
 			goodId
 		}
@@ -100,17 +93,10 @@ export const FIND_FIRST_CART = gql`
 					links
 					images
 					categories
-					admins
-					schedule
-					stocks
-					orders
 					_count
 				}
 				organizationId
 				type
-				_count{
-					carts
-				}
 			}
 			goodId
 		}
@@ -163,17 +149,10 @@ export const FIND_MANY_CART = gql`
 					links
 					images
 					categories
-					admins
-					schedule
-					stocks
-					orders
 					_count
 				}
 				organizationId
 				type
-				_count{
-					carts
-				}
 			}
 			goodId
 		}
@@ -216,17 +195,10 @@ export const CREATE_ONE_CART = gql`
 					links
 					images
 					categories
-					admins
-					schedule
-					stocks
-					orders
 					_count
 				}
 				organizationId
 				type
-				_count{
-					carts
-				}
 			}
 			goodId
 		}
@@ -271,17 +243,10 @@ export const UPDATE_ONE_CART = gql`
 					links
 					images
 					categories
-					admins
-					schedule
-					stocks
-					orders
 					_count
 				}
 				organizationId
 				type
-				_count{
-					carts
-				}
 			}
 			goodId
 		}
@@ -324,17 +289,10 @@ export const DELETE_ONE_CART = gql`
 					links
 					images
 					categories
-					admins
-					schedule
-					stocks
-					orders
 					_count
 				}
 				organizationId
 				type
-				_count{
-					carts
-				}
 			}
 			goodId
 		}
@@ -381,17 +339,10 @@ export const UPSERT_ONE_CART = gql`
 					links
 					images
 					categories
-					admins
-					schedule
-					stocks
-					orders
 					_count
 				}
 				organizationId
 				type
-				_count{
-					carts
-				}
 			}
 			goodId
 		}
