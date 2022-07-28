@@ -15,7 +15,6 @@ const Admin = gql`
     admin: Admin!
     token: String!
   }
-
   type Admin {
     id: String!
     createdAt: DateTime!
@@ -28,6 +27,8 @@ const Admin = gql`
     phone: String
     block: Boolean!
     delete: Boolean!
+    organization: Organization
+    organizationId: String
   }
 
   type Query {

@@ -12,6 +12,23 @@ const User = gql`
     block: Boolean!
     delete: Boolean!
     avatar: String
+    orders(
+      where: OrderWhereInput
+      orderBy: OrderOrderByWithRelationInput
+      cursor: OrderWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: OrderScalarFieldEnum
+    ): [Order!]!
+    pets(
+      where: PetWhereInput
+      orderBy: PetOrderByWithRelationInput
+      cursor: PetWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: PetScalarFieldEnum
+    ): [Pet!]!
+    _count: UserCountOutputType!
   }
 
   type Query {

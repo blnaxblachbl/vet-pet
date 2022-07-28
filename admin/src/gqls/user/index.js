@@ -17,6 +17,22 @@ export const FIND_UNIQUE_USER = gql`
 			block
 			delete
 			avatar
+			pets{
+				id
+				createdAt
+				updatedAt
+				birthday
+				name
+				kind
+				breed
+				gender
+				userId
+				images
+			}
+			_count{
+				orders
+				pets
+			}
 		}
 	}
 `
@@ -47,6 +63,22 @@ export const FIND_FIRST_USER = gql`
 			block
 			delete
 			avatar
+			pets{
+				id
+				createdAt
+				updatedAt
+				birthday
+				name
+				kind
+				breed
+				gender
+				userId
+				images
+			}
+			_count{
+				orders
+				pets
+			}
 		}
 	}
 `
@@ -77,6 +109,22 @@ export const FIND_MANY_USER = gql`
 			block
 			delete
 			avatar
+			pets{
+				id
+				createdAt
+				updatedAt
+				birthday
+				name
+				kind
+				breed
+				gender
+				userId
+				images
+			}
+			_count{
+				orders
+				pets
+			}
 		}
 	}
 `
@@ -97,6 +145,22 @@ export const CREATE_ONE_USER = gql`
 			block
 			delete
 			avatar
+			pets{
+				id
+				createdAt
+				updatedAt
+				birthday
+				name
+				kind
+				breed
+				gender
+				userId
+				images
+			}
+			_count{
+				orders
+				pets
+			}
 		}
 	}
 `
@@ -119,6 +183,22 @@ export const UPDATE_ONE_USER = gql`
 			block
 			delete
 			avatar
+			pets{
+				id
+				createdAt
+				updatedAt
+				birthday
+				name
+				kind
+				breed
+				gender
+				userId
+				images
+			}
+			_count{
+				orders
+				pets
+			}
 		}
 	}
 `
@@ -139,6 +219,22 @@ export const DELETE_ONE_USER = gql`
 			block
 			delete
 			avatar
+			pets{
+				id
+				createdAt
+				updatedAt
+				birthday
+				name
+				kind
+				breed
+				gender
+				userId
+				images
+			}
+			_count{
+				orders
+				pets
+			}
 		}
 	}
 `
@@ -163,6 +259,22 @@ export const UPSERT_ONE_USER = gql`
 			block
 			delete
 			avatar
+			pets{
+				id
+				createdAt
+				updatedAt
+				birthday
+				name
+				kind
+				breed
+				gender
+				userId
+				images
+			}
+			_count{
+				orders
+				pets
+			}
 		}
 	}
 `
