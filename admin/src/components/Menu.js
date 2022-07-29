@@ -13,6 +13,11 @@ export const Menu = () => {
                     Главная
                 </MenuLink>
             </AntMenu.Item>
+            <AntMenu.Item key={`/admin`}>
+                <MenuLink to={`/admin`}>
+                    Администраторы
+                </MenuLink>
+            </AntMenu.Item>
         </AntMenu>
     )
 }

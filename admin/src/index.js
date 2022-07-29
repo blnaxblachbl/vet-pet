@@ -15,6 +15,9 @@ import apolloClient from './utils/apollo'
 import Layout from './pages/layout'
 import HomePage from './pages/home'
 import LoginPage from './pages/login'
+import AdminsPage from './pages/admin'
+import AddAdminPage from './pages/admin/add'
+import EditAdminPage from './pages/admin/edit'
 
 moment.locale('ru')
 
@@ -39,6 +42,33 @@ const App = () => {
                                 exact
                                 element={
                                     <LoginPage />
+                                }
+                            />
+                            <Route
+                                path='/admin'
+                                exact
+                                element={
+                                    <Layout roles={['admin', "org-owner"]}>
+                                        <AdminsPage />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path='/admin/add'
+                                exact
+                                element={
+                                    <Layout roles={['admin', "org-owner"]}>
+                                        <AddAdminPage />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path='/admin/:id'
+                                exact
+                                element={
+                                    <Layout roles={['admin', "org-owner"]}>
+                                        <EditAdminPage />
+                                    </Layout>
                                 }
                             />
                         </Routes>
