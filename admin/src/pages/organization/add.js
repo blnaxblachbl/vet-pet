@@ -23,6 +23,7 @@ const rules = {
 }
 
 const AddOrg = () => {
+    const { user } = useUser()
     const [form] = Form.useForm()
     const refs = useRef(new Map()).current
 
@@ -43,8 +44,11 @@ const AddOrg = () => {
             ...value,
             logo: logo[0].name,
             images: images.map(item => item.name),
+            admins: {
+                connect: { id: user.id }
+            }
         }
-        console.log(data)
+        // console.log(data)
         createOrg({
             variables: { data }
         })
