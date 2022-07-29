@@ -10,8 +10,8 @@ const sendMail = require("../../utils/mailer")
 const Admin = {
   Query: {
     findMeAdmin: (_parent, args, { prisma, verify }) => {
-        args["where"] = { id: verify ? verify.id : '' }
-        return prisma.admin.findUnique(args)
+      args["where"] = { id: verify ? verify.id : '' }
+      return prisma.admin.findUnique(args)
     },
     findUniqueAdmin: (_parent, args, { prisma }) => {
       return prisma.admin.findUnique(args)
@@ -27,85 +27,103 @@ const Admin = {
     },
   },
   Mutation: {
-    createOneAdmin: (_parent, args, { prisma }) => {
-      return prisma.admin.create(args)
+    createOneAdmin: async (_parent, args, { prisma }) => {
+      const exist = await prisma.admin.findUnique({ where: { email: args.data.email } })
+      if (exist) {
+        throw new Error('admin-exist')
+      }
+      const password = nanoid()
+      const passwordHash = await bcrypt.hash(password, 10)
+      args.data['password'] = passwordHash
+      const admin = await prisma.admin.create(args)
+      try {
+        sendMail({
+          to: args.data.email,
+          subject: 'Создание учетной записи "VetPet"',
+          text: 'Создание учетной записи "VetPet"',
+          html: htmlLoginPassword(admin.email, password),
+        })
+      } catch (e) {
+        throw new Error("can send mail")
+      }
+      return admin
     },
     resetPassword: async (_parent, args, { prisma }) => {
-        const password = nanoid()
-        const passwordHash = await bcrypt.hash(password, 10)
-        const existAdmin = await prisma.admin.findUnique(args)
-        if (existAdmin) {
-            await prisma.admin.update({
-                where: { id: existAdmin.id },
-                data: {
-                    repassword: { set: passwordHash }
-                },
-            })
-            sendMail({
-                to: existAdmin.email,
-                subject: "Новый пароль",
-                text: "Новый пароль для вохда в панель администратора",
-                html: htmlLoginPassword(existAdmin.email, password),
-            })
-        }
-        return true
+      const password = nanoid()
+      const passwordHash = await bcrypt.hash(password, 10)
+      const existAdmin = await prisma.admin.findUnique(args)
+      if (existAdmin) {
+        await prisma.admin.update({
+          where: { id: existAdmin.id },
+          data: {
+            repassword: { set: passwordHash }
+          },
+        })
+        sendMail({
+          to: existAdmin.email,
+          subject: "Новый пароль",
+          text: "Новый пароль для вохда в панель администратора",
+          html: htmlLoginPassword(existAdmin.email, password),
+        })
+      }
+      return true
     },
     signInAdmin: async (parent, args, { prisma }) => {
-        const exist = await prisma.admin.findUnique({
-            where: {
-                email: args.data.email,
-            },
+      const exist = await prisma.admin.findUnique({
+        where: {
+          email: args.data.email,
+        },
+      })
+      if (!exist) throw new Error("not exist")
+      const compareRePassword = bcrypt.compareSync(
+        args.data.password,
+        exist.repassword ? exist.repassword : ""
+      )
+      const comparePassword = bcrypt.compareSync(
+        args.data.password,
+        exist.password
+      )
+      if (compareRePassword) {
+        const hashRePassword = await bcrypt.hash(nanoid(), 10)
+        const update = await prisma.admin.update({
+          where: {
+            email: args.data.email,
+          },
+          data: {
+            password: exist.repassword,
+            repassword: hashRePassword,
+          },
         })
-        if (!exist) throw new Error("not exist")
-        const compareRePassword = bcrypt.compareSync(
-            args.data.password,
-            exist.repassword ? exist.repassword : ""
-        )
-        const comparePassword = bcrypt.compareSync(
-            args.data.password,
-            exist.password
-        )
-        if (compareRePassword) {
-            const hashRePassword = await bcrypt.hash(nanoid(), 10)
-            const update = await prisma.admin.update({
-                where: {
-                    email: args.data.email,
-                },
-                data: {
-                    password: exist.repassword,
-                    repassword: hashRePassword,
-                },
-            })
-            if (!update) throw new Error("error signin")
-        }
-        if (!comparePassword && !compareRePassword)
-            throw new Error("password incorrect")
-        const token = jwt.sign({ id: exist.id, role: exist.type }, process.env.TOKEN_SECRET)
-        return {
-            token,
-            admin: exist,
-        }
+        if (!update) throw new Error("error signin")
+      }
+      if (!comparePassword && !compareRePassword)
+        throw new Error("password incorrect")
+      const token = jwt.sign({ id: exist.id, role: exist.type }, process.env.TOKEN_SECRET)
+      return {
+        token,
+        admin: exist,
+      }
     },
     changePasswordAdmin: async (parent, { data }, { prisma, verify }) => {
-        const { password, confirmPassword } = data
-        const admin = await prisma.admin.findUnique({
-            where: {
-                id: verify ? verify.id : "",
-            },
-        })
-        if (!admin) {
-            throw new Error("not exist")
-        }
-        if (password !== confirmPassword) {
-            throw new Error("password not confirmed")
-        }
-        const hashRePassword = await bcrypt.hash(password, 10)
-        return prisma.admin.update({
-            where: { id: verify.id },
-            data: {
-                password: hashRePassword,
-            },
-        })
+      const { password, confirmPassword } = data
+      const admin = await prisma.admin.findUnique({
+        where: {
+          id: verify ? verify.id : "",
+        },
+      })
+      if (!admin) {
+        throw new Error("not exist")
+      }
+      if (password !== confirmPassword) {
+        throw new Error("password not confirmed")
+      }
+      const hashRePassword = await bcrypt.hash(password, 10)
+      return prisma.admin.update({
+        where: { id: verify.id },
+        data: {
+          password: hashRePassword,
+        },
+      })
     },
     updateOneAdmin: (_parent, args, { prisma }) => {
       return prisma.admin.update(args)

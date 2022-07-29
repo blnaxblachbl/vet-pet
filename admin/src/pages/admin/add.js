@@ -6,7 +6,9 @@ import {
     Top
 } from '../../components'
 import { CREATE_ONE_ADMIN } from '../../gqls'
-import { ADMIN_TYPES } from '../../utils/const'
+import { ADMIN_TYPES, ORG_ADMIN_TYPES } from '../../utils/const'
+import { getPermission, useUser } from '../../utils/hooks'
+import { useMemo } from 'react'
 
 const Form = styled(AntForm)`
     max-width: 600px;
@@ -19,8 +21,10 @@ const rules = {
 }
 
 const AddAdmin = () => {
-
+    const { user } = useUser()
     const [form] = Form.useForm()
+    const isOwner = getPermission(user.type, ['org-owner'])
+    const isAdmin = getPermission(user.type, ['admin'])
 
     const [createAdmin, { loading }] = useMutation(CREATE_ONE_ADMIN, {
         onCompleted: () => {
@@ -35,9 +39,17 @@ const AddAdmin = () => {
         }
     })
 
-    const handleSubmit = ({ ...value }) => {
+    const organizations = useMemo(() => user ? user.organizations : [], [user])
+    const adminTypes = useMemo(() => isAdmin ? ADMIN_TYPES : ORG_ADMIN_TYPES, [isAdmin])
+
+    const handleSubmit = ({ organization, ...value }) => {
         const data = {
-            ...value
+            ...value,
+            organizations: organization ? {
+                connect: {
+                    id: organization,
+                }
+            } : undefined
         }
         createAdmin({
             variables: { data }
@@ -76,6 +88,36 @@ const AddAdmin = () => {
                 >
                     <Input placeholder='Введите номер' />
                 </Form.Item>
+                {
+                    isOwner && (
+                        <Form.Item
+                            name='organization'
+                            rules={[rules.required]}
+                            label="Организация в которой работат администратор"
+
+                        >
+                            <Select
+                                placeholder="Организацию"
+                                allowClear
+                                showSearch
+                                optionFilterProp="children"
+                                filterOption={(input, option) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }
+                            >
+                                {
+                                    organizations.map(item => (
+                                        <Select.Option
+                                            key={item.id}
+                                        >
+                                            {item.name}
+                                        </Select.Option>
+                                    ))
+                                }
+                            </Select>
+                        </Form.Item>
+                    )
+                }
                 <Form.Item
                     name={"type"}
                     rules={[rules.required]}
@@ -86,11 +128,11 @@ const AddAdmin = () => {
                         allowClear
                     >
                         {
-                            Object.keys(ADMIN_TYPES).map(key => (
+                            Object.keys(adminTypes).map(key => (
                                 <Select.Option
                                     key={key}
                                 >
-                                    {ADMIN_TYPES[key]}
+                                    {adminTypes[key]}
                                 </Select.Option>
                             ))
                         }

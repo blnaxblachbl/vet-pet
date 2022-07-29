@@ -16,7 +16,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { Top } from '../../components'
 import { FIND_MANY_ADMIN, FIND_MANY_ADMIN_COUNT, UPDATE_ONE_ADMIN } from "../../gqls"
 import { useRouteQuery, useUser, useNavigateSearch, parseBoolean, adminTypeParser, getPermission } from "../../utils/hooks"
-import { ADMIN_TYPES } from "../../utils/const"
+import { ADMIN_TYPES, ORG_ADMIN_TYPES } from "../../utils/const"
 
 const Filters = styled(AntForm)`
     /* display: flex;
@@ -39,19 +39,32 @@ const AdminList = () => {
     const navigate = useNavigateSearch()
     // const canCreate = getPermission(user.type, ['admin', "org-owner"])
     const canCreate = true
+    const isOwner = getPermission(user.type, ["org-owner"])
+    // const isAdmin = getPermission(user.type, ["admin"])
 
-    const variables = useMemo(() => ({
-        where: {
-            id: user ? { not: { equals: user.id } } : undefined,
-            type: role ? { equals: role } : undefined,
-            block: typeof parseBoolean(block) === 'boolean' ? { equals: parseBoolean(block) } : undefined,
-            delete: typeof parseBoolean(deleted) === 'boolean' ? { equals: parseBoolean(deleted) } : undefined,
-            OR: search ? [
-                { name: { contains: search, mode: 'insensitive' } },
-                { email: { contains: search, mode: 'insensitive' } },
-            ] : undefined
+    const variables = useMemo(() => {
+        let _role = undefined
+        if (role) {
+            _role = { equals: role }
+        } else {
+            if (isOwner) {
+                _role = { in: ['org-owner', 'org-moder'] }
+            }
         }
-    }), [user, deleted, block, search, role])
+        const variables = {
+            where: {
+                id: user ? { not: { equals: user.id } } : undefined,
+                type: _role,
+                block: typeof parseBoolean(block) === 'boolean' ? { equals: parseBoolean(block) } : undefined,
+                delete: typeof parseBoolean(deleted) === 'boolean' ? { equals: parseBoolean(deleted) } : undefined,
+                OR: search ? [
+                    { name: { contains: search, mode: 'insensitive' } },
+                    { email: { contains: search, mode: 'insensitive' } },
+                ] : undefined
+            }
+        }
+        return variables
+    }, [user, deleted, block, search, role, isOwner])
 
     const [updateAdmin, { loading: updateLoading }] = useMutation(UPDATE_ONE_ADMIN)
 
@@ -83,6 +96,7 @@ const AdminList = () => {
 
     const admins = useMemo(() => data ? data.findManyAdmin : [], [data])
     const adminCount = useMemo(() => countData ? countData.findManyAdminCount : 0, [countData])
+    const adminTypes = useMemo(() => !isOwner ? ADMIN_TYPES : ORG_ADMIN_TYPES, [isOwner])
 
     return (
         <>
@@ -147,9 +161,9 @@ const AdminList = () => {
                         onClear={() => navigate("/admin", { ...query, role: undefined })}
                     >
                         {
-                            Object.keys(ADMIN_TYPES).map(key => (
+                            Object.keys(adminTypes).map(key => (
                                 <Select.Option key={key}>
-                                    {ADMIN_TYPES[key]}
+                                    {adminTypes[key]}
                                 </Select.Option>
                             ))
                         }

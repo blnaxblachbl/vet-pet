@@ -8,6 +8,7 @@ const { Schedule } = require('./Schedule/resolvers')
 const { Organization } = require('./Organization/resolvers')
 const { User } = require('./User/resolvers')
 const { Admin } = require('./Admin/resolvers')
+const { Upload } = require('./Upload/resolvers')
 const resolvers = [
   Admin,
   User,
@@ -19,6 +20,7 @@ const resolvers = [
   Order,
   Pet,
   Ad,
+  Upload,
 ]
 
 module.exports = { resolvers }

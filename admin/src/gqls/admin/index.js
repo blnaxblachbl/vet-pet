@@ -14,6 +14,10 @@ export const FIND_ME_ADMIN = gql`
 			phone
 			block
 			delete
+			organizations {
+				id
+				name
+			}
 		}
 	}
 `
@@ -35,6 +39,10 @@ export const FIND_UNIQUE_ADMIN = gql`
 			phone
 			block
 			delete
+			organizations {
+				id
+				name
+			}
 		}
 	}
 `
@@ -66,6 +74,10 @@ export const FIND_FIRST_ADMIN = gql`
 			phone
 			block
 			delete
+			organizations {
+				id
+				name
+			}
 		}
 	}
 `
@@ -97,6 +109,10 @@ export const FIND_MANY_ADMIN = gql`
 			phone
 			block
 			delete
+			organizations {
+				id
+				name
+			}
 		}
 	}
 `
@@ -118,6 +134,10 @@ export const CREATE_ONE_ADMIN = gql`
 			phone
 			block
 			delete
+			organizations {
+				id
+				name
+			}
 		}
 	}
 `
@@ -141,6 +161,10 @@ export const UPDATE_ONE_ADMIN = gql`
 			phone
 			block
 			delete
+			organizations {
+				id
+				name
+			}
 		}
 	}
 `
@@ -162,6 +186,10 @@ export const DELETE_ONE_ADMIN = gql`
 			phone
 			block
 			delete
+			organizations {
+				id
+				name
+			}
 		}
 	}
 `
@@ -187,6 +215,10 @@ export const UPSERT_ONE_ADMIN = gql`
 			phone
 			block
 			delete
+			organizations {
+				id
+				name
+			}
 		}
 	}
 `
@@ -208,6 +240,10 @@ export const CHANGE_PASSWORD_ADMIN = gql`
 			phone
 			block
 			delete
+			organizations {
+				id
+				name
+			}
 		}
 	}
 `

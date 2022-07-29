@@ -8,6 +8,7 @@ const { Schedule } = require('./Schedule/typeDefs')
 const { Organization } = require('./Organization/typeDefs')
 const { User } = require('./User/typeDefs')
 const { Admin } = require('./Admin/typeDefs')
+const { Upload } = require('./Upload/typeDefs')
 const { mergeTypeDefs } = require('@graphql-tools/merge')
 const { sdlInputs } = require('@paljs/plugins')
 
@@ -23,6 +24,7 @@ const typeDefs = mergeTypeDefs([
   Order,
   Pet,
   Ad,
+  Upload,
 ])
 
 module.exports = { typeDefs }

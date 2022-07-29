@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import styled from 'styled-components'
 import { Form as AntForm, Input, Button, message, Select } from 'antd'
 import { useMutation, useQuery } from '@apollo/client'
@@ -7,7 +8,8 @@ import {
     Top
 } from '../../components'
 import { UPDATE_ONE_ADMIN, FIND_UNIQUE_ADMIN } from '../../gqls'
-import { ADMIN_TYPES } from '../../utils/const'
+import { ADMIN_TYPES, ORG_ADMIN_TYPES } from '../../utils/const'
+import { useUser, getPermission } from '../../utils/hooks'
 
 const Form = styled(AntForm)`
     max-width: 600px;
@@ -20,10 +22,12 @@ const rules = {
 }
 
 const EditAdmin = () => {
-
+    const { user } = useUser()
     const [form] = Form.useForm()
     const { id } = useParams()
     const navigate = useNavigate()
+    const isOwner = getPermission(user.type, ['org-owner'])
+    const isAdmin = getPermission(user.type, ['admin'])
 
     useQuery(FIND_UNIQUE_ADMIN, {
         variables: {
@@ -60,6 +64,9 @@ const EditAdmin = () => {
         })
     }
 
+    const organizations = useMemo(() => user ? user.organizations : [], [user])
+    const adminTypes = useMemo(() => isAdmin ? ADMIN_TYPES : ORG_ADMIN_TYPES, [isAdmin])
+
     return (
         <>
             <Top title={"Редактирование пользователя"} />
@@ -85,6 +92,32 @@ const EditAdmin = () => {
                 >
                     <Input placeholder='Введите номер' />
                 </Form.Item>
+                {
+                    isOwner && (
+                        <Form.Item
+                            name='organization'
+                            rules={[rules.required]}
+                            label="Организация в которой работат администратор"
+
+                        >
+                            <Select
+                                placeholder="Организацию"
+                                allowClear
+                                showSearch
+                            >
+                                {
+                                    organizations.map(item => (
+                                        <Select.Option
+                                            key={item.id}
+                                        >
+                                            {item.name}
+                                        </Select.Option>
+                                    ))
+                                }
+                            </Select>
+                        </Form.Item>
+                    )
+                }
                 <Form.Item
                     name={"type"}
                     rules={[rules.required]}
@@ -93,13 +126,18 @@ const EditAdmin = () => {
                     <Select
                         placeholder="Выберите тип пользователя"
                         allowClear
+                        showSearch
+                        optionFilterProp="children"
+                        filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
                     >
                         {
-                            Object.keys(ADMIN_TYPES).map(key => (
+                            Object.keys(adminTypes).map(key => (
                                 <Select.Option
                                     key={key}
                                 >
-                                    {ADMIN_TYPES[key]}
+                                    {adminTypes[key]}
                                 </Select.Option>
                             ))
                         }
