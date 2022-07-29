@@ -38,10 +38,11 @@ const Organizations = () => {
     const navigate = useNavigateSearch()
     const { page = 1, search = "", publish = undefined, deleted = false, } = query
 
-    const canCreate = getPermission(user.type, ['org-owner'])
+    const isOwner = getPermission(user.type, ['org-owner'])
 
     const variables = useMemo(() => ({
         where: {
+            id: isOwner ? { in: user.organizations.map(o => o.id) } : undefined,
             delete: { equals: false },
             publish: { equals: true }
         }
@@ -77,7 +78,7 @@ const Organizations = () => {
             <Top
                 title={`Организации (${organizationsCount})`}
                 action={
-                    canCreate && (
+                    isOwner && (
                         <Link to='add'>
                             <Button
                                 type='primary'

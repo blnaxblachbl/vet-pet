@@ -42,13 +42,13 @@ const AddAdmin = () => {
     const organizations = useMemo(() => user ? user.organizations : [], [user])
     const adminTypes = useMemo(() => isAdmin ? ADMIN_TYPES : ORG_ADMIN_TYPES, [isAdmin])
 
-    const handleSubmit = ({ organization, ...value }) => {
+    const handleSubmit = ({ organizations, ...value }) => {
         const data = {
             ...value,
-            organizations: organization ? {
-                connect: {
-                    id: organization,
-                }
+            organizations: organizations ? {
+                connect: organizations.map(o => ({
+                    id: o,
+                }))
             } : undefined
         }
         createAdmin({
@@ -91,16 +91,16 @@ const AddAdmin = () => {
                 {
                     isOwner && (
                         <Form.Item
-                            name='organization'
+                            name='organizations'
                             rules={[rules.required]}
                             label="Организация в которой работат администратор"
-
                         >
                             <Select
                                 placeholder="Организацию"
                                 allowClear
                                 showSearch
                                 optionFilterProp="children"
+                                mode='multiple'
                                 filterOption={(input, option) =>
                                     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                 }

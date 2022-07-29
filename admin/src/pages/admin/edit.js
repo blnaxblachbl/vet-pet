@@ -33,9 +33,21 @@ const EditAdmin = () => {
         variables: {
             where: { id }
         },
-        onCompleted: ({ findUniqueAdmin }) => {
+        onCompleted: ({
+            findUniqueAdmin: {
+                organizations,
+                name,
+                email,
+                phone,
+                type
+            }
+        }) => {
             form.setFieldsValue({
-                ...findUniqueAdmin
+                name,
+                email,
+                phone,
+                type,
+                organizations: organizations.map(o => o.id)
             })
         }
     })
@@ -95,7 +107,7 @@ const EditAdmin = () => {
                 {
                     isOwner && (
                         <Form.Item
-                            name='organization'
+                            name='organizations'
                             rules={[rules.required]}
                             label="Организация в которой работат администратор"
 
@@ -104,6 +116,11 @@ const EditAdmin = () => {
                                 placeholder="Организацию"
                                 allowClear
                                 showSearch
+                                optionFilterProp="children"
+                                filterOption={(input, option) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }
+                                mode='multiple'
                             >
                                 {
                                     organizations.map(item => (
