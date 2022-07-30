@@ -6,7 +6,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 import {
     Top,
-    UploadFile
+    UploadFile,
+    OrgAdmins
 } from '../../components'
 import { FIND_UNIQUE_ORGANIZATION, UPDATE_ONE_ORGANIZATION } from '../../gqls'
 import { ORG_CATEGORIES } from '../../utils/const'
@@ -14,6 +15,7 @@ import { getPermission, useUser } from '../../utils/hooks'
 
 const Form = styled(AntForm)`
     max-width: 600px;
+    margin-bottom: 24px;
 `
 const rules = {
     required: {
@@ -233,6 +235,10 @@ const EditOrg = () => {
                     Сохранить
                 </Button>
             </Form>
+            <OrgAdmins
+                organizationId={id}
+                isOwner={user && user.organizations.find(o => o.id === id)}
+            />
         </>
     )
 }

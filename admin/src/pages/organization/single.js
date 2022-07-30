@@ -5,14 +5,11 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { useMutation, useQuery } from "@apollo/client"
 
 import {
-    Empty,
     LoadingView,
     Top,
     PublishStatus,
-    ModerationStatus
 } from "../../components"
 import { FIND_UNIQUE_ORGANIZATION, UPDATE_ONE_ORGANIZATION } from "../../gqls"
-import { useUser } from "../../utils/hooks"
 import { ORG_CATEGORIES } from "../../utils/const"
 
 const Descriptions = styled(Desc)`
@@ -44,6 +41,7 @@ const Descriptions = styled(Desc)`
 `
 const Controls = styled.div`
     margin-top: 15px;
+    margin-bottom: 24px;
 `
 
 const SingleOrganization = () => {

@@ -39,7 +39,7 @@ const AdminList = () => {
     const navigate = useNavigateSearch()
     // const canCreate = getPermission(user.type, ['admin', "org-owner"])
     const canCreate = true
-    const isOwner = getPermission(user.type, ["org-owner"])
+    // const isOwner = getPermission(user.type, ["org-owner"])
     // const isAdmin = getPermission(user.type, ["admin"])
 
     const variables = useMemo(() => {
@@ -53,11 +53,11 @@ const AdminList = () => {
                     { name: { contains: search, mode: 'insensitive' } },
                     { email: { contains: search, mode: 'insensitive' } },
                 ] : undefined,
-                organizations: isOwner ? { some: { id: { in: user.organizations.map(o => o.id) } } } : undefined
+                // organizations: isOwner ? { some: { id: { in: user.organizations.map(o => o.id) } } } : undefined
             }
         }
         return variables
-    }, [user, deleted, block, search, role, isOwner])
+    }, [user, deleted, block, search, role])
 
     const [updateAdmin, { loading: updateLoading }] = useMutation(UPDATE_ONE_ADMIN)
 
@@ -89,7 +89,7 @@ const AdminList = () => {
 
     const admins = useMemo(() => data ? data.findManyAdmin : [], [data])
     const adminCount = useMemo(() => countData ? countData.findManyAdminCount : 0, [countData])
-    const adminTypes = useMemo(() => !isOwner ? ADMIN_TYPES : ORG_ADMIN_TYPES, [isOwner])
+    // const adminTypes = useMemo(() => !isOwner ? ADMIN_TYPES : ORG_ADMIN_TYPES, [isOwner])
 
     return (
         <>
@@ -154,9 +154,9 @@ const AdminList = () => {
                         onClear={() => navigate("/admin", { ...query, role: undefined })}
                     >
                         {
-                            Object.keys(adminTypes).map(key => (
+                            Object.keys(ADMIN_TYPES).map(key => (
                                 <Select.Option key={key}>
-                                    {adminTypes[key]}
+                                    {ADMIN_TYPES[key]}
                                 </Select.Option>
                             ))
                         }

@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+// import { useMemo } from 'react'
 import styled from 'styled-components'
 import { Form as AntForm, Input, Button, message, Select } from 'antd'
 import { useMutation, useQuery } from '@apollo/client'
@@ -8,7 +8,7 @@ import {
     Top
 } from '../../components'
 import { UPDATE_ONE_ADMIN, FIND_UNIQUE_ADMIN } from '../../gqls'
-import { ADMIN_TYPES, ORG_ADMIN_TYPES } from '../../utils/const'
+import { ADMIN_TYPES } from '../../utils/const'
 import { useUser, getPermission } from '../../utils/hooks'
 
 const Form = styled(AntForm)`
@@ -26,8 +26,8 @@ const EditAdmin = () => {
     const [form] = Form.useForm()
     const { id } = useParams()
     const navigate = useNavigate()
-    const isOwner = getPermission(user.type, ['org-owner'])
-    const isAdmin = getPermission(user.type, ['admin'])
+    // const isOwner = getPermission(user.type, ['org-owner'])
+    // const isAdmin = getPermission(user.type, ['admin'])
 
     useQuery(FIND_UNIQUE_ADMIN, {
         variables: {
@@ -55,7 +55,7 @@ const EditAdmin = () => {
     const [updateAdmin, { loading }] = useMutation(UPDATE_ONE_ADMIN, {
         onCompleted: () => {
             navigate("/admin")
-            message.success("Пользователь изменен")
+            message.success("Администратор изменен")
         },
         onError: e => {
             message.error("Что то пошло не так, повторите попытку позже")
@@ -63,11 +63,6 @@ const EditAdmin = () => {
     })
 
     const handleSubmit = ({ name, email, type, phone, organizations }) => {
-        let _organizations = undefined
-        if (isOwner) {
-            // if (organizations)
-        }
-        // console.log(organizations)
         updateAdmin({
             variables: {
                 where: { id },
@@ -76,14 +71,14 @@ const EditAdmin = () => {
                     email: { set: email },
                     type: { set: type },
                     phone: phone ? { set: phone } : undefined,
-                    organizations: _organizations
+                    // organizations: isOwner ? { set: organizations.map(o => ({ id: o })) } : undefined
                 }
             }
         })
     }
 
-    const organizations = useMemo(() => user ? user.organizations : [], [user])
-    const adminTypes = useMemo(() => isAdmin ? ADMIN_TYPES : ORG_ADMIN_TYPES, [isAdmin])
+    // const organizations = useMemo(() => user ? user.organizations : [], [user])
+    // const adminTypes = useMemo(() => isAdmin ? ADMIN_TYPES : ORG_ADMIN_TYPES, [isAdmin])
 
     return (
         <>
@@ -110,7 +105,7 @@ const EditAdmin = () => {
                 >
                     <Input placeholder='Введите номер' />
                 </Form.Item>
-                {
+                {/* {
                     isOwner && (
                         <Form.Item
                             name='organizations'
@@ -140,7 +135,7 @@ const EditAdmin = () => {
                             </Select>
                         </Form.Item>
                     )
-                }
+                } */}
                 <Form.Item
                     name={"type"}
                     rules={[rules.required]}
@@ -156,11 +151,11 @@ const EditAdmin = () => {
                         }
                     >
                         {
-                            Object.keys(adminTypes).map(key => (
+                            Object.keys(ADMIN_TYPES).map(key => (
                                 <Select.Option
                                     key={key}
                                 >
-                                    {adminTypes[key]}
+                                    {ADMIN_TYPES[key]}
                                 </Select.Option>
                             ))
                         }

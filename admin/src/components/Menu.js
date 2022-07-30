@@ -16,7 +16,7 @@ export const Menu = () => {
                 </MenuLink>
             </AntMenu.Item>
             {
-                getPermission(type, ['admin', 'org-owner']) && (
+                getPermission(type, ['admin']) && (
                     <AntMenu.Item key={`/admin`}>
                         <MenuLink to={`/admin`}>
                             Администраторы
