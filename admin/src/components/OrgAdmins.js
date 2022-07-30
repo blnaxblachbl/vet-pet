@@ -185,12 +185,8 @@ export const OrgAdmins = ({
     const openModal = (admin) => {
         if (admin) {
             adminForm.current.setFieldsValue({
+                ...admin,
                 organizations: admin.organizations.map(o => o.id),
-                name: admin.name,
-                email: admin.email,
-                phone: admin.phone,
-                type: admin.type,
-                id: admin.id
             })
         } else {
             adminForm.current.setFieldsValue({
@@ -210,7 +206,6 @@ export const OrgAdmins = ({
                 action={
                     isOwner && (
                         <Button
-                            type='primary'
                             onClick={() => openModal()}
                         >
                             + Добавить
@@ -319,6 +314,11 @@ export const OrgAdmins = ({
                                 {name}
                             </Link>
                         ) : name
+                    },
+                    {
+                        title: 'Номер телефона',
+                        dataIndex: 'phone',
+                        key: 'phone',
                     },
                     {
                         title: 'Email',
@@ -486,9 +486,6 @@ const AdmniModal = forwardRef(({
                         }
                     </Select>
                 </Form.Item>
-                {/* <Button loading={false} type="primary" htmlType="submit">
-                    Добавить
-                </Button> */}
             </Form>
         </Modal>
     )

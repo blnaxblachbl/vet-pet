@@ -98,9 +98,7 @@ const AdminList = () => {
                 action={
                     canCreate && (
                         <Link to='add'>
-                            <Button
-                                type='primary'
-                            >
+                            <Button>
                                 + Добавить
                             </Button>
                         </Link>

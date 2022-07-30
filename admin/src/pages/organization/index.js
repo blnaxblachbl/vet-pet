@@ -84,9 +84,7 @@ const Organizations = () => {
                 action={
                     isOwner && (
                         <Link to='add'>
-                            <Button
-                                type='primary'
-                            >
+                            <Button>
                                 + Добавить
                             </Button>
                         </Link>

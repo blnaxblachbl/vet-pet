@@ -145,6 +145,9 @@ const SingleOrganization = () => {
                                     <a href={link} target='_blank'>{link}</a>
                                 ))}
                             </Descriptions.Item>
+                            <Descriptions.Item label='Количество администраторов'>
+                                {organization._count.admins} шт.
+                            </Descriptions.Item>
                             <Descriptions.Item label='Изображения'>
                                 <div className="image-list">
                                     {
