@@ -14,6 +14,7 @@ export const FIND_UNIQUE_SCHEDULE = gql`
 			startTime
 			endTine
 			allTime
+			dayOff
 		}
 	}
 `
@@ -41,6 +42,7 @@ export const FIND_FIRST_SCHEDULE = gql`
 			startTime
 			endTine
 			allTime
+			dayOff
 		}
 	}
 `
@@ -68,6 +70,7 @@ export const FIND_MANY_SCHEDULE = gql`
 			startTime
 			endTine
 			allTime
+			dayOff
 		}
 	}
 `
@@ -85,6 +88,7 @@ export const CREATE_ONE_SCHEDULE = gql`
 			startTime
 			endTine
 			allTime
+			dayOff
 		}
 	}
 `
@@ -104,6 +108,7 @@ export const UPDATE_ONE_SCHEDULE = gql`
 			startTime
 			endTine
 			allTime
+			dayOff
 		}
 	}
 `
@@ -121,6 +126,7 @@ export const DELETE_ONE_SCHEDULE = gql`
 			startTime
 			endTine
 			allTime
+			dayOff
 		}
 	}
 `
@@ -142,6 +148,7 @@ export const UPSERT_ONE_SCHEDULE = gql`
 			startTime
 			endTine
 			allTime
+			dayOff
 		}
 	}
 `

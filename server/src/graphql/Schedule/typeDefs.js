@@ -11,6 +11,7 @@ const Schedule = gql`
     startTime: Int!
     endTine: Int!
     allTime: Boolean!
+    dayOff: Boolean!
   }
 
   type Query {

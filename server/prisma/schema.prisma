@@ -69,9 +69,10 @@ model Schedule {
     organization   Organization @relation(fields: [organizationId], references: [id])
     organizationId String       @unique
     day            String
-    startTime      Int // время начала работы в минутах относительно  00:00
-    endTine        Int // время окончания работы в минутах относительно  00:00
+    startTime      Int          @default(0) // время начала работы в минутах относительно  00:00
+    endTine        Int          @default(0) // время окончания работы в минутах относительно  00:00
     allTime        Boolean      @default(false) // устанавливается true если в этот день работает круглосуточно
+    dayOff         Boolean      @default(false) // устанавливается true если в этот день не работает
 }
 
 //Товар или услуга предоставляемая организацией
