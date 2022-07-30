@@ -62,7 +62,12 @@ const EditAdmin = () => {
         }
     })
 
-    const handleSubmit = ({ name, email, type, phone }) => {
+    const handleSubmit = ({ name, email, type, phone, organizations }) => {
+        let _organizations = undefined
+        if (isOwner) {
+            // if (organizations)
+        }
+        // console.log(organizations)
         updateAdmin({
             variables: {
                 where: { id },
@@ -70,7 +75,8 @@ const EditAdmin = () => {
                     name: { set: name },
                     email: { set: email },
                     type: { set: type },
-                    phone: phone ? { set: phone } : undefined
+                    phone: phone ? { set: phone } : undefined,
+                    organizations: _organizations
                 }
             }
         })

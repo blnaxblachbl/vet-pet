@@ -13,9 +13,9 @@ import { useMutation, useQuery } from "@apollo/client"
 import moment from "moment"
 import { Link, useNavigate } from "react-router-dom"
 
-import { Top } from "../../components"
+import { Top, PublishStatus } from "../../components"
 import { FIND_MANY_ORGANIZATION, FIND_MANY_ORGANIZATION_COUNT } from "../../gqls"
-import { getPermission, useRouteQuery, useUser, useNavigateSearch } from "../../utils/hooks"
+import { getPermission, useRouteQuery, useUser, useNavigateSearch, parseBoolean } from "../../utils/hooks"
 import { ORG_CATEGORIES } from "../../utils/const"
 
 const Filters = styled(AntForm)`
@@ -36,7 +36,7 @@ const Organizations = () => {
     const { user } = useUser()
     const query = useRouteQuery()
     const navigate = useNavigateSearch()
-    const { page = 1, search = "", publish = undefined, deleted = false, } = query
+    const { page = 1, search = "", publish = undefined, deleted = false, category = null } = query
 
     const isOwner = getPermission(user.type, ['org-owner'])
 
@@ -44,9 +44,9 @@ const Organizations = () => {
         where: {
             id: isOwner ? { in: user.organizations.map(o => o.id) } : undefined,
             delete: { equals: false },
-            publish: { equals: true }
+            publish: typeof parseBoolean(publish) === 'boolean' ? { equals: parseBoolean(publish) } : undefined
         }
-    }), [])
+    }), [publish])
 
     const { data, loading } = useQuery(FIND_MANY_ORGANIZATION, {
         variables: {
@@ -67,7 +67,11 @@ const Organizations = () => {
 
     const handleChangeTable = ({ current }) => {
         // setCurrentPage(current)
-        navigate(`/admin`, { ...query, page: current })
+        navigate(`/organization`, { ...query, page: current })
+    }
+
+    const onSubmitSearch = ({ search, category, publish }) => {
+        navigate("/organization", { ...query, search, category, publish })
     }
 
     const organizations = useMemo(() => data ? data.findManyOrganization : [], [data])
@@ -89,6 +93,67 @@ const Organizations = () => {
                     )
                 }
             />
+            <Filters
+                layout='inline'
+                onFinish={onSubmitSearch}
+                initialValues={{
+                    search,
+                    publish: parseBoolean(publish),
+                    category
+                }}
+            >
+                <Filters.Item name={'search'}>
+                    <Input
+                        placeholder="Поиск"
+                        allowClear
+                        onChange={e => {
+                            if (!e.target.value) {
+                                navigate("/organization", { ...query, search: '' })
+                            }
+                        }}
+                        className='item'
+                    />
+                </Filters.Item>
+                <Filters.Item name={'category'}>
+                    <Select
+                        placeholder="Тип"
+                        // onChange={data => setRole(data)}
+                        className='item'
+                        allowClear
+                        onClear={() => navigate("/organization", { ...query, category: undefined })}
+                    >
+                        {
+                            Object.keys(ORG_CATEGORIES).map(key => (
+                                <Select.Option key={key}>
+                                    {ORG_CATEGORIES[key]}
+                                </Select.Option>
+                            ))
+                        }
+                    </Select>
+                </Filters.Item>
+                <Filters.Item name={'publish'}>
+                    <Select
+                        placeholder="Статус"
+                        // onChange={data => setDeleted(data)}
+                        className='item'
+                        allowClear
+                        onClear={() => navigate("/organization", { ...query, publish: undefined })}
+                    >
+                        <Select.Option value={false}>
+                            Не опубликованый
+                        </Select.Option>
+                        <Select.Option value={true}>
+                            Опубликованый
+                        </Select.Option>
+                    </Select>
+                </Filters.Item>
+                <Button
+                    htmlType='submit'
+                    type='primary'
+                >
+                    Применить
+                </Button>
+            </Filters>
             <Table
                 loading={loading || countLoading}
                 rowKey={(obj) => obj.id}
@@ -107,7 +172,7 @@ const Organizations = () => {
                         dataIndex: 'name',
                         key: 'name',
                         render: (name, obj) => (
-                            <Link to={obj.id}>
+                            <Link to={!isOwner ? obj.id : `edit/${obj.id}`}>
                                 {name}
                             </Link>
                         )
@@ -128,6 +193,14 @@ const Organizations = () => {
                         key: 'categories',
                         render: (categories, obj) => (
                             <span>{categories.map(c => ORG_CATEGORIES[c]).join(", ")}</span>
+                        )
+                    },
+                    {
+                        title: 'Статус',
+                        dataIndex: 'publish',
+                        key: 'publish',
+                        render: (publish, obj) => (
+                            <PublishStatus publish={publish} />
                         )
                     },
                     {

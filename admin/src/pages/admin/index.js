@@ -43,24 +43,17 @@ const AdminList = () => {
     // const isAdmin = getPermission(user.type, ["admin"])
 
     const variables = useMemo(() => {
-        let _role = undefined
-        if (role) {
-            _role = { equals: role }
-        } else {
-            if (isOwner) {
-                _role = { in: ['org-owner', 'org-moder'] }
-            }
-        }
         const variables = {
             where: {
                 id: user ? { not: { equals: user.id } } : undefined,
-                type: _role,
+                type: role ? { equals: role } : undefined,
                 block: typeof parseBoolean(block) === 'boolean' ? { equals: parseBoolean(block) } : undefined,
                 delete: typeof parseBoolean(deleted) === 'boolean' ? { equals: parseBoolean(deleted) } : undefined,
                 OR: search ? [
                     { name: { contains: search, mode: 'insensitive' } },
                     { email: { contains: search, mode: 'insensitive' } },
-                ] : undefined
+                ] : undefined,
+                organizations: isOwner ? { some: { id: { in: user.organizations.map(o => o.id) } } } : undefined
             }
         }
         return variables

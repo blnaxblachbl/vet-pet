@@ -22,6 +22,8 @@ import EditAdminPage from './pages/admin/edit'
 
 import OrganizationsPage from './pages/organization'
 import AddOrganizationsPage from './pages/organization/add'
+import SingleOrganizationsPage from './pages/organization/single'
+import EditOrganizationsPage from './pages/organization/edit'
 
 moment.locale('ru')
 
@@ -90,6 +92,24 @@ const App = () => {
                                 element={
                                     <Layout roles={["org-owner"]}>
                                         <AddOrganizationsPage />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path='/organization/:id'
+                                exact
+                                element={
+                                    <Layout roles={["admin", 'moder']}>
+                                        <SingleOrganizationsPage />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path='/organization/edit/:id'
+                                exact
+                                element={
+                                    <Layout roles={['all']}>
+                                        <EditOrganizationsPage />
                                     </Layout>
                                 }
                             />
