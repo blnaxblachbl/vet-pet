@@ -11,11 +11,9 @@ const Organization = gql`
     logo: String!
     description: String!
     city: String
-    address: String!
-    phone: String!
-    email: String!
+    email: String
+    phone: String
     links: [String!]!
-    images: [String!]!
     categories: [String!]!
     admins(
       where: AdminWhereInput
@@ -25,14 +23,6 @@ const Organization = gql`
       skip: Int
       distinct: AdminScalarFieldEnum
     ): [Admin!]!
-    schedule(
-      where: ScheduleWhereInput
-      orderBy: ScheduleOrderByWithRelationInput
-      cursor: ScheduleWhereUniqueInput
-      take: Int
-      skip: Int
-      distinct: ScheduleScalarFieldEnum
-    ): [Schedule!]!
     goods(
       where: GoodWhereInput
       orderBy: GoodOrderByWithRelationInput
@@ -41,14 +31,14 @@ const Organization = gql`
       skip: Int
       distinct: GoodScalarFieldEnum
     ): [Good!]!
-    stocks(
-      where: StockWhereInput
-      orderBy: StockOrderByWithRelationInput
-      cursor: StockWhereUniqueInput
+    branchs(
+      where: BranchWhereInput
+      orderBy: BranchOrderByWithRelationInput
+      cursor: BranchWhereUniqueInput
       take: Int
       skip: Int
-      distinct: StockScalarFieldEnum
-    ): [Stock!]!
+      distinct: BranchScalarFieldEnum
+    ): [Branch!]!
     orders(
       where: OrderWhereInput
       orderBy: OrderOrderByWithRelationInput

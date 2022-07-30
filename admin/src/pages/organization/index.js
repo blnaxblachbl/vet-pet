@@ -42,11 +42,10 @@ const Organizations = () => {
 
     const variables = useMemo(() => ({
         where: {
-            id: isOwner ? { in: user.organizations.map(o => o.id) } : undefined,
             delete: { equals: false },
             publish: typeof parseBoolean(publish) === 'boolean' ? { equals: parseBoolean(publish) } : undefined
         }
-    }), [publish])
+    }), [publish, user])
 
     const { data, loading } = useQuery(FIND_MANY_ORGANIZATION, {
         variables: {

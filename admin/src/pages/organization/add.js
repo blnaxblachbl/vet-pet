@@ -112,13 +112,6 @@ const AddOrg = () => {
                     <Input placeholder='Введите номер' />
                 </Form.Item>
                 <Form.Item
-                    name={"address"}
-                    rules={[rules.required]}
-                    label="Адрес организации"
-                >
-                    <Input placeholder='Введите адрес' />
-                </Form.Item>
-                <Form.Item
                     name={"categories"}
                     rules={[rules.required]}
                     label="Категории организации"

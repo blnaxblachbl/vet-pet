@@ -3,8 +3,6 @@ import styled from "styled-components"
 import {
     Button,
     Table,
-    Switch,
-    Popconfirm,
     Form as AntForm,
     Select,
     Input,
@@ -13,27 +11,22 @@ import {
     message
 } from 'antd'
 import { useMutation, useQuery } from "@apollo/client"
-import moment from "moment"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import { Top } from '../components'
 import { FIND_MANY_ADMIN, FIND_MANY_ADMIN_COUNT, UPDATE_ONE_ADMIN, CREATE_ONE_ADMIN } from "../gqls"
-import { useRouteQuery, useUser, useNavigateSearch, parseBoolean, adminTypeParser, getPermission } from "../utils/hooks"
-import { ADMIN_TYPES, ORG_ADMIN_TYPES } from "../utils/const"
+import { useRouteQuery, useUser, useNavigateSearch, adminTypeParser, getPermission } from "../utils/hooks"
+import { ORG_ADMIN_TYPES } from "../utils/const"
 
 const Filters = styled(AntForm)`
-    /* display: flex;
-    flex-direction: row;
-    align-items: center; */
     margin-bottom: 20px;
 
     .item {
         width: 200px;
-        /* margin-right: 15px; */
     }
 `
 const PopoverMenu = styled.div`
-    width: fit-content;
+    width: 100%;
     .menu-item {
         margin-bottom: 5px;
         display: block;
@@ -61,7 +54,7 @@ export const OrgAdmins = ({
 }) => {
     const { user } = useUser()
     const query = useRouteQuery()
-    const { page = 1, search = "", block = undefined, deleted = false, role = undefined, } = query
+    const { page = 1, search = "", role = undefined, } = query
     const navigate = useNavigateSearch()
     const { pathname } = window.location
     const isAdmin = getPermission(user.type, ['admin'])
@@ -69,14 +62,15 @@ export const OrgAdmins = ({
     const adminForm = useRef()
 
     const [visible, setVisible] = useState(false)
+    const [listVisible, setListVisible] = useState(false)
 
     const variables = useMemo(() => {
         const variables = {
             where: {
                 id: user ? { not: { equals: user.id } } : undefined,
                 type: role ? { equals: role } : undefined,
-                block: typeof parseBoolean(block) === 'boolean' ? { equals: parseBoolean(block) } : undefined,
-                delete: typeof parseBoolean(deleted) === 'boolean' ? { equals: parseBoolean(deleted) } : undefined,
+                block: { equals: false },
+                delete: { equals: false },
                 OR: search ? [
                     { name: { contains: search, mode: 'insensitive' } },
                     { email: { contains: search, mode: 'insensitive' } },
@@ -85,7 +79,7 @@ export const OrgAdmins = ({
             }
         }
         return variables
-    }, [user, deleted, block, search, role])
+    }, [user, search, role])
 
     const { data, loading, refetch } = useQuery(FIND_MANY_ADMIN, {
         variables: {
@@ -130,6 +124,18 @@ export const OrgAdmins = ({
         navigate(pathname, { ...query, search, role, block, deleted })
     }
 
+    const uppin = (orgs = [], admin) => {
+        const orgsToSet = admin.organizations.filter(item => orgs.find(o => o.id !== item.id))
+        updateAdmin({
+            variables: {
+                where: { id: admin.id },
+                data: {
+                    organizations: { set: orgsToSet }
+                }
+            }
+        })
+    }
+
     const handleSubmitAdmin = ({
         id,
         name,
@@ -150,7 +156,6 @@ export const OrgAdmins = ({
                 },
                 type: { set: type },
             }
-            console.log(data)
             updateAdmin({
                 variables: {
                     where: { id },
@@ -169,7 +174,6 @@ export const OrgAdmins = ({
                 },
                 type
             }
-            console.log(data)
             createAdmin({
                 variables: { data }
             })
@@ -205,11 +209,32 @@ export const OrgAdmins = ({
                 title={`Администраторы (${adminCount})`}
                 action={
                     isOwner && (
-                        <Button
-                            onClick={() => openModal()}
+                        <Popover
+                            title='Добавление админстратора'
+                            content={
+                                <PopoverMenu>
+                                    <Button
+                                        className="menu-item"
+                                        onClick={() => openModal()}
+                                    >
+                                        Новый
+                                    </Button>
+                                    <Button
+                                        className="menu-item"
+                                        onClick={() => setListVisible(true)}
+                                    >
+                                        Из списка
+                                    </Button>
+                                </PopoverMenu>
+                            }
+                            overlayStyle={{
+                                width: 'fit-content'
+                            }}
                         >
-                            + Добавить
-                        </Button>
+                            <Button>
+                                + Добавить
+                            </Button>
+                        </Popover>
                     )
                 }
             />
@@ -218,8 +243,6 @@ export const OrgAdmins = ({
                 onFinish={onSubmitSearch}
                 initialValues={{
                     search,
-                    block,
-                    deleted: parseBoolean(deleted),
                     role
                 }}
             >
@@ -234,22 +257,6 @@ export const OrgAdmins = ({
                         }}
                         className='item'
                     />
-                </Filters.Item>
-                <Filters.Item name={'block'}>
-                    <Select
-                        placeholder="Статус блокировки"
-                        // onChange={data => setBlock(data)}
-                        className='item'
-                        allowClear
-                        onClear={() => navigate(pathname, { ...query, block: undefined })}
-                    >
-                        <Select.Option value={false}>
-                            Не заблокированный
-                        </Select.Option>
-                        <Select.Option value={true}>
-                            Заблокированный
-                        </Select.Option>
-                    </Select>
                 </Filters.Item>
                 <Filters.Item name={'role'}>
                     <Select
@@ -266,23 +273,6 @@ export const OrgAdmins = ({
                                 </Select.Option>
                             ))
                         }
-                    </Select>
-                </Filters.Item>
-                <Filters.Item name={'deleted'}>
-                    <Select
-                        placeholder="Статус удаления"
-                        // defaultValue={false}
-                        // onChange={data => setDeleted(data)}
-                        className='item'
-                        allowClear
-                        onClear={() => navigate(pathname, { ...query, deleted: undefined })}
-                    >
-                        <Select.Option value={false}>
-                            Не удаленный
-                        </Select.Option>
-                        <Select.Option value={true}>
-                            Удалённый
-                        </Select.Option>
                     </Select>
                 </Filters.Item>
                 <Button
@@ -341,16 +331,31 @@ export const OrgAdmins = ({
                                 title='Действия'
                                 content={
                                     <PopoverMenu>
-                                        <Button danger className="menu-item">
+                                        <Button
+                                            danger
+                                            className="menu-item"
+                                            onClick={() => {
+                                                uppin([{ id: organizationId }], object)
+                                            }}
+                                            loading={updateLoading}
+                                        >
                                             Удалить из организации
                                         </Button>
-                                        <Button type='danger' className="menu-item">
+                                        <Button
+                                            type='danger'
+                                            className="menu-item"
+                                            onClick={() => {
+                                                uppin(user.organizations, object)
+                                            }}
+                                            loading={updateLoading}
+                                        >
                                             Удалить из всех организаций
                                         </Button>
                                         <Button
                                             className="menu-item"
                                             onClick={() => openModal(object)}
                                             type='primary'
+                                            loading={updateLoading}
                                         >
                                             Редактировать
                                         </Button>
@@ -378,6 +383,12 @@ export const OrgAdmins = ({
                 closeModal={closeModal}
                 handleSubmit={handleSubmitAdmin}
                 loading={updateLoading || createLoading}
+            />
+            <AdmnListiModal
+                visible={listVisible}
+                admins={[]}
+                handleSubmit={() => { }}
+                closeModal={() => setListVisible(false)}
             />
         </>
     )
@@ -481,6 +492,68 @@ const AdmniModal = forwardRef(({
                                     key={key}
                                 >
                                     {ORG_ADMIN_TYPES[key]}
+                                </Select.Option>
+                            ))
+                        }
+                    </Select>
+                </Form.Item>
+            </Form>
+        </Modal>
+    )
+})
+
+const AdmnListiModal = forwardRef(({
+    visible = false,
+    admins = [],
+    closeModal = () => { },
+    handleSubmit = () => { },
+    loading = false,
+    organizationId = null
+}, ref) => {
+    const [form] = Form.useForm()
+
+    useImperativeHandle(ref, () => ({
+        resetFields: () => form.resetFields(),
+        setFieldsValue: (values) => form.setFieldsValue(values)
+    }))
+
+    return (
+        <Modal
+            visible={visible}
+            onCancel={closeModal}
+            onOk={form.submit}
+            okButtonProps={{
+                loading
+            }}
+            closable={false}
+        >
+            <Top title={"Добавление администратора"} />
+            <Form
+                form={form}
+                onFinish={handleSubmit}
+                layout="vertical"
+            >
+                <Form.Item
+                    name='organizations'
+                    rules={[rules.required]}
+                    label="Организация в которой работат администратор"
+                >
+                    <Select
+                        placeholder="Организацию"
+                        allowClear
+                        showSearch
+                        optionFilterProp="children"
+                        mode='multiple'
+                        filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                    >
+                        {
+                            admins.map(item => (
+                                <Select.Option
+                                    key={item.id}
+                                >
+                                    {item.name}, {item.email}
                                 </Select.Option>
                             ))
                         }

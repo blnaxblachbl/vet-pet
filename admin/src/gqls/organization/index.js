@@ -16,28 +16,15 @@ export const FIND_UNIQUE_ORGANIZATION = gql`
 			logo
 			description
 			city
-			address
 			phone
 			email
 			links
-			images
 			categories
-			schedule{
-				id
-				createdAt
-				updatedAt
-				organizationId
-				day
-				startTime
-				endTine
-				allTime
-			}
 			_count{
 				admins
-				schedule
 				goods
-				stocks
 				orders
+				branchs
 			}
 		}
 	}
@@ -68,27 +55,13 @@ export const FIND_FIRST_ORGANIZATION = gql`
 			logo
 			description
 			city
-			address
 			phone
 			email
 			links
-			images
 			categories
-			schedule{
-				id
-				createdAt
-				updatedAt
-				organizationId
-				day
-				startTime
-				endTine
-				allTime
-			}
 			_count{
 				admins
-				schedule
 				goods
-				stocks
 				orders
 			}
 		}
@@ -120,27 +93,13 @@ export const FIND_MANY_ORGANIZATION = gql`
 			logo
 			description
 			city
-			address
 			phone
 			email
 			links
-			images
 			categories
-			schedule{
-				id
-				createdAt
-				updatedAt
-				organizationId
-				day
-				startTime
-				endTine
-				allTime
-			}
 			_count{
 				admins
-				schedule
 				goods
-				stocks
 				orders
 			}
 		}
@@ -162,27 +121,13 @@ export const CREATE_ONE_ORGANIZATION = gql`
 			logo
 			description
 			city
-			address
 			phone
 			email
 			links
-			images
 			categories
-			schedule{
-				id
-				createdAt
-				updatedAt
-				organizationId
-				day
-				startTime
-				endTine
-				allTime
-			}
 			_count{
 				admins
-				schedule
 				goods
-				stocks
 				orders
 			}
 		}
@@ -206,27 +151,13 @@ export const UPDATE_ONE_ORGANIZATION = gql`
 			logo
 			description
 			city
-			address
 			phone
 			email
 			links
-			images
 			categories
-			schedule{
-				id
-				createdAt
-				updatedAt
-				organizationId
-				day
-				startTime
-				endTine
-				allTime
-			}
 			_count{
 				admins
-				schedule
 				goods
-				stocks
 				orders
 			}
 		}
@@ -248,27 +179,13 @@ export const DELETE_ONE_ORGANIZATION = gql`
 			logo
 			description
 			city
-			address
 			phone
 			email
 			links
-			images
 			categories
-			schedule{
-				id
-				createdAt
-				updatedAt
-				organizationId
-				day
-				startTime
-				endTine
-				allTime
-			}
 			_count{
 				admins
-				schedule
 				goods
-				stocks
 				orders
 			}
 		}
@@ -294,27 +211,13 @@ export const UPSERT_ONE_ORGANIZATION = gql`
 			logo
 			description
 			city
-			address
 			phone
 			email
 			links
-			images
 			categories
-			schedule{
-				id
-				createdAt
-				updatedAt
-				organizationId
-				day
-				startTime
-				endTine
-				allTime
-			}
 			_count{
 				admins
-				schedule
 				goods
-				stocks
 				orders
 			}
 		}

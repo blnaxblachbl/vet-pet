@@ -14,6 +14,8 @@ const Order = gql`
     user: User!
     userId: String!
     anotherUser: Json
+    branch: Branch!
+    branchId: String!
     organization: Organization!
     organizationId: String!
   }

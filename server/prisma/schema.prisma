@@ -8,18 +8,19 @@ datasource db {
 }
 
 model Admin {
-    id            String         @id @default(cuid())
-    createdAt     DateTime       @default(now())
-    updatedAt     DateTime       @updatedAt
-    email         String         @unique
-    type          String //admin, moder, org-owner, org-moder
-    name          String?
-    password      String?
-    repassword    String?
-    phone         String?
-    block         Boolean        @default(false)
-    delete        Boolean        @default(false)
-    organizations Organization[]
+    id             String        @id @default(cuid())
+    createdAt      DateTime      @default(now())
+    updatedAt      DateTime      @updatedAt
+    email          String        @unique
+    type           String //admin, moder, org-owner, org-admin
+    name           String?
+    password       String?
+    repassword     String?
+    phone          String?
+    block          Boolean       @default(false)
+    delete         Boolean       @default(false)
+    organization   Organization? @relation(fields: [organizationId], references: [id])
+    organizationId String?
 }
 
 model User {
@@ -37,42 +38,55 @@ model User {
     pets      Pet[] // питомцы пользователя
 }
 
-//Ветеринарная клиника
+//Ветеринарная оргианизация
 model Organization {
-    id          String     @id @default(cuid())
-    createdAt   DateTime   @default(now())
-    updatedAt   DateTime   @updatedAt
-    publish     Boolean    @default(true) // статус публикации
-    delete      Boolean    @default(false) // статус удаления
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    publish     Boolean  @default(true) // статус публикации
+    delete      Boolean  @default(false) // статус удаления
     name        String // название организации
     logo        String // логотип организации
     description String // описание организации
     city        String? // город* данный параметр пока не будет использоваться
-    address     String // адрес физического расположения
-    phone       String // контактный телефон организации
-    email       String // контактный адрес эл. почты организации
+    email       String? // контактный адрес эл. почты организации
+    phone       String? // контактный телефон кол центра организации
     links       String[] // массив ссылок на сторонние ресурсы
-    images      String[] // массив изображений
     categories  String[] // категория оргаизации: vet, salon, shop
     admins      Admin[] // администраторы и модераторы организации
-    schedule    Schedule[] // расписание времени работы
     goods       Good[] // товары и услуги которые предоставляет организация
-    stocks      Stock[] // акции организации
+    branchs     Branch[]
     orders      Order[] // список заказов организации
+}
+
+model Branch {
+    id             String       @id @default(cuid())
+    createdAt      DateTime     @default(now())
+    updatedAt      DateTime     @updatedAt
+    publish        Boolean      @default(true) // статус публикации
+    delete         Boolean      @default(false) // статус удаления
+    organization   Organization @relation(fields: [organizationId], references: [id])
+    organizationId String
+    orders         Order[] // список заказов филиала
+    schedule       Schedule[] // расписание времени работы
+    goods          Good[] // товары филиала
+    address        String // адрес физического расположения
+    phone          String // контактный телефон филиала
+    images         String[] // массив изображений
 }
 
 // Расписание работы
 model Schedule {
-    id             String       @id @default(cuid())
-    createdAt      DateTime     @default(now())
-    updatedAt      DateTime     @updatedAt
-    organization   Organization @relation(fields: [organizationId], references: [id])
-    organizationId String       @unique
-    day            String
-    startTime      Int          @default(0) // время начала работы в минутах относительно  00:00
-    endTine        Int          @default(0) // время окончания работы в минутах относительно  00:00
-    allTime        Boolean      @default(false) // устанавливается true если в этот день работает круглосуточно
-    dayOff         Boolean      @default(false) // устанавливается true если в этот день не работает
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    branch    Branch   @relation(fields: [branchId], references: [id])
+    branchId  String   @unique
+    day       String
+    startTime Int      @default(0) // время начала работы в минутах относительно  00:00
+    endTine   Int      @default(0) // время окончания работы в минутах относительно  00:00
+    allTime   Boolean  @default(false) // устанавливается true если в этот день работает круглосуточно
+    dayOff    Boolean  @default(false) // устанавливается true если в этот день не работает
 }
 
 //Товар или услуга предоставляемая организацией
@@ -88,24 +102,25 @@ model Good {
     images         String[] // изображения услуги
     organization   Organization @relation(fields: [organizationId], references: [id])
     organizationId String
+    branchs        Branch[]
     type           String // тип товара: service, product, enimal
     carts          Cart[]
 }
 
 // Акция 
-model Stock {
-    id             String       @id @default(cuid())
-    createdAt      DateTime     @default(now())
-    updatedAt      DateTime     @updatedAt
-    publish        Boolean      @default(true) // статус публикации
-    delete         Boolean      @default(false) // статус удаления
-    deadline       DateTime // срок действия акции до конца дня
-    name           String // название акции
-    description    String // описание акции
-    code           String? // промокод* данный параметр пока не будет использоваться. это на будущее 
-    organization   Organization @relation(fields: [organizationId], references: [id])
-    organizationId String
-}
+// model Stock {
+//     id             String       @id @default(cuid())
+//     createdAt      DateTime     @default(now())
+//     updatedAt      DateTime     @updatedAt
+//     publish        Boolean      @default(true) // статус публикации
+//     delete         Boolean      @default(false) // статус удаления
+//     deadline       DateTime // срок действия акции до конца дня
+//     name           String // название акции
+//     description    String // описание акции
+//     code           String? // промокод* данный параметр пока не будет использоваться. это на будущее 
+//     organization   Organization @relation(fields: [organizationId], references: [id])
+//     organizationId String
+// }
 
 // Корзина
 model Cart {
@@ -129,6 +144,8 @@ model Order {
     user           User         @relation(fields: [userId], references: [id]) // пользователь сделавший заказ
     userId         String
     anotherUser    Json? // контактная информаци если пользователь делает заказ не для себя
+    branch         Branch       @relation(fields: [branchId], references: [id])
+    branchId       String
     organization   Organization @relation(fields: [organizationId], references: [id])
     organizationId String
 }

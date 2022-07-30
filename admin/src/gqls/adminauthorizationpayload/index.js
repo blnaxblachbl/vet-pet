@@ -19,6 +19,11 @@ export const SIGN_IN_ADMIN = gql`
 				phone
 				block
 				delete
+				organization {
+					id
+					name
+				}
+				organizationId
 			}
 			token
 		}

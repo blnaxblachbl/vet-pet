@@ -1,4 +1,4 @@
-// import { useMemo } from 'react'
+import { useMemo } from 'react'
 import styled from 'styled-components'
 import { Form as AntForm, Input, Button, message, Select } from 'antd'
 import { useMutation } from '@apollo/client'
@@ -7,7 +7,7 @@ import {
     Top
 } from '../../components'
 import { CREATE_ONE_ADMIN } from '../../gqls'
-import { ADMIN_TYPES } from '../../utils/const'
+import { ADMIN_TYPES, ORG_ADMIN_TYPES } from '../../utils/const'
 import { getPermission, useUser } from '../../utils/hooks'
 
 const Form = styled(AntForm)`
@@ -23,8 +23,8 @@ const rules = {
 const AddAdmin = () => {
     const { user } = useUser()
     const [form] = Form.useForm()
-    // const isOwner = getPermission(user.type, ['org-owner'])
-    // const isAdmin = getPermission(user.type, ['admin'])
+    const isOwner = getPermission(user.type, ['org-owner', 'org-admin'])
+    const isAdmin = getPermission(user.type, ['admin'])
 
     const [createAdmin, { loading }] = useMutation(CREATE_ONE_ADMIN, {
         onCompleted: () => {
@@ -40,16 +40,23 @@ const AddAdmin = () => {
     })
 
     // const organizations = useMemo(() => user ? user.organizations : [], [user])
-    // const adminTypes = useMemo(() => isAdmin ? ADMIN_TYPES : ORG_ADMIN_TYPES, [isAdmin])
+    const adminTypes = useMemo(() => isAdmin ? ADMIN_TYPES : ORG_ADMIN_TYPES, [isAdmin])
 
     const handleSubmit = ({ ...value }) => {
+        let organization = undefined
+        if (isOwner) {
+            if (user.organization) {
+                organization = {
+                    connect: { id: user.organizationId }
+                }
+            } else {
+                message.warning("Сначала нужно добавить организацию")
+                return
+            }
+        }
         const data = {
             ...value,
-            // organizations: organizations ? {
-            //     connect: organizations.map(o => ({
-            //         id: o,
-            //     }))
-            // } : undefined
+            organization
         }
         createAdmin({
             variables: { data }
@@ -88,36 +95,6 @@ const AddAdmin = () => {
                 >
                     <Input placeholder='Введите номер' />
                 </Form.Item>
-                {/* {
-                    isOwner && (
-                        <Form.Item
-                            name='organizations'
-                            rules={[rules.required]}
-                            label="Организация в которой работат администратор"
-                        >
-                            <Select
-                                placeholder="Организацию"
-                                allowClear
-                                showSearch
-                                optionFilterProp="children"
-                                mode='multiple'
-                                filterOption={(input, option) =>
-                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                }
-                            >
-                                {
-                                    organizations.map(item => (
-                                        <Select.Option
-                                            key={item.id}
-                                        >
-                                            {item.name}
-                                        </Select.Option>
-                                    ))
-                                }
-                            </Select>
-                        </Form.Item>
-                    )
-                } */}
                 <Form.Item
                     name={"type"}
                     rules={[rules.required]}
@@ -128,11 +105,11 @@ const AddAdmin = () => {
                         allowClear
                     >
                         {
-                            Object.keys(ADMIN_TYPES).map(key => (
+                            Object.keys(adminTypes).map(key => (
                                 <Select.Option
                                     key={key}
                                 >
-                                    {ADMIN_TYPES[key]}
+                                    {adminTypes[key]}
                                 </Select.Option>
                             ))
                         }

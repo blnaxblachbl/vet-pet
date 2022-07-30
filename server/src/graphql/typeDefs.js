@@ -1,8 +1,8 @@
+const { Branch } = require('./Branch/typeDefs')
 const { Ad } = require('./Ad/typeDefs')
 const { Pet } = require('./Pet/typeDefs')
 const { Order } = require('./Order/typeDefs')
 const { Cart } = require('./Cart/typeDefs')
-const { Stock } = require('./Stock/typeDefs')
 const { Good } = require('./Good/typeDefs')
 const { Schedule } = require('./Schedule/typeDefs')
 const { Organization } = require('./Organization/typeDefs')
@@ -19,12 +19,12 @@ const typeDefs = mergeTypeDefs([
   Organization,
   Schedule,
   Good,
-  Stock,
   Cart,
   Order,
   Pet,
   Ad,
   Upload,
+  Branch,
 ])
 
 module.exports = { typeDefs }

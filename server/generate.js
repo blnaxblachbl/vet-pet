@@ -13,6 +13,6 @@ new Generator(
             // 'deleteOne',
             // 'updateMany',
         ],
-        models: ['Schedule'], 
+        models: ['Schedule', 'Branch', 'Organization', 'Good', 'Order'], 
     }
 ).run()

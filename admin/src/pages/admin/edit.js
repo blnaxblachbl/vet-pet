@@ -26,8 +26,6 @@ const EditAdmin = () => {
     const [form] = Form.useForm()
     const { id } = useParams()
     const navigate = useNavigate()
-    // const isOwner = getPermission(user.type, ['org-owner'])
-    // const isAdmin = getPermission(user.type, ['admin'])
 
     useQuery(FIND_UNIQUE_ADMIN, {
         variables: {
@@ -35,7 +33,6 @@ const EditAdmin = () => {
         },
         onCompleted: ({
             findUniqueAdmin: {
-                organizations,
                 name,
                 email,
                 phone,
@@ -46,8 +43,7 @@ const EditAdmin = () => {
                 name,
                 email,
                 phone,
-                type,
-                organizations: organizations.map(o => o.id)
+                type
             })
         }
     })
@@ -62,7 +58,7 @@ const EditAdmin = () => {
         }
     })
 
-    const handleSubmit = ({ name, email, type, phone, organizations }) => {
+    const handleSubmit = ({ name, email, type, phone }) => {
         updateAdmin({
             variables: {
                 where: { id },
@@ -70,15 +66,11 @@ const EditAdmin = () => {
                     name: { set: name },
                     email: { set: email },
                     type: { set: type },
-                    phone: phone ? { set: phone } : undefined,
-                    // organizations: isOwner ? { set: organizations.map(o => ({ id: o })) } : undefined
+                    phone: { set: phone }
                 }
             }
         })
     }
-
-    // const organizations = useMemo(() => user ? user.organizations : [], [user])
-    // const adminTypes = useMemo(() => isAdmin ? ADMIN_TYPES : ORG_ADMIN_TYPES, [isAdmin])
 
     return (
         <>
@@ -105,37 +97,6 @@ const EditAdmin = () => {
                 >
                     <Input placeholder='Введите номер' />
                 </Form.Item>
-                {/* {
-                    isOwner && (
-                        <Form.Item
-                            name='organizations'
-                            rules={[rules.required]}
-                            label="Организация в которой работат администратор"
-
-                        >
-                            <Select
-                                placeholder="Организацию"
-                                allowClear
-                                showSearch
-                                optionFilterProp="children"
-                                filterOption={(input, option) =>
-                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                }
-                                mode='multiple'
-                            >
-                                {
-                                    organizations.map(item => (
-                                        <Select.Option
-                                            key={item.id}
-                                        >
-                                            {item.name}
-                                        </Select.Option>
-                                    ))
-                                }
-                            </Select>
-                        </Form.Item>
-                    )
-                } */}
                 <Form.Item
                     name={"type"}
                     rules={[rules.required]}

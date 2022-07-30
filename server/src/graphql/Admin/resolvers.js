@@ -73,6 +73,7 @@ const Admin = {
         where: {
           email: args.data.email,
         },
+        select: args.select.admin.select
       })
       if (!exist) throw new Error("not exist")
       const compareRePassword = bcrypt.compareSync(
@@ -104,7 +105,7 @@ const Admin = {
         admin: exist,
       }
     },
-    changePasswordAdmin: async (parent, { data }, { prisma, verify }) => {
+    changePasswordAdmin: async (parent, { data, select }, { prisma, verify }) => {
       const { password, confirmPassword } = data
       const admin = await prisma.admin.findUnique({
         where: {
@@ -123,6 +124,7 @@ const Admin = {
         data: {
           password: hashRePassword,
         },
+        select
       })
     },
     updateOneAdmin: (_parent, args, { prisma }) => {

@@ -37,11 +37,9 @@ const AdminList = () => {
     const query = useRouteQuery()
     const { page = 1, search = "", block = undefined, deleted = false, role = undefined, } = query
     const navigate = useNavigateSearch()
-    // const canCreate = getPermission(user.type, ['admin', "org-owner"])
-    const canCreate = true
-    // const isOwner = getPermission(user.type, ["org-owner"])
+    const isOwner = getPermission(user.type, ["org-owner"])
     // const isAdmin = getPermission(user.type, ["admin"])
-
+    
     const variables = useMemo(() => {
         const variables = {
             where: {
@@ -53,11 +51,11 @@ const AdminList = () => {
                     { name: { contains: search, mode: 'insensitive' } },
                     { email: { contains: search, mode: 'insensitive' } },
                 ] : undefined,
-                // organizations: isOwner ? { some: { id: { in: user.organizations.map(o => o.id) } } } : undefined
+                organization: isOwner ? { id: { equals: user.organization ? user.organization.id : '' } } : undefined
             }
         }
         return variables
-    }, [user, deleted, block, search, role])
+    }, [user, deleted, block, search, role, isOwner])
 
     const [updateAdmin, { loading: updateLoading }] = useMutation(UPDATE_ONE_ADMIN)
 
@@ -96,7 +94,7 @@ const AdminList = () => {
             <Top
                 title={`Администраторы (${adminCount})`}
                 action={
-                    canCreate && (
+                    isOwner && (
                         <Link to='add'>
                             <Button>
                                 + Добавить

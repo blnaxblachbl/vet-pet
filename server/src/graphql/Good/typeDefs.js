@@ -13,6 +13,14 @@ const Good = gql`
     images: [String!]!
     organization: Organization!
     organizationId: String!
+    branchs(
+      where: BranchWhereInput
+      orderBy: BranchOrderByWithRelationInput
+      cursor: BranchWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: BranchScalarFieldEnum
+    ): [Branch!]!
     type: String!
     carts(
       where: CartWhereInput

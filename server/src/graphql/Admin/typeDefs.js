@@ -27,7 +27,8 @@ const Admin = gql`
     phone: String
     block: Boolean!
     delete: Boolean!
-    organizations: [Organization!]!
+    organization: Organization
+    organizationId: String
   }
 
   type Query {

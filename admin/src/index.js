@@ -54,7 +54,7 @@ const App = () => {
                                 path='/admin'
                                 exact
                                 element={
-                                    <Layout roles={['admin']}>
+                                    <Layout roles={['all']}>
                                         <AdminsPage />
                                     </Layout>
                                 }
@@ -63,7 +63,7 @@ const App = () => {
                                 path='/admin/add'
                                 exact
                                 element={
-                                    <Layout roles={['admin']}>
+                                    <Layout roles={['all']}>
                                         <AddAdminPage />
                                     </Layout>
                                 }
@@ -72,7 +72,7 @@ const App = () => {
                                 path='/admin/:id'
                                 exact
                                 element={
-                                    <Layout roles={['admin']}>
+                                    <Layout roles={['all']}>
                                         <EditAdminPage />
                                     </Layout>
                                 }
@@ -81,7 +81,7 @@ const App = () => {
                                 path='/organization'
                                 exact
                                 element={
-                                    <Layout roles={['admin', "org-owner", 'moder']}>
+                                    <Layout roles={['all']}>
                                         <OrganizationsPage />
                                     </Layout>
                                 }
@@ -90,7 +90,7 @@ const App = () => {
                                 path='/organization/add'
                                 exact
                                 element={
-                                    <Layout roles={["org-owner"]}>
+                                    <Layout roles={['org-owner']}>
                                         <AddOrganizationsPage />
                                     </Layout>
                                 }
@@ -99,7 +99,7 @@ const App = () => {
                                 path='/organization/:id'
                                 exact
                                 element={
-                                    <Layout roles={["admin", 'moder']}>
+                                    <Layout roles={['org-owner', 'org-admin']}>
                                         <SingleOrganizationsPage />
                                     </Layout>
                                 }

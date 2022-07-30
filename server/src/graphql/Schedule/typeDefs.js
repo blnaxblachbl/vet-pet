@@ -5,8 +5,8 @@ const Schedule = gql`
     id: String!
     createdAt: DateTime!
     updatedAt: DateTime!
-    organization: Organization!
-    organizationId: String!
+    branch: Branch!
+    branchId: String!
     day: String!
     startTime: Int!
     endTine: Int!
