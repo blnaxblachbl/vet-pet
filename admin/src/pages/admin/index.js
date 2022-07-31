@@ -48,6 +48,7 @@ const AdminList = () => {
                 OR: search ? [
                     { name: { contains: search, mode: 'insensitive' } },
                     { email: { contains: search, mode: 'insensitive' } },
+                    { phone: { contains: search, mode: 'insensitive' } },
                 ] : undefined,
                 organization: isOwner ? { id: { equals: organizationId } } : undefined
             }

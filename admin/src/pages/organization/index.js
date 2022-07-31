@@ -38,7 +38,13 @@ const Organizations = () => {
         where: {
             delete: { equals: false },
             publish: typeof parseBoolean(publish) === 'boolean' ? { equals: parseBoolean(publish) } : undefined,
-            categories: category ? { has: category } : undefined
+            categories: category ? { has: category } : undefined,
+            OR: search ? [
+                { name: { contains: search, mode: 'insensitive' } },
+                { description: { contains: search, mode: 'insensitive' } },
+                { email: { contains: search, mode: 'insensitive' } },
+                { phone: { contains: search, mode: 'insensitive' } },
+            ] : undefined,
         }
     }), [publish, user, category])
 

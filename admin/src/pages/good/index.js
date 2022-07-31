@@ -16,8 +16,9 @@ import moment from "moment"
 import { Link } from "react-router-dom"
 
 import { Top, PublishStatus } from "../../components"
-import { FIND_MANY_GOOD, FIND_MANY_GOOD_COUNT, FIND_MANY_ORGANIZATION, UPDATE_ONE_GOOD } from "../../gqls"
+import { FIND_MANY_GOOD, FIND_MANY_GOOD_COUNT, FIND_MANY_ORGANIZATION, UPDATE_ONE_GOOD, FIND_MANY_BRANCH } from "../../gqls"
 import { useRouteQuery, useUser, useNavigateSearch, parseBoolean, getPermission } from "../../utils/hooks"
+import { GOOD_TYPES } from "../../utils/const"
 
 const Filters = styled(AntForm)`
     margin-bottom: 20px;
@@ -42,7 +43,7 @@ const Goods = () => {
     const { user } = useUser()
     const query = useRouteQuery()
     const navigate = useNavigateSearch()
-    const { page = 1, search = "", publish = undefined, deleted = undefined, organization = null } = query
+    const { page = 1, search = "", publish = undefined, deleted = undefined, organization = null, branch = null } = query
     const isAdminOrModer = getPermission(user.type, ['admin', 'moder'])
 
     const [updateGood, { loading: updateLoading }] = useMutation(UPDATE_ONE_GOOD, {
@@ -52,6 +53,16 @@ const Goods = () => {
             countRefetch()
         },
         onError: e => { }
+    })
+
+    const { data: branchData, loading: branchsLoadnig } = useQuery(FIND_MANY_BRANCH, {
+        variables: {
+            where: {
+                delete: { equals: false },
+                publish: { equals: true }
+            }
+        },
+        fetchPolicy: 'network-only'
     })
 
     const variables = useMemo(() => {
@@ -67,10 +78,15 @@ const Goods = () => {
             where: {
                 publish: typeof parseBoolean(publish) === 'boolean' ? { equals: parseBoolean(publish) } : undefined,
                 delete: typeof parseBoolean(deleted) === 'boolean' ? { equals: parseBoolean(deleted) } : undefined,
-                organizationId
+                organizationId,
+                OR: search ? [
+                    { name: { contains: search, mode: 'insensitive' } },
+                    { description: { contains: search, mode: 'insensitive' } },
+                ] : undefined,
+                branchs: branch ? { some: { id: { equals: branch } } } : undefined
             }
         }
-    }, [publish, user, deleted, organization, isAdminOrModer])
+    }, [publish, user, deleted, organization, isAdminOrModer, branch])
 
     const { data: orgData, loading: orgLoading } = useQuery(FIND_MANY_ORGANIZATION, {
         variables: {
@@ -102,10 +118,11 @@ const Goods = () => {
         navigate(`/good`, { ...query, page: current })
     }
 
-    const onSubmitSearch = ({ search, deleted, publish }) => {
-        navigate("/good", { ...query, search, deleted, publish })
+    const onSubmitSearch = ({ search, deleted, publish, branch, organization }) => {
+        navigate("/good", { ...query, search, deleted, publish, branch, organization })
     }
 
+    const branchs = useMemo(() => branchData ? branchData.findManyBranch : [], [branchData])
     const organizations = useMemo(() => orgData ? orgData.findManyOrganization : [], [orgData])
     const goods = useMemo(() => data ? data.findManyGood : [], [data])
     const goodsCount = useMemo(() => countData ? countData.findManyGoodCount : 0, [countData])
@@ -131,7 +148,8 @@ const Goods = () => {
                     search,
                     publish: parseBoolean(publish),
                     deleted: parseBoolean(deleted),
-                    organization
+                    organization,
+                    branch
                 }}
             >
                 <Filters.Item name={'search'}>
@@ -168,6 +186,29 @@ const Goods = () => {
                         </Filters.Item>
                     )
                 }
+                <Filters.Item name={'branch'}>
+                    <Select
+                        placeholder="Филиал"
+                        // onChange={data => setDeleted(data)}
+                        className='item'
+                        allowClear
+                        showSearch
+                        onClear={() => navigate("/good", { ...query, branch: undefined })}
+                        loading={branchsLoadnig}
+                        optionFilterProp="children"
+                        filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                    >
+                        {
+                            branchs.map(item => (
+                                <Select.Option value={item.id}>
+                                    {item.address}
+                                </Select.Option>
+                            ))
+                        }
+                    </Select>
+                </Filters.Item>
                 <Filters.Item name={'publish'}>
                     <Select
                         placeholder="Статус"
@@ -234,6 +275,12 @@ const Goods = () => {
                         dataIndex: 'branchs',
                         key: 'branchs',
                         render: (branchs, obj) => branchs.map(item => item.address).join(", ")
+                    },
+                    {
+                        title: 'Тип',
+                        dataIndex: 'type',
+                        key: 'type',
+                        render: (type, obj) => GOOD_TYPES[type]
                     },
                     {
                         title: 'Статус',

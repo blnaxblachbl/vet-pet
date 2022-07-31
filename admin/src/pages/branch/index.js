@@ -68,7 +68,11 @@ const Branchs = () => {
             where: {
                 publish: typeof parseBoolean(publish) === 'boolean' ? { equals: parseBoolean(publish) } : undefined,
                 delete: typeof parseBoolean(deleted) === 'boolean' ? { equals: parseBoolean(deleted) } : undefined,
-                organizationId
+                organizationId,
+                OR: search ? [
+                    { address: { contains: search, mode: 'insensitive' } },
+                    { phone: { contains: search, mode: 'insensitive' } },
+                ] : undefined,
             }
         }
     }, [publish, user, deleted, organization, isAdminOrModer])
