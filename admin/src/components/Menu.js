@@ -38,6 +38,11 @@ export const Menu = () => {
                     Филиалы
                 </MenuLink>
             </AntMenu.Item>
+            <AntMenu.Item key={`/good`}>
+                <MenuLink to={`/good?deleted=false`}>
+                    Товар и услуги
+                </MenuLink>
+            </AntMenu.Item>
         </AntMenu>
     )
 }

@@ -29,6 +29,10 @@ import BranchsPage from './pages/branch'
 import AddBranchsPage from './pages/branch/add'
 import EditBranchsPage from './pages/branch/edit'
 
+import GoodsPage from './pages/good'
+import AddGoodsPage from './pages/good/add'
+import EditGoodsPage from './pages/good/edit'
+
 moment.locale('ru')
 
 const App = () => {
@@ -141,6 +145,33 @@ const App = () => {
                                 element={
                                     <Layout roles={['all']}>
                                         <EditBranchsPage />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path='/good'
+                                exact
+                                element={
+                                    <Layout roles={['all']}>
+                                        <GoodsPage />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path='/good/add'
+                                exact
+                                element={
+                                    <Layout roles={['org-owner', 'org-admin']}>
+                                        <AddGoodsPage />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path='/good/:id'
+                                exact
+                                element={
+                                    <Layout roles={['all']}>
+                                        <EditGoodsPage />
                                     </Layout>
                                 }
                             />

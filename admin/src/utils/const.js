@@ -49,3 +49,7 @@ export const WEEK_DAYS = [
         value: 'Воскресенье'
     },
 ]
+export const GOOD_TYPES = {
+    service: 'Услуга', 
+    product: "Товар"
+}

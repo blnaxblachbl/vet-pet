@@ -16,35 +16,11 @@ export const FIND_UNIQUE_GOOD = gql`
 			description
 			price
 			images
-			organization{
-				id
-				createdAt
-				updatedAt
-				publish
-				delete
-				name
-				logo
-				description
-				city
-				address
-				phone
-				email
-				links
-				images
-				categories
-				schedule{
-					id
-					createdAt
-					updatedAt
-					organizationId
-					day
-					startTime
-					endTime
-					allTime
-				}
-			}
-			organizationId
 			type
+			branchs {
+				id
+				address
+			}
 		}
 	}
 `
@@ -74,35 +50,11 @@ export const FIND_FIRST_GOOD = gql`
 			description
 			price
 			images
-			organization{
-				id
-				createdAt
-				updatedAt
-				publish
-				delete
-				name
-				logo
-				description
-				city
-				address
-				phone
-				email
-				links
-				images
-				categories
-				schedule{
-					id
-					createdAt
-					updatedAt
-					organizationId
-					day
-					startTime
-					endTime
-					allTime
-				}
-			}
-			organizationId
 			type
+			branchs {
+				id
+				address
+			}
 		}
 	}
 `
@@ -132,35 +84,11 @@ export const FIND_MANY_GOOD = gql`
 			description
 			price
 			images
-			organization{
-				id
-				createdAt
-				updatedAt
-				publish
-				delete
-				name
-				logo
-				description
-				city
-				address
-				phone
-				email
-				links
-				images
-				categories
-				schedule{
-					id
-					createdAt
-					updatedAt
-					organizationId
-					day
-					startTime
-					endTime
-					allTime
-				}
-			}
-			organizationId
 			type
+			branchs {
+				id
+				address
+			}
 		}
 	}
 `
@@ -180,35 +108,11 @@ export const CREATE_ONE_GOOD = gql`
 			description
 			price
 			images
-			organization{
-				id
-				createdAt
-				updatedAt
-				publish
-				delete
-				name
-				logo
-				description
-				city
-				address
-				phone
-				email
-				links
-				images
-				categories
-				schedule{
-					id
-					createdAt
-					updatedAt
-					organizationId
-					day
-					startTime
-					endTime
-					allTime
-				}
-			}
-			organizationId
 			type
+			branchs {
+				id
+				address
+			}
 		}
 	}
 `
@@ -230,35 +134,11 @@ export const UPDATE_ONE_GOOD = gql`
 			description
 			price
 			images
-			organization{
-				id
-				createdAt
-				updatedAt
-				publish
-				delete
-				name
-				logo
-				description
-				city
-				address
-				phone
-				email
-				links
-				images
-				categories
-				schedule{
-					id
-					createdAt
-					updatedAt
-					organizationId
-					day
-					startTime
-					endTime
-					allTime
-				}
-			}
-			organizationId
 			type
+			branchs {
+				id
+				address
+			}
 		}
 	}
 `
@@ -278,35 +158,11 @@ export const DELETE_ONE_GOOD = gql`
 			description
 			price
 			images
-			organization{
-				id
-				createdAt
-				updatedAt
-				publish
-				delete
-				name
-				logo
-				description
-				city
-				address
-				phone
-				email
-				links
-				images
-				categories
-				schedule{
-					id
-					createdAt
-					updatedAt
-					organizationId
-					day
-					startTime
-					endTime
-					allTime
-				}
-			}
-			organizationId
 			type
+			branchs {
+				id
+				address
+			}
 		}
 	}
 `
@@ -330,35 +186,11 @@ export const UPSERT_ONE_GOOD = gql`
 			description
 			price
 			images
-			organization{
-				id
-				createdAt
-				updatedAt
-				publish
-				delete
-				name
-				logo
-				description
-				city
-				address
-				phone
-				email
-				links
-				images
-				categories
-				schedule{
-					id
-					createdAt
-					updatedAt
-					organizationId
-					day
-					startTime
-					endTime
-					allTime
-				}
-			}
-			organizationId
 			type
+			branchs {
+				id
+				address
+			}
 		}
 	}
 `
