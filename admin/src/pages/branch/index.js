@@ -8,7 +8,8 @@ import {
     Form as AntForm,
     Select,
     Input,
-    message
+    message,
+    Popover
 } from 'antd'
 import { useMutation, useQuery } from "@apollo/client"
 import moment from "moment"
@@ -26,6 +27,15 @@ const Filters = styled(AntForm)`
         width: 200px;
     }
 `
+const PopoverMenu = styled.div`
+    .menu-item {
+        width: 100%;
+        margin-bottom: 5px;
+        :last-child {
+            margin-bottom: 0;
+        }
+    }
+`
 
 const limit = 20
 
@@ -33,12 +43,14 @@ const Branchs = () => {
     const { user } = useUser()
     const query = useRouteQuery()
     const navigate = useNavigateSearch()
-    const { page = 1, search = "", publish = undefined, deleted = false, organization = null } = query
+    const { page = 1, search = "", publish = undefined, deleted = undefined, organization = null } = query
     const isAdminOrModer = getPermission(user.type, ['admin', 'moder'])
 
     const [updateBranch, { loading: updateLoading }] = useMutation(UPDATE_ONE_BRANCH, {
         onCompleted: () => {
-            message.success("Филиал удален")
+            message.success("Филиал обновлен")
+            refetch()
+            countRefetch()
         },
         onError: e => { }
     })
@@ -54,7 +66,6 @@ const Branchs = () => {
         }
         return {
             where: {
-                delete: { equals: false },
                 publish: typeof parseBoolean(publish) === 'boolean' ? { equals: parseBoolean(publish) } : undefined,
                 delete: typeof parseBoolean(deleted) === 'boolean' ? { equals: parseBoolean(deleted) } : undefined,
                 organizationId
@@ -70,7 +81,7 @@ const Branchs = () => {
         }
     })
 
-    const { data, loading } = useQuery(FIND_MANY_BRANCH, {
+    const { data, loading, refetch } = useQuery(FIND_MANY_BRANCH, {
         variables: {
             ...variables,
             take: 10,
@@ -82,7 +93,7 @@ const Branchs = () => {
         fetchPolicy: 'network-only'
     })
 
-    const { data: countData, loading: countLoading } = useQuery(FIND_MANY_BRANCH_COUNT, {
+    const { data: countData, loading: countLoading, refetch: countRefetch } = useQuery(FIND_MANY_BRANCH_COUNT, {
         variables,
         fetchPolicy: 'network-only'
     })
@@ -177,11 +188,9 @@ const Branchs = () => {
                 <Filters.Item name={'deleted'}>
                     <Select
                         placeholder="Статус удаления"
-                        defaultValue={false}
-                        // onChange={data => setDeleted(data)}
                         className='item'
                         allowClear
-                        onClear={() => navigate("/admin", { ...query, deleted: undefined })}
+                        onClear={() => navigate("/branch", { ...query, deleted: undefined })}
                     >
                         <Select.Option value={false}>
                             Не удаленный
@@ -247,9 +256,9 @@ const Branchs = () => {
                         dataIndex: 'delete',
                         key: 'delete',
                         width: 150,
-                        render: (_delete, object) => (
+                        render: (_delete, object) => _delete ? (
                             <Popconfirm
-                                title={`${object.delete ? "Восстановить" : "Удалить"} модератора?`}
+                                title={`${object.delete ? "Восстановить" : "Удалить"} филиал?`}
                                 onConfirm={() => {
                                     updateBranch({
                                         variables: {
@@ -262,13 +271,73 @@ const Branchs = () => {
                                         }
                                     })
                                 }}
+                                disabled={updateLoading}
                             >
                                 <Button
                                     type={_delete ? 'primary' : 'danger'}
+                                    className="menu-item"
+                                    loading={updateLoading}
                                 >
                                     {_delete ? "Восстановить" : "Удалить"}
                                 </Button>
                             </Popconfirm>
+                        ) : (
+                            <Popover
+                                title='Действия'
+                                content={
+                                    <PopoverMenu>
+                                        <Popconfirm
+                                            title={`${!object.publish ? "Опубликовать" : "Снять с публткации"} филиал?`}
+                                            onConfirm={() => {
+                                                updateBranch({
+                                                    variables: {
+                                                        where: {
+                                                            id: object.id,
+                                                        },
+                                                        data: {
+                                                            publish: { set: !object.publish }
+                                                        }
+                                                    }
+                                                })
+                                            }}
+                                            disabled={updateLoading}
+                                        >
+                                            <Button danger className="menu-item" loading={updateLoading}>
+                                                {!object.publish ? "Опубликовать" : "Снять с публткации"}
+                                            </Button>
+                                        </Popconfirm>
+                                        <Popconfirm
+                                            title={`${object.delete ? "Восстановить" : "Удалить"} филиал?`}
+                                            onConfirm={() => {
+                                                updateBranch({
+                                                    variables: {
+                                                        where: {
+                                                            id: object.id,
+                                                        },
+                                                        data: {
+                                                            delete: { set: !_delete }
+                                                        }
+                                                    }
+                                                })
+                                            }}
+                                            disabled={updateLoading}
+                                        >
+                                            <Button
+                                                type={_delete ? 'primary' : 'danger'}
+                                                className="menu-item"
+                                                loading={updateLoading}
+                                            >
+                                                {_delete ? "Восстановить" : "Удалить"}
+                                            </Button>
+                                        </Popconfirm>
+                                    </PopoverMenu>
+                                }
+                            >
+                                <Button>
+                                    Действия
+                                </Button>
+                            </Popover >
+
                         )
                     }
                 ]}

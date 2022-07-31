@@ -7,7 +7,8 @@ import {
     Popconfirm,
     Form as AntForm,
     Select,
-    Input
+    Input,
+    message
 } from 'antd'
 import { useMutation, useQuery } from "@apollo/client"
 import moment from "moment"
@@ -31,7 +32,7 @@ const limit = 20
 const AdminList = () => {
     const { user } = useUser()
     const query = useRouteQuery()
-    const { page = 1, search = "", block = undefined, deleted = false, role = undefined, } = query
+    const { page = 1, search = "", block = undefined, deleted = undefined, role = undefined, } = query
     const navigate = useNavigateSearch()
     const isOwner = getPermission(user.type, ["org-owner"])
     const organizationId = useMemo(() => user.organizationId ? user.organizationId : "", [user])
@@ -54,9 +55,16 @@ const AdminList = () => {
         return variables
     }, [user, deleted, block, search, role, isOwner])
 
-    const [updateAdmin, { loading: updateLoading }] = useMutation(UPDATE_ONE_ADMIN)
+    const [updateAdmin, { loading: updateLoading }] = useMutation(UPDATE_ONE_ADMIN, {
+        onCompleted: () => {
+            message.success("Администратор обновлен")
+            refetch()
+            countRefetch()
+        },
+        onError: e => {}
+    })
 
-    const { data, loading } = useQuery(FIND_MANY_ADMIN, {
+    const { data, loading, refetch } = useQuery(FIND_MANY_ADMIN, {
         variables: {
             ...variables,
             take: 10,
@@ -68,7 +76,7 @@ const AdminList = () => {
         fetchPolicy: 'network-only'
     })
 
-    const { data: countData, loading: countLoading } = useQuery(FIND_MANY_ADMIN_COUNT, {
+    const { data: countData, loading: countLoading, refetch: countRefetch } = useQuery(FIND_MANY_ADMIN_COUNT, {
         variables,
         fetchPolicy: 'network-only'
     })
@@ -240,8 +248,8 @@ const AdminList = () => {
                 onFinish={onSubmitSearch}
                 initialValues={{
                     search,
-                    block,
-                    deleted,
+                    block: parseBoolean(block),
+                    deleted: parseBoolean(deleted),
                     role
                 }}
             >
@@ -279,7 +287,6 @@ const AdminList = () => {
                             <Filters.Item name={'role'}>
                                 <Select
                                     placeholder="Роль"
-                                    // onChange={data => setRole(data)}
                                     className='item'
                                     allowClear
                                     onClear={() => navigate("/admin", { ...query, role: undefined })}
@@ -296,8 +303,6 @@ const AdminList = () => {
                             <Filters.Item name={'deleted'}>
                                 <Select
                                     placeholder="Статус удаления"
-                                    defaultValue={false}
-                                    // onChange={data => setDeleted(data)}
                                     className='item'
                                     allowClear
                                     onClear={() => navigate("/admin", { ...query, deleted: undefined })}

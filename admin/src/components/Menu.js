@@ -18,7 +18,7 @@ export const Menu = () => {
             {
                 getPermission(type, ['admin', 'org-owner', 'org-admin', 'moder']) && (
                     <AntMenu.Item key={`/admin`}>
-                        <MenuLink to={`/admin`}>
+                        <MenuLink to={`/admin?deleted=false`}>
                             Администраторы
                         </MenuLink>
                     </AntMenu.Item>
@@ -34,7 +34,7 @@ export const Menu = () => {
                 )
             }
             <AntMenu.Item key={`/branch`}>
-                <MenuLink to={`/branch`}>
+                <MenuLink to={`/branch?deleted=false`}>
                     Филиалы
                 </MenuLink>
             </AntMenu.Item>

@@ -49,10 +49,10 @@ export const useNavigateSearch = () => {
     }
 }
 export const parseBoolean = (value) => {
-    if (value == 'true') {
+    if (value === 'true' || value === true) {
         return true
     }
-    if (value == 'false') {
+    if (value === 'false' || value === false) {
         return false
     }
     return undefined
