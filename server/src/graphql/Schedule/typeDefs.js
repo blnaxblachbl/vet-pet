@@ -9,7 +9,7 @@ const Schedule = gql`
     branchId: String!
     day: String!
     startTime: Int!
-    endTine: Int!
+    endTime: Int!
     allTime: Boolean!
     dayOff: Boolean!
   }

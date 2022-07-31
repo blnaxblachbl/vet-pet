@@ -39,7 +39,7 @@ export const FIND_UNIQUE_GOOD = gql`
 					organizationId
 					day
 					startTime
-					endTine
+					endTime
 					allTime
 				}
 			}
@@ -97,7 +97,7 @@ export const FIND_FIRST_GOOD = gql`
 					organizationId
 					day
 					startTime
-					endTine
+					endTime
 					allTime
 				}
 			}
@@ -155,7 +155,7 @@ export const FIND_MANY_GOOD = gql`
 					organizationId
 					day
 					startTime
-					endTine
+					endTime
 					allTime
 				}
 			}
@@ -203,7 +203,7 @@ export const CREATE_ONE_GOOD = gql`
 					organizationId
 					day
 					startTime
-					endTine
+					endTime
 					allTime
 				}
 			}
@@ -253,7 +253,7 @@ export const UPDATE_ONE_GOOD = gql`
 					organizationId
 					day
 					startTime
-					endTine
+					endTime
 					allTime
 				}
 			}
@@ -301,7 +301,7 @@ export const DELETE_ONE_GOOD = gql`
 					organizationId
 					day
 					startTime
-					endTine
+					endTime
 					allTime
 				}
 			}
@@ -353,7 +353,7 @@ export const UPSERT_ONE_GOOD = gql`
 					organizationId
 					day
 					startTime
-					endTine
+					endTime
 					allTime
 				}
 			}

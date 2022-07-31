@@ -32,14 +32,15 @@ const Organizations = () => {
     const { user } = useUser()
     const query = useRouteQuery()
     const navigate = useNavigateSearch()
-    const { page = 1, search = "", publish = undefined, deleted = false, category = null } = query
+    const { page = 1, search = "", publish = undefined, category = null } = query
 
     const variables = useMemo(() => ({
         where: {
             delete: { equals: false },
-            publish: typeof parseBoolean(publish) === 'boolean' ? { equals: parseBoolean(publish) } : undefined
+            publish: typeof parseBoolean(publish) === 'boolean' ? { equals: parseBoolean(publish) } : undefined,
+            categories: category ? { has: category } : undefined
         }
-    }), [publish, user])
+    }), [publish, user, category])
 
     const { data, loading } = useQuery(FIND_MANY_ORGANIZATION, {
         variables: {

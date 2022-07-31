@@ -81,10 +81,10 @@ model Schedule {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     branch    Branch   @relation(fields: [branchId], references: [id])
-    branchId  String   @unique
+    branchId  String
     day       String
     startTime Int      @default(0) // время начала работы в минутах относительно  00:00
-    endTine   Int      @default(0) // время окончания работы в минутах относительно  00:00
+    endTime   Int      @default(0) // время окончания работы в минутах относительно  00:00
     allTime   Boolean  @default(false) // устанавливается true если в этот день работает круглосуточно
     dayOff    Boolean  @default(false) // устанавливается true если в этот день не работает
 }

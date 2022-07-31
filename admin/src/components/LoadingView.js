@@ -3,9 +3,10 @@ import { Spin } from "antd"
 
 const Container = styled.div`
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
     position: absolute;
+    padding-top: 30%;
     background-color: rgba(255,255,255, 0.5);
     top: 0;
     bottom: 0;

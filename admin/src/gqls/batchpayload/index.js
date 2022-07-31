@@ -240,3 +240,27 @@ export const UPDATE_MANY_AD = gql`
 		}
 	}
 `
+export const DELETE_MANY_BRANCH = gql`
+	mutation(
+		$where: BranchWhereInput
+	){
+		deleteManyBranch(
+			where: $where
+		){
+			count
+		}
+	}
+`
+export const UPDATE_MANY_BRANCH = gql`
+	mutation(
+		$data: BranchUpdateManyMutationInput!
+		$where: BranchWhereInput
+	){
+		updateManyBranch(
+			data: $data
+			where: $where
+		){
+			count
+		}
+	}
+`

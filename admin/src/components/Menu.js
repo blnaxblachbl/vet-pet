@@ -33,6 +33,11 @@ export const Menu = () => {
                     </AntMenu.Item>
                 )
             }
+            <AntMenu.Item key={`/branch`}>
+                <MenuLink to={`/branch`}>
+                    Филиалы
+                </MenuLink>
+            </AntMenu.Item>
         </AntMenu>
     )
 }

@@ -34,6 +34,9 @@ export const useRouteQuery = () => {
 export const timeFromDuration = (duration) => {
     return moment.utc(moment.duration(duration, "minutes").as("milliseconds"))
 }
+export const durationFromTime = (time = moment()) => {
+    return (moment(time).hours() * 60) + moment(time).minutes()
+}
 export const useNavigateSearch = () => {
     const navigate = useNavigate()
     return (pathname, params) => {

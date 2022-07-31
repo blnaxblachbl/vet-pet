@@ -190,3 +190,22 @@ export const FIND_MANY_AD_COUNT = gql`
 		)
 	}
 `
+export const FIND_MANY_BRANCH_COUNT = gql`
+	query(
+		$where: BranchWhereInput
+		$orderBy: [BranchOrderByWithRelationInput]
+		$cursor: BranchWhereUniqueInput
+		$take: Int
+		$skip: Int
+		$distinct: [BranchScalarFieldEnum]
+	){
+		findManyBranchCount(
+			where: $where
+			orderBy: $orderBy
+			cursor: $cursor
+			take: $take
+			skip: $skip
+			distinct: $distinct
+		)
+	}
+`

@@ -19,3 +19,33 @@ export const ORG_CATEGORIES = {
     shop: 'Магазин для животных',
     'pet-shop': 'Зоомагазин'
 }
+export const WEEK_DAYS = [
+    {
+        name: 'moday',
+        value: 'Понедельник'
+    },
+    {
+        name: 'tuesday',
+        value: 'Вторник'
+    },
+    {
+        name: 'wednesday',
+        value: 'Среда'
+    },
+    {
+        name: 'thursday',
+        value: 'Четверг'
+    },
+    {
+        name: 'friday',
+        value: 'Пятница'
+    },
+    {
+        name: 'saturday',
+        value: 'Суббота'
+    },
+    {
+        name: 'sunday',
+        value: 'Воскресенье'
+    },
+]
