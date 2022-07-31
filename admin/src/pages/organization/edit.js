@@ -7,7 +7,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import {
     Top,
     UploadFile,
-    OrgAdmins
+    // OrgAdmins
 } from '../../components'
 import { FIND_UNIQUE_ORGANIZATION, UPDATE_ONE_ORGANIZATION } from '../../gqls'
 import { ORG_CATEGORIES } from '../../utils/const'
@@ -80,9 +80,6 @@ const EditOrg = () => {
     const [updateOrg, { loading: updateLoading }] = useMutation(UPDATE_ONE_ORGANIZATION, {
         onCompleted: () => {
             message.success("Организация обновлена")
-            // form.resetFields()
-            // refs.get("logo").setFileList([])
-            // refs.get("images").setFileList([])
             window.history.back()
         },
         onError: e => { }
@@ -126,9 +123,6 @@ const EditOrg = () => {
                 form={form}
                 onFinish={handleSubmit}
                 layout="vertical"
-            // initialValues={{
-            //     payerStatus: 'default'
-            // }}
             >
                 <Form.Item
                     name={"logo"}
@@ -164,14 +158,12 @@ const EditOrg = () => {
                 </Form.Item>
                 <Form.Item
                     name={"email"}
-                    // rules={[rules.required]}
                     label="Адрес электронной почты"
                 >
                     <Input placeholder='Введите Email' />
                 </Form.Item>
                 <Form.Item
                     name={"phone"}
-                    rules={[rules.required]}
                     label="Номер телефона"
                 >
                     <Input placeholder='Введите номер' />
@@ -209,7 +201,6 @@ const EditOrg = () => {
                 </Form.Item>
                 <Form.Item
                     name={"links"}
-                    // rules={[rules.required]}
                     label="Ссылки на сторонние ресурсы и соцсети"
                 >
                     <Select
@@ -220,7 +211,6 @@ const EditOrg = () => {
                 </Form.Item>
                 <Form.Item
                     name={"images"}
-                    // rules={[rules.required]}
                     label="Фотогалерея организации"
                 >
                     <UploadFile
@@ -235,10 +225,6 @@ const EditOrg = () => {
                     Сохранить
                 </Button>
             </Form>
-            <OrgAdmins
-                organizationId={id}
-                isOwner={user && user.organizations.find(o => o.id === id)}
-            />
         </>
     )
 }

@@ -11,22 +11,18 @@ import {
 } from 'antd'
 import { useMutation, useQuery } from "@apollo/client"
 import moment from "moment"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import { Top } from '../../components'
 import { FIND_MANY_ADMIN, FIND_MANY_ADMIN_COUNT, UPDATE_ONE_ADMIN } from "../../gqls"
 import { useRouteQuery, useUser, useNavigateSearch, parseBoolean, adminTypeParser, getPermission } from "../../utils/hooks"
-import { ADMIN_TYPES, ORG_ADMIN_TYPES } from "../../utils/const"
+import { ADMIN_TYPES } from "../../utils/const"
 
 const Filters = styled(AntForm)`
-    /* display: flex;
-    flex-direction: row;
-    align-items: center; */
     margin-bottom: 20px;
 
     .item {
         width: 200px;
-        /* margin-right: 15px; */
     }
 `
 
@@ -38,8 +34,9 @@ const AdminList = () => {
     const { page = 1, search = "", block = undefined, deleted = false, role = undefined, } = query
     const navigate = useNavigateSearch()
     const isOwner = getPermission(user.type, ["org-owner"])
-    // const isAdmin = getPermission(user.type, ["admin"])
-    
+    const organizationId = useMemo(() => user.organizationId ? user.organizationId : "", [user])
+    const isAdmin = getPermission(user.type, ["admin"])
+
     const variables = useMemo(() => {
         const variables = {
             where: {
@@ -51,7 +48,7 @@ const AdminList = () => {
                     { name: { contains: search, mode: 'insensitive' } },
                     { email: { contains: search, mode: 'insensitive' } },
                 ] : undefined,
-                organization: isOwner ? { id: { equals: user.organization ? user.organization.id : '' } } : undefined
+                organization: isOwner ? { id: { equals: organizationId } } : undefined
             }
         }
         return variables
@@ -87,20 +84,152 @@ const AdminList = () => {
 
     const admins = useMemo(() => data ? data.findManyAdmin : [], [data])
     const adminCount = useMemo(() => countData ? countData.findManyAdminCount : 0, [countData])
-    // const adminTypes = useMemo(() => !isOwner ? ADMIN_TYPES : ORG_ADMIN_TYPES, [isOwner])
+
+    const columns = useMemo(() => {
+        let col = [
+            {
+                title: 'ФИО',
+                dataIndex: 'name',
+                key: 'name',
+                render: (name, obj) => (
+                    <Link to={obj.id}>
+                        {name}
+                    </Link>
+                )
+            },
+            {
+                title: 'Email',
+                dataIndex: 'email',
+                key: 'email',
+            },
+            {
+                title: 'Тип',
+                dataIndex: 'type',
+                key: 'type',
+                render: (type, obj) => (
+                    <span>{adminTypeParser(type)}</span>
+                )
+            },
+            {
+                title: 'Дата создание',
+                dataIndex: 'createdAt',
+                key: 'createdAt',
+                render: (createdAt, obj) => (
+                    <span>{moment(createdAt).format("DD.MM.yyyy HH:mm")}</span>
+                )
+            },
+        ]
+        if (isAdmin) {
+            col = [
+                ...col,
+                {
+                    title: "Организация",
+                    dataIndex: 'organization',
+                    key: 'organization',
+                    render: (organization, object) => (
+                        <span>{organization ? organization.name : "-"}</span>
+                    )
+                },
+                {
+                    title: 'Бан',
+                    dataIndex: 'block',
+                    key: 'block',
+                    render: (block, object) => (
+                        <Switch
+                            size='small'
+                            onChange={(value) => {
+                                updateAdmin({
+                                    variables: {
+                                        where: {
+                                            id: object.id,
+                                        },
+                                        data: {
+                                            block: { set: value }
+                                        }
+                                    }
+                                })
+                            }}
+                            defaultChecked={block}
+                        />
+                    )
+                },
+                {
+                    title: 'Действие',
+                    dataIndex: 'delete',
+                    key: 'delete',
+                    width: 150,
+                    render: (_delete, object) => (
+                        <Popconfirm
+                            title={`${object.delete ? "Восстановить" : "Удалить"} модератора?`}
+                            onConfirm={() => {
+                                updateAdmin({
+                                    variables: {
+                                        where: {
+                                            id: object.id,
+                                        },
+                                        data: {
+                                            delete: { set: !_delete }
+                                        }
+                                    }
+                                })
+                            }}
+                        >
+                            <Button
+                                type={_delete ? 'primary' : 'danger'}
+                            >
+                                {_delete ? "Восстановить" : "Удалить"}
+                            </Button>
+                        </Popconfirm>
+                    )
+                }
+            ]
+        }
+        if (isOwner) {
+            col.push({
+                title: 'Действие',
+                dataIndex: 'delete',
+                key: 'delete',
+                width: 150,
+                render: (_delete, object) => (
+                    <Popconfirm
+                        title={`Удалить модератора?`}
+                        onConfirm={() => {
+                            updateAdmin({
+                                variables: {
+                                    where: {
+                                        id: object.id,
+                                    },
+                                    data: {
+                                        organization: {
+                                            disconnect: true
+                                        }
+                                    }
+                                }
+                            })
+                        }}
+                    >
+                        <Button
+                            type={'danger'}
+                        >
+                            Удалить
+                        </Button>
+                    </Popconfirm>
+                )
+            })
+        }
+        return col
+    }, [isAdmin, isOwner, updateAdmin])
 
     return (
         <>
             <Top
                 title={`Администраторы (${adminCount})`}
                 action={
-                    isOwner && (
-                        <Link to='add'>
-                            <Button>
-                                + Добавить
-                            </Button>
-                        </Link>
-                    )
+                    <Link to='add'>
+                        <Button>
+                            + Добавить
+                        </Button>
+                    </Link>
                 }
             />
             <Filters
@@ -125,56 +254,62 @@ const AdminList = () => {
                         className='item'
                     />
                 </Filters.Item>
-                <Filters.Item name={'block'}>
-                    <Select
-                        placeholder="Статус блокировки"
-                        // onChange={data => setBlock(data)}
-                        className='item'
-                        allowClear
-                        onClear={() => navigate("/admin", { ...query, block: undefined })}
-                    >
-                        <Select.Option value={false}>
-                            Не заблокированный
-                        </Select.Option>
-                        <Select.Option value={true}>
-                            Заблокированный
-                        </Select.Option>
-                    </Select>
-                </Filters.Item>
-                <Filters.Item name={'role'}>
-                    <Select
-                        placeholder="Роль"
-                        // onChange={data => setRole(data)}
-                        className='item'
-                        allowClear
-                        onClear={() => navigate("/admin", { ...query, role: undefined })}
-                    >
-                        {
-                            Object.keys(ADMIN_TYPES).map(key => (
-                                <Select.Option key={key}>
-                                    {ADMIN_TYPES[key]}
-                                </Select.Option>
-                            ))
-                        }
-                    </Select>
-                </Filters.Item>
-                <Filters.Item name={'deleted'}>
-                    <Select
-                        placeholder="Статус удаления"
-                        defaultValue={false}
-                        // onChange={data => setDeleted(data)}
-                        className='item'
-                        allowClear
-                        onClear={() => navigate("/admin", { ...query, deleted: undefined })}
-                    >
-                        <Select.Option value={false}>
-                            Не удаленный
-                        </Select.Option>
-                        <Select.Option value={true}>
-                            Удалённый
-                        </Select.Option>
-                    </Select>
-                </Filters.Item>
+                {
+                    isAdmin && (
+                        <>
+                            <Filters.Item name={'block'}>
+                                <Select
+                                    placeholder="Статус блокировки"
+                                    // onChange={data => setBlock(data)}
+                                    className='item'
+                                    allowClear
+                                    onClear={() => navigate("/admin", { ...query, block: undefined })}
+                                >
+                                    <Select.Option value={false}>
+                                        Не заблокированный
+                                    </Select.Option>
+                                    <Select.Option value={true}>
+                                        Заблокированный
+                                    </Select.Option>
+                                </Select>
+                            </Filters.Item>
+                            <Filters.Item name={'role'}>
+                                <Select
+                                    placeholder="Роль"
+                                    // onChange={data => setRole(data)}
+                                    className='item'
+                                    allowClear
+                                    onClear={() => navigate("/admin", { ...query, role: undefined })}
+                                >
+                                    {
+                                        Object.keys(ADMIN_TYPES).map(key => (
+                                            <Select.Option key={key}>
+                                                {ADMIN_TYPES[key]}
+                                            </Select.Option>
+                                        ))
+                                    }
+                                </Select>
+                            </Filters.Item>
+                            <Filters.Item name={'deleted'}>
+                                <Select
+                                    placeholder="Статус удаления"
+                                    defaultValue={false}
+                                    // onChange={data => setDeleted(data)}
+                                    className='item'
+                                    allowClear
+                                    onClear={() => navigate("/admin", { ...query, deleted: undefined })}
+                                >
+                                    <Select.Option value={false}>
+                                        Не удаленный
+                                    </Select.Option>
+                                    <Select.Option value={true}>
+                                        Удалённый
+                                    </Select.Option>
+                                </Select>
+                            </Filters.Item>
+                        </>
+                    )
+                }
                 <Button
                     htmlType='submit'
                     type='primary'
@@ -194,91 +329,7 @@ const AdminList = () => {
                     pageSize: limit
                 }}
                 onChange={handleChangeTable}
-                columns={[
-                    {
-                        title: 'ФИО',
-                        dataIndex: 'name',
-                        key: 'name',
-                        render: (name, obj) => (
-                            <Link to={obj.id}>
-                                {name}
-                            </Link>
-                        )
-                    },
-                    {
-                        title: 'Email',
-                        dataIndex: 'email',
-                        key: 'email',
-                    },
-                    {
-                        title: 'Тип',
-                        dataIndex: 'type',
-                        key: 'type',
-                        render: (type, obj) => (
-                            <span>{adminTypeParser(type)}</span>
-                        )
-                    },
-                    {
-                        title: 'Дата создание',
-                        dataIndex: 'createdAt',
-                        key: 'createdAt',
-                        render: (createdAt, obj) => (
-                            <span>{moment(createdAt).format("DD.MM.yyyy HH:mm")}</span>
-                        )
-                    },
-                    {
-                        title: 'Бан',
-                        dataIndex: 'block',
-                        key: 'block',
-                        render: (block, object) => (
-                            <Switch
-                                size='small'
-                                onChange={(value) => {
-                                    updateAdmin({
-                                        variables: {
-                                            where: {
-                                                id: object.id,
-                                            },
-                                            data: {
-                                                block: { set: value }
-                                            }
-                                        }
-                                    })
-                                }}
-                                defaultChecked={block}
-                            />
-                        )
-                    },
-                    {
-                        title: 'Действие',
-                        dataIndex: 'delete',
-                        key: 'delete',
-                        width: 150,
-                        render: (_delete, object) => (
-                            <Popconfirm
-                                title={`${object.delete ? "Восстановить" : "Удалить"} модератора?`}
-                                onConfirm={() => {
-                                    updateAdmin({
-                                        variables: {
-                                            where: {
-                                                id: object.id,
-                                            },
-                                            data: {
-                                                delete: { set: !_delete }
-                                            }
-                                        }
-                                    })
-                                }}
-                            >
-                                <Button
-                                    type={_delete ? 'primary' : 'danger'}
-                                >
-                                    {_delete ? "Восстановить" : "Удалить"}
-                                </Button>
-                            </Popconfirm>
-                        )
-                    },
-                ]}
+                columns={columns}
             />
         </>
     )

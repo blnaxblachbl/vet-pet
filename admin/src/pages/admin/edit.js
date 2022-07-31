@@ -8,7 +8,7 @@ import {
     Top
 } from '../../components'
 import { UPDATE_ONE_ADMIN, FIND_UNIQUE_ADMIN } from '../../gqls'
-import { ADMIN_TYPES } from '../../utils/const'
+import { ADMIN_TYPES, ADMIN_TYPES_TO_SHARE } from '../../utils/const'
 import { useUser, getPermission } from '../../utils/hooks'
 
 const Form = styled(AntForm)`
@@ -26,6 +26,8 @@ const EditAdmin = () => {
     const [form] = Form.useForm()
     const { id } = useParams()
     const navigate = useNavigate()
+    const isOwner = getPermission(user.type, ['org-owner', 'org-admin'])
+    const isAdmin = getPermission(user.type, ['admin'])
 
     useQuery(FIND_UNIQUE_ADMIN, {
         variables: {
@@ -101,6 +103,9 @@ const EditAdmin = () => {
                     name={"type"}
                     rules={[rules.required]}
                     label="Тип"
+                    style={{
+                        display: isAdmin ? "block" : "none"
+                    }}
                 >
                     <Select
                         placeholder="Выберите тип пользователя"
@@ -112,11 +117,11 @@ const EditAdmin = () => {
                         }
                     >
                         {
-                            Object.keys(ADMIN_TYPES).map(key => (
+                            Object.keys(ADMIN_TYPES_TO_SHARE).map(key => (
                                 <Select.Option
                                     key={key}
                                 >
-                                    {ADMIN_TYPES[key]}
+                                    {ADMIN_TYPES_TO_SHARE[key]}
                                 </Select.Option>
                             ))
                         }

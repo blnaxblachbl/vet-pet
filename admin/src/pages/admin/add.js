@@ -7,7 +7,7 @@ import {
     Top
 } from '../../components'
 import { CREATE_ONE_ADMIN } from '../../gqls'
-import { ADMIN_TYPES, ORG_ADMIN_TYPES } from '../../utils/const'
+import { ADMIN_TYPES, ADMIN_TYPES_TO_SHARE } from '../../utils/const'
 import { getPermission, useUser } from '../../utils/hooks'
 
 const Form = styled(AntForm)`
@@ -39,12 +39,11 @@ const AddAdmin = () => {
         }
     })
 
-    // const organizations = useMemo(() => user ? user.organizations : [], [user])
-    const adminTypes = useMemo(() => isAdmin ? ADMIN_TYPES : ORG_ADMIN_TYPES, [isAdmin])
-
-    const handleSubmit = ({ ...value }) => {
+    const handleSubmit = ({ type, ...value }) => {
         let organization = undefined
+        let _type = type
         if (isOwner) {
+            _type = ADMIN_TYPES['org-admin']
             if (user.organization) {
                 organization = {
                     connect: { id: user.organizationId }
@@ -56,6 +55,7 @@ const AddAdmin = () => {
         }
         const data = {
             ...value,
+            type: _type,
             organization
         }
         createAdmin({
@@ -95,26 +95,30 @@ const AddAdmin = () => {
                 >
                     <Input placeholder='Введите номер' />
                 </Form.Item>
-                <Form.Item
-                    name={"type"}
-                    rules={[rules.required]}
-                    label="Тип"
-                >
-                    <Select
-                        placeholder="Выберите тип пользователя"
-                        allowClear
-                    >
-                        {
-                            Object.keys(adminTypes).map(key => (
-                                <Select.Option
-                                    key={key}
-                                >
-                                    {adminTypes[key]}
-                                </Select.Option>
-                            ))
-                        }
-                    </Select>
-                </Form.Item>
+                {
+                    isAdmin && (
+                        <Form.Item
+                            name={"type"}
+                            rules={[rules.required]}
+                            label="Тип"
+                        >
+                            <Select
+                                placeholder="Выберите тип пользователя"
+                                allowClear
+                            >
+                                {
+                                    Object.keys(ADMIN_TYPES_TO_SHARE).map(key => (
+                                        <Select.Option
+                                            key={key}
+                                        >
+                                            {ADMIN_TYPES_TO_SHARE[key]}
+                                        </Select.Option>
+                                    ))
+                                }
+                            </Select>
+                        </Form.Item>
+                    )
+                }
                 <Button loading={loading} type="primary" htmlType="submit">
                     Добавить
                 </Button>
