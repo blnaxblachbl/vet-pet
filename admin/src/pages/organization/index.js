@@ -19,14 +19,10 @@ import { getPermission, useRouteQuery, useUser, useNavigateSearch, parseBoolean 
 import { ORG_CATEGORIES } from "../../utils/const"
 
 const Filters = styled(AntForm)`
-    /* display: flex;
-    flex-direction: row;
-    align-items: center; */
     margin-bottom: 20px;
 
     .item {
         width: 200px;
-        /* margin-right: 15px; */
     }
 `
 
@@ -37,8 +33,6 @@ const Organizations = () => {
     const query = useRouteQuery()
     const navigate = useNavigateSearch()
     const { page = 1, search = "", publish = undefined, deleted = false, category = null } = query
-
-    const isOwner = getPermission(user.type, ['org-owner'])
 
     const variables = useMemo(() => ({
         where: {
@@ -80,15 +74,6 @@ const Organizations = () => {
         <>
             <Top
                 title={`Организации (${organizationsCount})`}
-                action={
-                    isOwner && (
-                        <Link to='add'>
-                            <Button>
-                                + Добавить
-                            </Button>
-                        </Link>
-                    )
-                }
             />
             <Filters
                 layout='inline'
@@ -169,7 +154,7 @@ const Organizations = () => {
                         dataIndex: 'name',
                         key: 'name',
                         render: (name, obj) => (
-                            <Link to={!isOwner ? obj.id : `edit/${obj.id}`}>
+                            <Link to={obj.id}>
                                 {name}
                             </Link>
                         )

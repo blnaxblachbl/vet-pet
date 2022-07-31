@@ -43,7 +43,7 @@ const AddAdmin = () => {
         let organization = undefined
         let _type = type
         if (isOwner) {
-            _type = ADMIN_TYPES['org-admin']
+            _type = 'org-admin'
             if (user.organization) {
                 organization = {
                     connect: { id: user.organizationId }
@@ -107,11 +107,11 @@ const AddAdmin = () => {
                                 allowClear
                             >
                                 {
-                                    Object.keys(ADMIN_TYPES_TO_SHARE).map(key => (
+                                    Object.keys(ADMIN_TYPES).map(key => (
                                         <Select.Option
                                             key={key}
                                         >
-                                            {ADMIN_TYPES_TO_SHARE[key]}
+                                            {ADMIN_TYPES[key]}
                                         </Select.Option>
                                     ))
                                 }

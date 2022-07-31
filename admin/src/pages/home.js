@@ -6,9 +6,12 @@ import {
     message,
 } from 'antd'
 import { useMutation } from "@apollo/client"
+import { useNavigate } from "react-router-dom"
 
-import { Top } from '../components'
+import { Empty, Top, OrgInfo } from '../components'
 import { CHANGE_PASSWORD_ADMIN } from '../gqls'
+import { getPermission, useUser } from "../utils/hooks"
+import { ADMIN_TYPES } from "../utils/const"
 
 const Button = styled(AntButton)`
 
@@ -16,7 +19,11 @@ const Button = styled(AntButton)`
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    max-width: 400px;
+    max-width: 600px;
+    margin-bottom: 24px;
+    :last-child {
+        margin-bottom: 0;
+    }
     
     .change-pass-lable {
         font-size: 14px;
@@ -31,8 +38,11 @@ const requiredRule = {
 }
 
 const Home = () => {
-
     const [form] = Form.useForm()
+    const navigate = useNavigate()
+    const { user } = useUser()
+    const isOwner = getPermission(user.type, ['org-owner'])
+    const isOrgAdmin = getPermission(user.type, ['org-admin'])
 
     const [chnagePasss, { loading }] = useMutation(CHANGE_PASSWORD_ADMIN, {
         onCompleted: () => {
@@ -58,7 +68,21 @@ const Home = () => {
 
     return (
         <>
-            <Top title="Главная" helpText="Панель администратора" />
+            <Top title="Главная" />
+            {
+                (isOwner || isOrgAdmin) && (
+                    <>
+                        <Container>
+                            <span className="change-pass-lable">Ваша организация</span>
+                            <OrgInfo 
+                                isOwner={isOwner}
+                                organizationId={user.organizationId}
+                            />
+                        </Container>
+                        <Top title="Настройки" />
+                    </>
+                )
+            }
             <Container>
                 <span className="change-pass-lable">Изменение пароля для входа</span>
                 <Form form={form} onFinish={handleSubmitForm} layout="vertical" name="change_password">

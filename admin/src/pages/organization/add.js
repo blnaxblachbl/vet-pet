@@ -2,15 +2,15 @@ import { useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { Form as AntForm, Input, Button, message, Select } from 'antd'
 import { useMutation } from '@apollo/client'
-import { useForm } from 'rc-field-form'
+import { useNavigate, Navigate } from 'react-router-dom'
 
 import {
     Top,
     UploadFile
 } from '../../components'
-import { CREATE_ONE_ADMIN, CREATE_ONE_ORGANIZATION } from '../../gqls'
+import { CREATE_ONE_ORGANIZATION } from '../../gqls'
 import { ORG_CATEGORIES } from '../../utils/const'
-import { getPermission, useUser } from '../../utils/hooks'
+import { useUser } from '../../utils/hooks'
 
 const Form = styled(AntForm)`
     max-width: 600px;
@@ -26,32 +26,32 @@ const AddOrg = () => {
     const { user } = useUser()
     const [form] = Form.useForm()
     const refs = useRef(new Map()).current
+    const navigate = useNavigate()
 
     const [createOrg, { loading }] = useMutation(CREATE_ONE_ORGANIZATION, {
         onCompleted: () => {
             message.success("Организация создана")
-            form.resetFields()
-            refs.get("logo").setFileList([])
-            refs.get("images").setFileList([])
+            navigate("/")
         },
         onError: e => { }
     })
 
     const handleSubmit = ({ ...value }) => {
         const logo = refs.get("logo").getFileList()
-        const images = refs.get("images").getFileList()
         const data = {
             ...value,
             logo: logo[0].name,
-            images: images.map(item => item.name),
             admins: {
-                connect: { id: user.id }
+                connect: [{ id: user.id }]
             }
         }
-        // console.log(data)
         createOrg({
             variables: { data }
         })
+    }
+
+    if (user && user.organization) {
+        return <Navigate to={`/`} />
     }
 
     return (
@@ -61,9 +61,6 @@ const AddOrg = () => {
                 form={form}
                 onFinish={handleSubmit}
                 layout="vertical"
-            // initialValues={{
-            //     payerStatus: 'default'
-            // }}
             >
                 <Form.Item
                     name={"logo"}
@@ -146,7 +143,7 @@ const AddOrg = () => {
                         allowClear
                     />
                 </Form.Item>
-                <Form.Item
+                {/* <Form.Item
                     name={"images"}
                     // rules={[rules.required]}
                     label="Фотогалерея организации"
@@ -158,7 +155,7 @@ const AddOrg = () => {
                     >
                         Загрузите изображение
                     </UploadFile>
-                </Form.Item>
+                </Form.Item> */}
                 <Button loading={loading} type="primary" htmlType="submit">
                     Добавить организацию
                 </Button>

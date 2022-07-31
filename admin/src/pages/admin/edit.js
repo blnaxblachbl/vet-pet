@@ -117,11 +117,11 @@ const EditAdmin = () => {
                         }
                     >
                         {
-                            Object.keys(ADMIN_TYPES_TO_SHARE).map(key => (
+                            Object.keys(ADMIN_TYPES).map(key => (
                                 <Select.Option
                                     key={key}
                                 >
-                                    {ADMIN_TYPES_TO_SHARE[key]}
+                                    {ADMIN_TYPES[key]}
                                 </Select.Option>
                             ))
                         }

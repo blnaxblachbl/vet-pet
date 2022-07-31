@@ -31,7 +31,7 @@ const EditOrg = () => {
     const { id } = useParams()
     const navigate = useNavigate()
 
-    const { data, loading } = useQuery(FIND_UNIQUE_ORGANIZATION, {
+    const { loading } = useQuery(FIND_UNIQUE_ORGANIZATION, {
         variables: {
             where: { id }
         },
@@ -39,10 +39,8 @@ const EditOrg = () => {
             findUniqueOrganization: {
                 logo,
                 images,
-                // admins
                 name,
                 description,
-                address,
                 email,
                 phone,
                 categories,
@@ -54,25 +52,17 @@ const EditOrg = () => {
                 images,
                 name,
                 description,
-                address,
                 email,
                 phone,
                 categories,
                 links
             })
-            // refs.get("logo").setFileList([logo])
-            // refs.get("images").setFileList([images])
             setTimeout(() => {
                 refs.get("logo").setFileList([{
                     uid: logo,
                     url: `/uploads/${logo}`,
                     name: logo
                 }])
-                refs.get("images").setFileList(images.map(item => ({
-                    uid: item,
-                    url: `/uploads/${item}`,
-                    name: item
-                })))
             }, 200)
         }
     })
@@ -80,7 +70,8 @@ const EditOrg = () => {
     const [updateOrg, { loading: updateLoading }] = useMutation(UPDATE_ONE_ORGANIZATION, {
         onCompleted: () => {
             message.success("Организация обновлена")
-            window.history.back()
+            // window.history.back()
+            navigate(`/organization/${id}`)
         },
         onError: e => { }
     })
@@ -90,24 +81,19 @@ const EditOrg = () => {
         description,
         email,
         phone,
-        address,
         categories,
         links
     }) => {
         const logo = refs.get("logo").getFileList()
-        const images = refs.get("images").getFileList()
         const data = {
             logo: { set: logo[0].name },
-            images: images.map(item => item.name),
             name: { set: name },
             description: { set: description },
             email: { set: email },
             phone: { set: phone },
-            address: { set: address },
             categories,
             links
         }
-        // console.log(data)
         updateOrg({
             variables: {
                 where: { id },
@@ -169,13 +155,6 @@ const EditOrg = () => {
                     <Input placeholder='Введите номер' />
                 </Form.Item>
                 <Form.Item
-                    name={"address"}
-                    rules={[rules.required]}
-                    label="Адрес организации"
-                >
-                    <Input placeholder='Введите адрес' />
-                </Form.Item>
-                <Form.Item
                     name={"categories"}
                     rules={[rules.required]}
                     label="Категории организации"
@@ -208,18 +187,6 @@ const EditOrg = () => {
                         placeholder='Введите ссылки'
                         allowClear
                     />
-                </Form.Item>
-                <Form.Item
-                    name={"images"}
-                    label="Фотогалерея организации"
-                >
-                    <UploadFile
-                        ref={ref => refs.set("images", ref)}
-                        listType="picture-card"
-                        maxCount={10}
-                    >
-                        Загрузите изображение
-                    </UploadFile>
                 </Form.Item>
                 <Button loading={loading} type="primary" htmlType="submit">
                     Сохранить

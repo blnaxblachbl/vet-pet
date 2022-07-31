@@ -168,7 +168,10 @@ const AdminList = () => {
                                             id: object.id,
                                         },
                                         data: {
-                                            delete: { set: !_delete }
+                                            delete: { set: !_delete },
+                                            organization: {
+                                                disconnect: true
+                                            }
                                         }
                                     }
                                 })

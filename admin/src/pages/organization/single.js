@@ -17,9 +17,12 @@ const Descriptions = styled(Desc)`
     font-size: 14px;
 
     .logo {
-        width: 200px;
-        height: 200px;
+        min-width: 200px;
+        max-width: 200px;
+        min-height: 200px;
+        max-height: 200px;
         border-radius: 50%;
+        padding: 0;
         object-fit: cover;
     }
     .image-list {
@@ -86,7 +89,8 @@ const SingleOrganization = () => {
             variables: {
                 where: { id },
                 data: {
-                    delete: { set: true }
+                    delete: { set: true },
+                    admins: { set: [] }
                 }
             }
         })
@@ -134,35 +138,19 @@ const SingleOrganization = () => {
                             {/* <Descriptions.Item label='Город'>
                                 {organization.city}
                             </Descriptions.Item> */}
-                            <Descriptions.Item label='Адрес'>
-                                {organization.address}
-                            </Descriptions.Item>
                             <Descriptions.Item label='Категории'>
                                 {organization.categories.map(c => ORG_CATEGORIES[c]).join(", ")}
                             </Descriptions.Item>
                             <Descriptions.Item label='Ссылки'>
-                                {organization.links.map(link => (
+                                {organization.length > 0 ? organization.links.map(link => (
                                     <a href={link} target='_blank'>{link}</a>
-                                ))}
+                                )) : '-'}
                             </Descriptions.Item>
                             <Descriptions.Item label='Количество администраторов'>
                                 {organization._count.admins} шт.
                             </Descriptions.Item>
-                            <Descriptions.Item label='Изображения'>
-                                <div className="image-list">
-                                    {
-                                        organization.images.map(item => (
-                                            <div className="image-container">
-                                                <Image
-                                                    key={item}
-                                                    src={`/uploads/${item}`}
-                                                    alt={item}
-                                                    className='image'
-                                                />
-                                            </div>
-                                        ))
-                                    }
-                                </div>
+                            <Descriptions.Item label='Количество филиалов'>
+                                {organization._count.branchs} шт.
                             </Descriptions.Item>
                         </Descriptions>
                         <Controls>
