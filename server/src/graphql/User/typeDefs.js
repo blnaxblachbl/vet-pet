@@ -1,6 +1,20 @@
 const { default: gql } = require('graphql-tag')
 
 const User = gql`
+  input UserSendPhoneInput {
+    phone: String!
+  }
+
+  input UserSendPhoneAndCodeInput {
+    phone: String!
+    code: String!
+  }
+
+  type AuthPayload {
+    user: User!
+    token: String!
+  }
+
   type User {
     id: String!
     createdAt: DateTime!
@@ -73,6 +87,8 @@ const User = gql`
       data: UserUpdateManyMutationInput!
       where: UserWhereInput
     ): BatchPayload
+    sendUserPhone(data: UserSendPhoneInput!): Boolean
+    sendUserCode(data: UserSendPhoneAndCodeInput!): AuthPayload!
   }
 `
 
