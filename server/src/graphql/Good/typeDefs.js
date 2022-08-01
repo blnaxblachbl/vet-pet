@@ -13,6 +13,7 @@ const Good = gql`
     images: [String!]!
     organization: Organization!
     organizationId: String!
+    categories: [String!]!
     branchs(
       where: BranchWhereInput
       orderBy: BranchOrderByWithRelationInput
@@ -59,6 +60,7 @@ const Good = gql`
       skip: Int
       distinct: [GoodScalarFieldEnum]
     ): Int!
+    findUniqueGoodCategories(where: OrganizationWhereUniqueInput!): [String!]
   }
 
   type Mutation {

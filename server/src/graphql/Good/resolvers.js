@@ -12,6 +12,21 @@ const Good = {
     findManyGoodCount: (_parent, args, { prisma }) => {
       return prisma.good.count(args)
     },
+    findUniqueGoodCategories: async (_parent, args, { prisma }) => {
+      const goods = await prisma.good.findMany({
+        where: {
+          organizationId: { equals: args.where.id }
+        },
+        distinct: ['categories'],
+        select: {
+          categories: true
+        }
+      })
+      const categories = goods.reduce((acc, { categories }) => {
+        return [...acc, ...categories]
+      }, [])
+      return [...new Set(categories)]
+    },
   },
   Mutation: {
     createOneGood: (_parent, args, { prisma }) => {

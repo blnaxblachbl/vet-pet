@@ -1,5 +1,10 @@
 import { gql } from "@apollo/client"
 
+export const FIND_UNIQUE_GOOD_CATEGORIES = gql`
+	query($where: OrganizationWhereUniqueInput!){
+		findUniqueGoodCategories(where: $where)
+	}
+`
 export const FIND_UNIQUE_GOOD = gql`
 	query(
 		$where: GoodWhereUniqueInput!
@@ -17,6 +22,7 @@ export const FIND_UNIQUE_GOOD = gql`
 			price
 			images
 			type
+			categories
 			branchs {
 				id
 				address
@@ -51,6 +57,7 @@ export const FIND_FIRST_GOOD = gql`
 			price
 			images
 			type
+			categories
 			branchs {
 				id
 				address
@@ -85,6 +92,7 @@ export const FIND_MANY_GOOD = gql`
 			price
 			images
 			type
+			categories
 			branchs {
 				id
 				address
@@ -109,6 +117,7 @@ export const CREATE_ONE_GOOD = gql`
 			price
 			images
 			type
+			categories
 			branchs {
 				id
 				address
@@ -135,6 +144,7 @@ export const UPDATE_ONE_GOOD = gql`
 			price
 			images
 			type
+			categories
 			branchs {
 				id
 				address
@@ -159,6 +169,7 @@ export const DELETE_ONE_GOOD = gql`
 			price
 			images
 			type
+			categories
 			branchs {
 				id
 				address
@@ -187,6 +198,7 @@ export const UPSERT_ONE_GOOD = gql`
 			price
 			images
 			type
+			categories
 			branchs {
 				id
 				address

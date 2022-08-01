@@ -10,7 +10,7 @@ import {
     UploadFile,
     Empty
 } from '../../components'
-import { UPDATE_ONE_GOOD, FIND_MANY_BRANCH, FIND_UNIQUE_GOOD } from '../../gqls'
+import { UPDATE_ONE_GOOD, FIND_MANY_BRANCH, FIND_UNIQUE_GOOD, FIND_UNIQUE_GOOD_CATEGORIES } from '../../gqls'
 import { useUser } from '../../utils/hooks'
 import { GOOD_TYPES } from '../../utils/const'
 
@@ -43,7 +43,8 @@ const EditGood = () => {
                 images,
                 price,
                 branchs,
-                type
+                type,
+                categories
             }
         }) => {
             form.setFieldsValue({
@@ -52,7 +53,8 @@ const EditGood = () => {
                 price,
                 branchs: branchs.map(item => item.id),
                 type,
-                images
+                images,
+                categories
             })
             setTimeout(() => {
                 refs.get("images").setFileList(images.map(name => ({
@@ -74,8 +76,18 @@ const EditGood = () => {
         fetchPolicy: 'network-only'
     })
 
+    const { data: categoriesData, loading: categoriesLoading } = useQuery(FIND_UNIQUE_GOOD_CATEGORIES, {
+        variables: {
+            where: { id: user.organizationId ? user.organizationId : "" }
+        },
+        fetchPolicy: 'network-only'
+    })
+
     const branchs = useMemo(() => branchData ? branchData.findManyBranch : [], [branchData])
     const good = useMemo(() => data ? data.findUniqueGood : [], [data])
+    const categories = useMemo(() => categoriesData ? categoriesData.findUniqueGoodCategories : [], [categoriesData])
+
+    // console.log(categoriesData, categories)
 
     const [updateGood, { loading: updateLoading }] = useMutation(UPDATE_ONE_GOOD, {
         onCompleted: () => {
@@ -91,6 +103,7 @@ const EditGood = () => {
         name,
         description,
         type,
+        categories
     }) => {
         if (!user.organization) {
             message.warning("Сначала нужно добавить организацию")
@@ -105,7 +118,8 @@ const EditGood = () => {
             price: { set: parseInt(price) },
             name: { set: name },
             description: { set: description },
-            type: { set: type }
+            type: { set: type },
+            categories
         }
         updateGood({
             variables: {
@@ -193,6 +207,7 @@ const EditGood = () => {
                     <Select
                         placeholder="Выберите филиалы"
                         allowClear
+                        showSearch
                         mode='multiple'
                         optionFilterProp="children"
                         filterOption={(input, option) =>
@@ -204,6 +219,31 @@ const EditGood = () => {
                             branchs.map(item => (
                                 <Select.Option key={item.id}>
                                     {item.address}
+                                </Select.Option>
+                            ))
+                        }
+                    </Select>
+                </Form.Item>
+                <Form.Item
+                    name={"categories"}
+                    rules={[rules.required]}
+                    label="Категории товара"
+                >
+                    <Select
+                        placeholder="Выберите категории"
+                        allowClear
+                        showSearch
+                        mode='tags'
+                        optionFilterProp="children"
+                        filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                        loading={branchsLoadnig}
+                    >
+                        {
+                            categories.map(item => (
+                                <Select.Option key={item}>
+                                    {item}
                                 </Select.Option>
                             ))
                         }

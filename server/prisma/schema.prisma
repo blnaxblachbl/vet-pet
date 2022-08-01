@@ -105,6 +105,7 @@ model Good {
     branchs        Branch[]
     type           String // тип товара: service, product, enimal
     carts          Cart[]
+    categories     String[]
 }
 
 // Акция 

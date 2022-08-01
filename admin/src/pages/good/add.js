@@ -8,7 +8,7 @@ import {
     Top,
     UploadFile
 } from '../../components'
-import { CREATE_ONE_GOOD, FIND_MANY_BRANCH } from '../../gqls'
+import { CREATE_ONE_GOOD, FIND_MANY_BRANCH, FIND_UNIQUE_GOOD_CATEGORIES } from '../../gqls'
 import { useUser } from '../../utils/hooks'
 import { GOOD_TYPES } from '../../utils/const'
 
@@ -38,7 +38,15 @@ const AddGood = () => {
         fetchPolicy: 'network-only'
     })
 
+    const { data: categoriesData, loading: categoriesLoading } = useQuery(FIND_UNIQUE_GOOD_CATEGORIES, {
+        variables: {
+            where: { id: user.organizationId ? user.organizationId : "" }
+        },
+        fetchPolicy: 'network-only'
+    })
+
     const branchs = useMemo(() => data ? data.findManyBranch : [], [data])
+    const categories = useMemo(() => categoriesData ? categoriesData.findUniqueGoodCategories : [], [categoriesData])
 
     const [createGood, { loading }] = useMutation(CREATE_ONE_GOOD, {
         onCompleted: () => {
@@ -138,6 +146,7 @@ const AddGood = () => {
                     <Select
                         placeholder="Выберите филиалы"
                         allowClear
+                        showSearch
                         mode='multiple'
                         optionFilterProp="children"
                         filterOption={(input, option) =>
@@ -149,6 +158,31 @@ const AddGood = () => {
                             branchs.map(item => (
                                 <Select.Option key={item.id}>
                                     {item.address}
+                                </Select.Option>
+                            ))
+                        }
+                    </Select>
+                </Form.Item>
+                <Form.Item
+                    name={"categories"}
+                    rules={[rules.required]}
+                    label="Категории товара"
+                >
+                    <Select
+                        placeholder="Выберите категории"
+                        allowClear
+                        showSearch
+                        mode='tags'
+                        optionFilterProp="children"
+                        filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                        loading={categoriesLoading}
+                    >
+                        {
+                            categories.map(item => (
+                                <Select.Option key={item}>
+                                    {item}
                                 </Select.Option>
                             ))
                         }

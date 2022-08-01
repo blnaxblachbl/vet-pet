@@ -13,6 +13,7 @@ const { typeDefs } = require('./graphql/typeDefs')
 const { resolvers } = require('./graphql/resolvers')
 const { permissions } = require('./utils/permissions')
 const { ApolloServerPluginLandingPageGraphQLPlayground, ApolloServerPluginLandingPageDisabled } = require('apollo-server-core')
+const cookieParser = require('cookie-parser')
 
 dotenv.config()
 
@@ -39,6 +40,8 @@ const startServer = async () => {
         schema: applyMiddleware(schema, selects, permissions),
         context: async (ctx) => {
             const { authorization } = ctx.req.headers
+            // const { city } = ctx.req.cookies
+            // console.log(ctx.req.cookies) //куки
             const token = authorization ? authorization.replace('Bearer ', '') : ''
             const verify = await jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
                 if (err) {
@@ -60,6 +63,7 @@ const startServer = async () => {
 
     await server.start()
     const app = express()
+    app.use(cookieParser())
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json({ limit: '500mb' }))
     app.use(graphqlUploadExpress())
