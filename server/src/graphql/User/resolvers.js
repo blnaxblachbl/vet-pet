@@ -30,6 +30,13 @@ const sendCodeToPhone = async (phone) => {
 
 const User = {
     Query: {
+        findMeUser: async (_parent, args, { prisma, verify, fingerprint }) => {
+            if (!verify) return null
+            args.where = {
+                id: verify.id
+            }
+            return prisma.user.findUnique(args)
+        },
         findUniqueUser: (_parent, args, { prisma }) => {
             return prisma.user.findUnique(args)
         },

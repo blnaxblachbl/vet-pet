@@ -46,6 +46,7 @@ const User = gql`
   }
 
   type Query {
+    findMeUser: User
     findUniqueUser(where: UserWhereUniqueInput!): User
     findFirstUser(
       where: UserWhereInput
