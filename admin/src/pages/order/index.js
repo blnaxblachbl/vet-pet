@@ -11,7 +11,6 @@ import {
 } from 'antd'
 import { useMutation, useQuery } from "@apollo/client"
 import moment from "moment"
-import { Link } from "react-router-dom"
 
 import { Top } from "../../components"
 import {
@@ -134,15 +133,6 @@ const Orders = () => {
         <>
             <Top
                 title={`Заказы (${ordersCount})`}
-                action={
-                    !isAdminOrModer && (
-                        <Link to='add'>
-                            <Button>
-                                + Добавить
-                            </Button>
-                        </Link>
-                    )
-                }
             />
             <Filters
                 layout='inline'
