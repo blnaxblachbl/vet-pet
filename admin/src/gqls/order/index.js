@@ -20,30 +20,15 @@ export const FIND_UNIQUE_ORDER = gql`
 				updatedAt
 				name
 				phone
-				code
 				email
-				block
-				delete
 				avatar
 			}
 			userId
 			anotherUser
 			organization{
 				id
-				createdAt
-				updatedAt
-				publish
-				delete
 				name
 				logo
-				description
-				city
-				address
-				phone
-				email
-				links
-				images
-				categories
 			}
 			organizationId
 		}
@@ -79,30 +64,15 @@ export const FIND_FIRST_ORDER = gql`
 				updatedAt
 				name
 				phone
-				code
 				email
-				block
-				delete
 				avatar
 			}
 			userId
 			anotherUser
 			organization{
 				id
-				createdAt
-				updatedAt
-				publish
-				delete
 				name
 				logo
-				description
-				city
-				address
-				phone
-				email
-				links
-				images
-				categories
 			}
 			organizationId
 		}
@@ -138,30 +108,15 @@ export const FIND_MANY_ORDER = gql`
 				updatedAt
 				name
 				phone
-				code
 				email
-				block
-				delete
 				avatar
 			}
 			userId
 			anotherUser
 			organization{
 				id
-				createdAt
-				updatedAt
-				publish
-				delete
 				name
 				logo
-				description
-				city
-				address
-				phone
-				email
-				links
-				images
-				categories
 			}
 			organizationId
 		}
@@ -187,30 +142,15 @@ export const CREATE_ONE_ORDER = gql`
 				updatedAt
 				name
 				phone
-				code
 				email
-				block
-				delete
 				avatar
 			}
 			userId
 			anotherUser
 			organization{
 				id
-				createdAt
-				updatedAt
-				publish
-				delete
 				name
 				logo
-				description
-				city
-				address
-				phone
-				email
-				links
-				images
-				categories
 			}
 			organizationId
 		}
@@ -238,30 +178,15 @@ export const UPDATE_ONE_ORDER = gql`
 				updatedAt
 				name
 				phone
-				code
 				email
-				block
-				delete
 				avatar
 			}
 			userId
 			anotherUser
 			organization{
 				id
-				createdAt
-				updatedAt
-				publish
-				delete
 				name
 				logo
-				description
-				city
-				address
-				phone
-				email
-				links
-				images
-				categories
 			}
 			organizationId
 		}
@@ -287,30 +212,15 @@ export const DELETE_ONE_ORDER = gql`
 				updatedAt
 				name
 				phone
-				code
 				email
-				block
-				delete
 				avatar
 			}
 			userId
 			anotherUser
 			organization{
 				id
-				createdAt
-				updatedAt
-				publish
-				delete
 				name
 				logo
-				description
-				city
-				address
-				phone
-				email
-				links
-				images
-				categories
 			}
 			organizationId
 		}
@@ -340,30 +250,15 @@ export const UPSERT_ONE_ORDER = gql`
 				updatedAt
 				name
 				phone
-				code
 				email
-				block
-				delete
 				avatar
 			}
 			userId
 			anotherUser
 			organization{
 				id
-				createdAt
-				updatedAt
-				publish
-				delete
 				name
 				logo
-				description
-				city
-				address
-				phone
-				email
-				links
-				images
-				categories
 			}
 			organizationId
 		}

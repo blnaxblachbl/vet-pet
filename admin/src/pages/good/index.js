@@ -165,20 +165,44 @@ const Goods = () => {
                     />
                 </Filters.Item>
                 {
-                    isAdminOrModer && (
+                    isAdminOrModer ? (
                         <Filters.Item name={'organization'}>
                             <Select
                                 placeholder="Организация"
                                 // onChange={data => setDeleted(data)}
                                 className='item'
                                 allowClear
-                                onClear={() => navigate("/good", { ...query, publish: undefined })}
+                                onClear={() => navigate("/good", { ...query, organization: undefined })}
                                 loading={orgLoading}
                             >
                                 {
                                     organizations.map(item => (
-                                        <Select.Option value={item.id}>
+                                        <Select.Option key={item.id} value={item.id}>
                                             {item.name}
+                                        </Select.Option>
+                                    ))
+                                }
+                            </Select>
+                        </Filters.Item>
+                    ) : (
+                        <Filters.Item name={'branch'}>
+                            <Select
+                                placeholder="Филиал"
+                                // onChange={data => setDeleted(data)}
+                                className='item'
+                                allowClear
+                                showSearch
+                                onClear={() => navigate("/good", { ...query, branch: undefined })}
+                                loading={branchsLoadnig}
+                                optionFilterProp="children"
+                                filterOption={(input, option) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }
+                            >
+                                {
+                                    branchs.map(item => (
+                                        <Select.Option key={item.id} value={item.id}>
+                                            {item.address}
                                         </Select.Option>
                                     ))
                                 }
@@ -186,29 +210,6 @@ const Goods = () => {
                         </Filters.Item>
                     )
                 }
-                <Filters.Item name={'branch'}>
-                    <Select
-                        placeholder="Филиал"
-                        // onChange={data => setDeleted(data)}
-                        className='item'
-                        allowClear
-                        showSearch
-                        onClear={() => navigate("/good", { ...query, branch: undefined })}
-                        loading={branchsLoadnig}
-                        optionFilterProp="children"
-                        filterOption={(input, option) =>
-                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        }
-                    >
-                        {
-                            branchs.map(item => (
-                                <Select.Option value={item.id}>
-                                    {item.address}
-                                </Select.Option>
-                            ))
-                        }
-                    </Select>
-                </Filters.Item>
                 <Filters.Item name={'publish'}>
                     <Select
                         placeholder="Статус"

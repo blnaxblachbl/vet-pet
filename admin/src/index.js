@@ -33,6 +33,8 @@ import GoodsPage from './pages/good'
 import AddGoodsPage from './pages/good/add'
 import EditGoodsPage from './pages/good/edit'
 
+import OrdersPage from './pages/order'
+
 moment.locale('ru')
 
 const App = () => {
@@ -172,6 +174,15 @@ const App = () => {
                                 element={
                                     <Layout roles={['all']}>
                                         <EditGoodsPage />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path='/order'
+                                exact
+                                element={
+                                    <Layout roles={['all']}>
+                                        <OrdersPage />
                                     </Layout>
                                 }
                             />

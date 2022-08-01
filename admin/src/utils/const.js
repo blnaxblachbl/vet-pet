@@ -50,6 +50,12 @@ export const WEEK_DAYS = [
     },
 ]
 export const GOOD_TYPES = {
-    service: 'Услуга', 
+    service: 'Услуга',
     product: "Товар"
+}
+export const ORDER_STATUS = {
+    new: 'Новый',
+    confirmed: "Подтвержден",
+    done: "Выполнен",
+    canceled: "Отменен"
 }

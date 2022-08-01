@@ -43,6 +43,11 @@ export const Menu = () => {
                     Товар и услуги
                 </MenuLink>
             </AntMenu.Item>
+            <AntMenu.Item key={`/order`}>
+                <MenuLink to={`/order?status=new`}>
+                    Заказы
+                </MenuLink>
+            </AntMenu.Item>
         </AntMenu>
     )
 }
