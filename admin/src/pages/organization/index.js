@@ -1,21 +1,19 @@
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import styled from "styled-components"
 import {
     Button,
     Table,
-    Switch,
-    Popconfirm,
     Form as AntForm,
     Select,
     Input
 } from 'antd'
-import { useMutation, useQuery } from "@apollo/client"
+import { useQuery } from "@apollo/client"
 import moment from "moment"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import { Top, PublishStatus } from "../../components"
 import { FIND_MANY_ORGANIZATION, FIND_MANY_ORGANIZATION_COUNT } from "../../gqls"
-import { getPermission, useRouteQuery, useUser, useNavigateSearch, parseBoolean } from "../../utils/hooks"
+import { useRouteQuery, useNavigateSearch, parseBoolean } from "../../utils/hooks"
 import { ORG_CATEGORIES } from "../../utils/const"
 
 const Filters = styled(AntForm)`
@@ -29,7 +27,6 @@ const Filters = styled(AntForm)`
 const limit = 20
 
 const Organizations = () => {
-    const { user } = useUser()
     const query = useRouteQuery()
     const navigate = useNavigateSearch()
     const { page = 1, search = "", publish = undefined, category = null } = query
@@ -46,7 +43,7 @@ const Organizations = () => {
                 { phone: { contains: search, mode: 'insensitive' } },
             ] : undefined,
         }
-    }), [publish, user, category])
+    }), [publish, category, search])
 
     const { data, loading } = useQuery(FIND_MANY_ORGANIZATION, {
         variables: {

@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import styled from 'styled-components'
 import { Form as AntForm, Input, Button, message, Select } from 'antd'
 import { useMutation } from '@apollo/client'
@@ -7,7 +6,7 @@ import {
     Top
 } from '../../components'
 import { CREATE_ONE_ADMIN } from '../../gqls'
-import { ADMIN_TYPES, ADMIN_TYPES_TO_SHARE } from '../../utils/const'
+import { ADMIN_TYPES } from '../../utils/const'
 import { getPermission, useUser } from '../../utils/hooks'
 
 const Form = styled(AntForm)`

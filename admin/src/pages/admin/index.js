@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import styled from "styled-components"
 import {
     Button,
@@ -54,7 +54,7 @@ const AdminList = () => {
             }
         }
         return variables
-    }, [user, deleted, block, search, role, isOwner])
+    }, [user, deleted, block, search, role, isOwner, organizationId])
 
     const [updateAdmin, { loading: updateLoading }] = useMutation(UPDATE_ONE_ADMIN, {
         onCompleted: () => {

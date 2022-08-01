@@ -6,12 +6,10 @@ import {
     message,
 } from 'antd'
 import { useMutation } from "@apollo/client"
-import { useNavigate } from "react-router-dom"
 
-import { Empty, Top, OrgInfo } from '../components'
+import { Top, OrgInfo } from '../components'
 import { CHANGE_PASSWORD_ADMIN } from '../gqls'
 import { getPermission, useUser } from "../utils/hooks"
-import { ADMIN_TYPES } from "../utils/const"
 
 const Button = styled(AntButton)`
 
@@ -39,7 +37,6 @@ const requiredRule = {
 
 const Home = () => {
     const [form] = Form.useForm()
-    const navigate = useNavigate()
     const { user } = useUser()
     const isOwner = getPermission(user.type, ['org-owner'])
     const isOrgAdmin = getPermission(user.type, ['org-admin'])

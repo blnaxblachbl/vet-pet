@@ -1,8 +1,8 @@
 import { useMemo } from "react"
 import styled from "styled-components"
 import { useQuery } from "@apollo/client"
-import { Link, useNavigate, useParams } from "react-router-dom"
-import { Button, Descriptions as Desc, message, Popconfirm, Spin, Image } from "antd"
+import { Link, useNavigate } from "react-router-dom"
+import { Button, Spin, Image } from "antd"
 
 import { FIND_UNIQUE_ORGANIZATION } from "../gqls"
 import { Empty } from "."

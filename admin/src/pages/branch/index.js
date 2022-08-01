@@ -1,9 +1,8 @@
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import styled from "styled-components"
 import {
     Button,
     Table,
-    Switch,
     Popconfirm,
     Form as AntForm,
     Select,
@@ -13,12 +12,11 @@ import {
 } from 'antd'
 import { useMutation, useQuery } from "@apollo/client"
 import moment from "moment"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import { Top, PublishStatus } from "../../components"
 import { FIND_MANY_BRANCH, FIND_MANY_BRANCH_COUNT, FIND_MANY_ORGANIZATION, UPDATE_ONE_BRANCH } from "../../gqls"
 import { useRouteQuery, useUser, useNavigateSearch, parseBoolean, getPermission } from "../../utils/hooks"
-import { ORG_CATEGORIES } from "../../utils/const"
 
 const Filters = styled(AntForm)`
     margin-bottom: 20px;
@@ -75,7 +73,7 @@ const Branchs = () => {
                 ] : undefined,
             }
         }
-    }, [publish, user, deleted, organization, isAdminOrModer])
+    }, [publish, user, deleted, organization, isAdminOrModer, search])
 
     const { data: orgData, loading: orgLoading } = useQuery(FIND_MANY_ORGANIZATION, {
         variables: {

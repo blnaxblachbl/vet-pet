@@ -8,7 +8,7 @@ const Container = styled.div`
 `
 export const Header = ({ isMobile }) => {
     const { user } = useUser()
-    
+
     return (
         <Container>
         </Container>

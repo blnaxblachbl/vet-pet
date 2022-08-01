@@ -1,9 +1,8 @@
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import styled from "styled-components"
 import {
     Button,
     Table,
-    Switch,
     Popconfirm,
     Form as AntForm,
     Select,
@@ -86,7 +85,7 @@ const Goods = () => {
                 branchs: branch ? { some: { id: { equals: branch } } } : undefined
             }
         }
-    }, [publish, user, deleted, organization, isAdminOrModer, branch])
+    }, [publish, user, deleted, organization, isAdminOrModer, branch, search])
 
     const { data: orgData, loading: orgLoading } = useQuery(FIND_MANY_ORGANIZATION, {
         variables: {

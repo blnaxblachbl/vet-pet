@@ -5,13 +5,14 @@ import { useMutation, useQuery } from '@apollo/client'
 import { useParams, useNavigate } from 'react-router-dom'
 
 import {
+    Empty,
+    LoadingView,
     Top,
     UploadFile,
     // OrgAdmins
 } from '../../components'
 import { FIND_UNIQUE_ORGANIZATION, UPDATE_ONE_ORGANIZATION } from '../../gqls'
 import { ORG_CATEGORIES } from '../../utils/const'
-import { getPermission, useUser } from '../../utils/hooks'
 
 const Form = styled(AntForm)`
     max-width: 600px;
@@ -25,13 +26,12 @@ const rules = {
 }
 
 const EditOrg = () => {
-    const { user } = useUser()
     const [form] = Form.useForm()
     const refs = useRef(new Map()).current
     const { id } = useParams()
     const navigate = useNavigate()
 
-    const { loading } = useQuery(FIND_UNIQUE_ORGANIZATION, {
+    const { data, loading } = useQuery(FIND_UNIQUE_ORGANIZATION, {
         variables: {
             where: { id }
         },
@@ -100,6 +100,18 @@ const EditOrg = () => {
                 data
             }
         })
+    }
+
+    const organization = useMemo(() => data ? data.findUniqueOrganization : null, [data])
+
+    if (!loading && !organization) {
+        return (
+            <Empty 
+                description='Организация не найдена'
+                buttonText='к организациям'
+                onButtonClick={() => navigate("/organization")}
+            />
+        )
     }
 
     return (
@@ -188,10 +200,11 @@ const EditOrg = () => {
                         allowClear
                     />
                 </Form.Item>
-                <Button loading={loading} type="primary" htmlType="submit">
+                <Button loading={updateLoading} type="primary" htmlType="submit">
                     Сохранить
                 </Button>
             </Form>
+            <LoadingView loading={loading} />
         </>
     )
 }

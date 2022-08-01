@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import styled from "styled-components"
-import { Button, Descriptions as Desc, message, Popconfirm, Spin, Image } from "antd"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { Button, Descriptions as Desc, message, Popconfirm, Image } from "antd"
+import { Link, useParams } from "react-router-dom"
 import { useMutation, useQuery } from "@apollo/client"
 
 import {
@@ -49,7 +49,6 @@ const Controls = styled.div`
 
 const SingleOrganization = () => {
     const { id } = useParams()
-    const navigate = useNavigate()
 
     const { data, loading } = useQuery(FIND_UNIQUE_ORGANIZATION, {
         variables: {
@@ -143,7 +142,7 @@ const SingleOrganization = () => {
                             </Descriptions.Item>
                             <Descriptions.Item label='Ссылки'>
                                 {organization.length > 0 ? organization.links.map(link => (
-                                    <a href={link} target='_blank'>{link}</a>
+                                    <a href={link} rel="noreferrer" target='_blank'>{link}</a>
                                 )) : '-'}
                             </Descriptions.Item>
                             <Descriptions.Item label='Количество администраторов'>

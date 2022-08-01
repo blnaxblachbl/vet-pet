@@ -1,4 +1,3 @@
-// import { useMemo } from 'react'
 import styled from 'styled-components'
 import { Form as AntForm, Input, Button, message, Select } from 'antd'
 import { useMutation, useQuery } from '@apollo/client'
@@ -8,7 +7,7 @@ import {
     Top
 } from '../../components'
 import { UPDATE_ONE_ADMIN, FIND_UNIQUE_ADMIN } from '../../gqls'
-import { ADMIN_TYPES, ADMIN_TYPES_TO_SHARE } from '../../utils/const'
+import { ADMIN_TYPES } from '../../utils/const'
 import { useUser, getPermission } from '../../utils/hooks'
 
 const Form = styled(AntForm)`
@@ -26,7 +25,7 @@ const EditAdmin = () => {
     const [form] = Form.useForm()
     const { id } = useParams()
     const navigate = useNavigate()
-    const isOwner = getPermission(user.type, ['org-owner', 'org-admin'])
+    // const isOwner = getPermission(user.type, ['org-owner', 'org-admin'])
     const isAdmin = getPermission(user.type, ['admin'])
 
     useQuery(FIND_UNIQUE_ADMIN, {

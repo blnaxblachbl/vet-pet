@@ -1,10 +1,8 @@
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import styled from "styled-components"
 import {
     Button,
     Table,
-    Switch,
-    Popconfirm,
     Form as AntForm,
     Select,
     Input,
@@ -23,8 +21,8 @@ import {
     UPDATE_ONE_ORDER,
     FIND_MANY_BRANCH
 } from "../../gqls"
-import { useRouteQuery, useUser, useNavigateSearch, parseBoolean, getPermission } from "../../utils/hooks"
-import { GOOD_TYPES, ORDER_STATUS } from "../../utils/const"
+import { useRouteQuery, useUser, useNavigateSearch, getPermission } from "../../utils/hooks"
+import { ORDER_STATUS } from "../../utils/const"
 
 const Filters = styled(AntForm)`
     margin-bottom: 20px;

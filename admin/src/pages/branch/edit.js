@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react'
 import styled from 'styled-components'
-import { Form as AntForm, Input, Button, message, DatePicker, TimePicker, Checkbox } from 'antd'
+import { Form as AntForm, Input, Button, message, TimePicker, Checkbox } from 'antd'
 import { useMutation, useQuery } from '@apollo/client'
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -11,9 +11,8 @@ import {
     UploadFile
 } from '../../components'
 import { UPDATE_ONE_BRANCH, FIND_UNIQUE_BRANCH } from '../../gqls'
-import { useUser, durationFromTime, timeFromDuration } from '../../utils/hooks'
+import { durationFromTime, timeFromDuration } from '../../utils/hooks'
 import { WEEK_DAYS } from '../../utils/const'
-import moment from 'moment'
 
 const Form = styled(AntForm)`
     max-width: 600px;
@@ -27,7 +26,6 @@ const rules = {
 
 const EditBranch = () => {
     const { id } = useParams()
-    const { user } = useUser()
     const [form] = Form.useForm()
     const refs = useRef(new Map()).current
     const navigate = useNavigate()

@@ -1,6 +1,6 @@
-import { useMemo, useRef } from 'react'
+import { useRef } from 'react'
 import styled from 'styled-components'
-import { Form as AntForm, Input, Button, message, DatePicker, TimePicker, Checkbox } from 'antd'
+import { Form as AntForm, Input, Button, message, TimePicker, Checkbox } from 'antd'
 import { useMutation } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
 
@@ -44,13 +44,11 @@ const AddBranch = () => {
         const images = refs.get("images").getFileList()
         const scheduleKeys = Object.keys(schedule)
         const _schedule = scheduleKeys.map(key => ({
-            // data: {
             day: key,
             startTime: schedule[key].range ? durationFromTime(schedule[key].range[0]) : 0,
             endTime: schedule[key].range ? durationFromTime(schedule[key].range[1]) : 0,
             dayOff: schedule[key].dayOff,
             allTime: schedule[key].allTime
-            // }
         }))
         const data = {
             ...value,

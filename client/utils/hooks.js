@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useMemo } from "react"
 import { useQuery } from "@apollo/client"
 import { DateTime, Duration } from "luxon"
 
@@ -17,7 +17,7 @@ export const useUser = (params = {}) => {
         fetchPolicy
     })
 
-    const user = data ? data.findMeUser : null // use some query to get user
+    const user = data ? data.findMeUser : null
 
     return {
         loading,

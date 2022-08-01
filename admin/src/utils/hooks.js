@@ -41,7 +41,7 @@ export const useNavigateSearch = () => {
     const navigate = useNavigate()
     return (pathname, params) => {
         Object.keys(params).forEach(key => {
-            if (params[key] === null || params[key] === undefined || params[key] === '' || params[key] === NaN) {
+            if (params[key] === null || params[key] === undefined || params[key] === '' || isNaN(params[key])) {
                 delete params[key]
             }
         })
