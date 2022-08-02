@@ -26,7 +26,7 @@ export const initApollo = (token = '', forceNew = false, nextHeaders = null) => 
 
         const uploadLink = createUploadLink({
             uri: URL,
-            credentials: 'same-origin'
+            credentials: 'include'
         })
 
         const authLink = setContext((_, { headers }) => {
@@ -41,7 +41,7 @@ export const initApollo = (token = '', forceNew = false, nextHeaders = null) => 
                 headers: {
                     ...headers,
                     ...nextHeaders,
-                    authorization: 'Bearer ' + _token,
+                    authorization: 'Bearer ' + _token
                 }
             }
         })
@@ -63,7 +63,8 @@ export const initApollo = (token = '', forceNew = false, nextHeaders = null) => 
                         }
                         case "invalid token": {
                             // toast.error("Не удалось отправить код")
-                            localStorage.removeItem("token")
+                            // localStorage.removeItem("token")
+                            document.cookie = cookie.serialize('token', '', { maxAge: 0 })
                             break
                         }
                         case "user deleted": {

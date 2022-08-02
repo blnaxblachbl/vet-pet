@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+import { authRef } from './Auth'
 import { useUser } from '../utils/hooks'
 
 const Container = styled.div`
@@ -11,6 +12,7 @@ export const Header = ({ isMobile }) => {
 
     return (
         <Container>
+            <div onClick={() => authRef.current.openAuth()}>Войти</div>
         </Container>
     )
 }
