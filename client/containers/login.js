@@ -42,7 +42,8 @@ const LoginForm = ({
             toast.success("Сообщение отправлено")
             onComplate({ phone })
         },
-        onError: e => { }
+        onError: e => {  }
+        // errorPolicy: 'ignore'
     })
 
     const submit = (e) => {

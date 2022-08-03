@@ -11,7 +11,7 @@ import { toast } from "react-toastify"
 
 const domain = 'http://192.168.31.22:4000'
 
-export const host = process.env.NODE_ENV === 'production' ? domain : 'http://192.168.31.22:4000'
+export const host = process.env.NODE_ENV === 'production' ? domain : 'http://localhost:4000'
 // export const host = domain
 
 export let client
@@ -29,7 +29,7 @@ export const initApollo = (token = '', forceNew = false, nextHeaders = null) => 
             credentials: 'include'
         })
 
-        const authLink = setContext((_, { headers }) => {
+        const authLink = setContext(() => {
             let _token = ''
             if (!isServer) {
                 const { token } = cookie.parse(document.cookie)
@@ -39,7 +39,6 @@ export const initApollo = (token = '', forceNew = false, nextHeaders = null) => 
             }
             return {
                 headers: {
-                    ...headers,
                     ...nextHeaders,
                     authorization: 'Bearer ' + _token
                 }
@@ -49,9 +48,7 @@ export const initApollo = (token = '', forceNew = false, nextHeaders = null) => 
         const errorLink = onError(({ graphQLErrors, networkError, forward, operation }) => {
             if (graphQLErrors) {
                 graphQLErrors.map(async ({ message, locations, path }) => {
-                    console.error(
-                        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-                    )
+                    console.error(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
                     switch (message) {
                         case "phone not provided": {
                             toast.error("Номер не отправлен")
@@ -64,7 +61,18 @@ export const initApollo = (token = '', forceNew = false, nextHeaders = null) => 
                         case "invalid token": {
                             // toast.error("Не удалось отправить код")
                             // localStorage.removeItem("token")
+                            // console.log(operation)
                             document.cookie = cookie.serialize('token', '', { maxAge: 0 })
+                            // operation.setContext(({ headers }) => {
+                            //     return {
+                            //         headers: {
+                            //             ...headers,
+                            //             authorization: ""
+                            //         }
+                            //     }
+                            // })
+                            // console.log("forward")
+                            // return forward(operation)
                             break
                         }
                         case "user deleted": {
@@ -113,8 +121,13 @@ export const initApollo = (token = '', forceNew = false, nextHeaders = null) => 
                         }
                     }
                 })
+                // return graphQLErrors
             }
-            if (networkError) console.error(`[Network error]: ${networkError}`)
+            if (networkError) {
+                console.error(`[Network error]: ${networkError}`)
+                // return networkError
+            }
+            // return {}
         })
 
         const link = ApolloLink.from([errorLink, authLink, uploadLink])

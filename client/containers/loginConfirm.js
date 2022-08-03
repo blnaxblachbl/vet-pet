@@ -104,15 +104,12 @@ const LoginConfirmForm = ({
         onCompleted: ({ sendUserCode: { user, token } }) => {
             toast.success("Авторизация прошла успешно")
             onComplate(user)
-            // onSuccess(true)
         },
         update: async (client, { data: { sendUserCode } }) => {
             if (sendUserCode) {
                 const { user, token } = sendUserCode
                 document.cookie = cookie.serialize('token', token, {
-                    maxAge: 60 * 60 * 24 * 30,
-                    // httpOnly: process.env.NODE_ENV === 'production' ? false : true,
-                    // path: '/'
+                    maxAge: 60 * 60 * 24 * 30
                 })
                 await client.writeQuery({
                     query: FIND_ME_USER,

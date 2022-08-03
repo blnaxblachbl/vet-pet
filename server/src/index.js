@@ -41,7 +41,7 @@ const startServer = async () => {
         context: async (ctx) => {
             const { authorization } = ctx.req.headers
             // const { city } = ctx.req.cookies
-            console.log(ctx.req.cookies) //куки
+            // console.log(ctx.req.cookies) //куки
             const token = authorization ? authorization.replace('Bearer ', '') : ''
             const verify = await jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
                 if (err) {
