@@ -11,7 +11,7 @@ const Container = styled.div`
     height: 50px;
     background: ${COLORS.secondary.lightGray};
     border-radius: 12px;
-    padding: 0 15px;
+    padding: 0 12px;
     box-sizing: border-box;
 
     &:focus-within {

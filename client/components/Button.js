@@ -19,26 +19,25 @@ const Container = styled.button`
     cursor: pointer;
     box-sizing: border-box;
 
+    :disabled {
+        background-color: ${COLORS.secondary.lightGray};
+        color: ${COLORS.secondary.gray};
+    }
+
     svg {
         path: {
             fill: ${COLORS.secondary.white};
         }
     }
-
-    /* :hover {
-        background-color: ${({ disabled }) => disabled ? 'gray' : '#FF6666e6'};
-    } */
 `
 
 export const Button = ({
     children = "Кнопка",
     loading = false,
-    onClick = () => { },
-    disabled = false,
     ouline = false,
     loadingColor = "#fff",
     className = null,
-    type="button",
+    type = "button",
     ...props
 }) => {
 
@@ -50,16 +49,12 @@ export const Button = ({
         if (ouline) {
             classes.push("button-ouline")
         }
-        if (disabled) {
-            classes.push("button-disabled")
-        }
         return classes.join(" ")
-    }, [className, disabled, ouline])
+    }, [className, ouline])
 
     return (
         <Container
             {...props}
-            onClick={!disabled ? onClick : undefined}
             className={_className}
             type={type}
         >

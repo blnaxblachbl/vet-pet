@@ -10,6 +10,7 @@ import {
     Button,
     Good
 } from '../components'
+import AdsContainer from '../containers/ad'
 import { HOME } from '../gqls'
 import { COLORS } from '../utils/const'
 
@@ -65,7 +66,7 @@ const Goods = styled(Organizations)`
             width: 35%;
         }
     }
-    @media only screen and (max-width: 800px) {
+    @media only screen and (max-width: 700px) {
         .good {
             width: 55%;
         }
@@ -87,7 +88,7 @@ const Home = () => {
         findManyAd,
         findManyOrganization,
         findManyGood
-    } = useMemo(() => data ? data : {}, [data])
+    } = useMemo(() => data ? data : { findManyAd: [], findManyOrganization: [], findManyGood: [] }, [data])
 
     if (loading) {
         return <LoadingView loading />
@@ -95,54 +96,73 @@ const Home = () => {
 
     return (
         <>
-            <Top
-                label='Клиники и магазины'
-                value={
-                    <Link href='/organization'>
-                        <AllButton>
-                            Все
-                        </AllButton>
-                    </Link>
-                }
-            />
-            <Organizations className='hide-scroll-indicator'>
-                {
-                    findManyOrganization.map(item => (
-                        <div key={item.id} className='organizatioin'>
-                            <Organization item={item} />
-                        </div>
-                    ))
-                }
-            </Organizations>
-            <Top
-                label='Товары и услуги'
-                value={
-                    <Link href='/good'>
-                        <AllButton>
-                            Все
-                        </AllButton>
-                    </Link>
-                }
-            />
-            <Goods className='hide-scroll-indicator'>
-                {
-                    findManyGood.map(item => (
-                        <div key={item.id} className='good'>
-                            <Good item={item} />
-                        </div>
-                    ))
-                }
-            </Goods>
-            <Top
-                label='Объявления'
-                value={
-                    <Link href='/ad'>
-                        <AllButton>
-                            Все
-                        </AllButton>
-                    </Link>
-                }
-            />
+            {
+                findManyOrganization.length > 0 && (
+                    <>
+                        <Top
+                            label='Клиники и магазины'
+                            value={
+                                <Link href='/organization'>
+                                    <AllButton>
+                                        Все
+                                    </AllButton>
+                                </Link>
+                            }
+                        />
+                        <Organizations className='hide-scroll-indicator'>
+                            {
+                                findManyOrganization.map(item => (
+                                    <div key={item.id} className='organizatioin'>
+                                        <Organization item={item} />
+                                    </div>
+                                ))
+                            }
+                        </Organizations>
+                    </>
+                )
+            }
+            {
+                findManyGood.length > 0 && (
+                    <>
+                        <Top
+                            label='Товары и услуги'
+                            value={
+                                <Link href='/good'>
+                                    <AllButton>
+                                        Все
+                                    </AllButton>
+                                </Link>
+                            }
+                        />
+                        <Goods className='hide-scroll-indicator'>
+                            {
+                                findManyGood.map(item => (
+                                    <div key={item.id} className='good'>
+                                        <Good item={item} />
+                                    </div>
+                                ))
+                            }
+                        </Goods>
+                    </>
+                )
+            }
+            {
+                findManyAd.length > 0 && (
+                    <>
+                        <Top
+                            label='Объявления'
+                            value={
+                                <Link href='/ad'>
+                                    <AllButton>
+                                        Все
+                                    </AllButton>
+                                </Link>
+                            }
+                        />
+                        <AdsContainer ads={findManyAd} />
+                    </>
+                )
+            }
         </>
     )
 }

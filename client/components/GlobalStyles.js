@@ -28,6 +28,12 @@ export const GlobalStyles = createGlobalStyle`
         font-family: 'Rubik', sans-serif;
     }
 
+    .button-ouline {
+        border: solid 1px ${COLORS.primary.purple};
+        background-color: transparent;
+        color: ${COLORS.primary.purple};
+    }
+
     a {
         text-decoration: none;
     }

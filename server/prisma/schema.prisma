@@ -36,6 +36,7 @@ model User {
     avatar    String?
     orders    Order[] // заказы пользователя
     pets      Pet[] // питомцы пользователя
+    ads       Ad[] // объявления пользователя
 }
 
 //Ветеринарная оргианизация
@@ -176,9 +177,13 @@ model Ad {
     updatedAt   DateTime @updatedAt
     publish     Boolean  @default(true) // статус публикации
     delete      Boolean  @default(false) // статус удаления
-    tite        String // заголовок объявления
+    title       String // заголовок объявления
     description String // описание объявления
-    pet         Pet      @relation(fields: [petId], references: [id]) // можно прикрепить своего питомца если его нужно отдать или продать
-    petId       String
+    pet         Pet?     @relation(fields: [petId], references: [id]) // можно прикрепить своего питомца если его нужно отдать или продать
+    petId       String?
     price       Int      @default(0) // цена за предоставляемого питомца 0 - бесплатно
+    images      String[] // изображения объявления
+    user        User     @relation(fields: [userId], references: [id])
+    userId      String
+    viewCount   Int      @default(0)
 }

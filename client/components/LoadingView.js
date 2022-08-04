@@ -6,10 +6,11 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 24px;
 `
 
 export const LoadingView = ({ loading = false, size, color, ...props }) => {
-    
+
     if (!loading) return null
 
     return (

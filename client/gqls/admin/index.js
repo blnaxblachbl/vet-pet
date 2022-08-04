@@ -13,6 +13,7 @@ export const FIND_ME_ADMIN = gql`
 			repassword
 			phone
 			block
+			images
 			delete
 			organization {
 				id
@@ -39,6 +40,7 @@ export const FIND_UNIQUE_ADMIN = gql`
 			repassword
 			phone
 			block
+			images
 			delete
 			organization {
 				id
@@ -75,6 +77,7 @@ export const FIND_FIRST_ADMIN = gql`
 			repassword
 			phone
 			block
+			images
 			delete
 			organization {
 				id
@@ -111,6 +114,7 @@ export const FIND_MANY_ADMIN = gql`
 			repassword
 			phone
 			block
+			images
 			delete
 			organization {
 				id
@@ -137,6 +141,7 @@ export const CREATE_ONE_ADMIN = gql`
 			repassword
 			phone
 			block
+			images
 			delete
 			organization {
 				id
@@ -165,6 +170,7 @@ export const UPDATE_ONE_ADMIN = gql`
 			repassword
 			phone
 			block
+			images
 			delete
 			organization {
 				id
@@ -191,6 +197,7 @@ export const DELETE_ONE_ADMIN = gql`
 			repassword
 			phone
 			block
+			images
 			delete
 			organization {
 				id
@@ -221,6 +228,7 @@ export const UPSERT_ONE_ADMIN = gql`
 			repassword
 			phone
 			block
+			images
 			delete
 			organization {
 				id
@@ -247,6 +255,7 @@ export const CHANGE_PASSWORD_ADMIN = gql`
 			repassword
 			phone
 			block
+			images
 			delete
 			organization {
 				id

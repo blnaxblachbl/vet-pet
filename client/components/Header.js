@@ -44,11 +44,11 @@ const Inner = styled(props => <Padding {...props} />)`
         }
         .name {
             text-align: center;
-            font-weight: 600;
             color: ${COLORS.primary.black};
         }
     }
     .logo-container {
+        cursor: pointer;
         svg {
             width: 127px;
             height: 32px;

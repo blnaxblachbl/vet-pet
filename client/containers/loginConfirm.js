@@ -29,7 +29,7 @@ const Form = styled.form`
         margin-top: 24px;
 
         .time {
-            color: ${COLORS.primary.yellow};
+            color: ${COLORS.primary.camel};
         }
     }
     .button {

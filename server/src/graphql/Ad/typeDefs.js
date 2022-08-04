@@ -7,11 +7,15 @@ const Ad = gql`
     updatedAt: DateTime!
     publish: Boolean!
     delete: Boolean!
-    tite: String!
+    title: String!
     description: String!
-    pet: Pet!
-    petId: String!
+    pet: Pet
+    petId: String
     price: Int!
+    images: [String!]!
+    user: User!
+    userId: String!
+    viewCount: Int!
   }
 
   type Query {

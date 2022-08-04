@@ -91,8 +91,10 @@ export const HOME = gql`
 			updatedAt
 			publish
 			delete
-			tite
+			title
 			description
+			viewCount
+			images
 			pet{
 				id
 				createdAt

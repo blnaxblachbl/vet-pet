@@ -42,6 +42,14 @@ const User = gql`
       skip: Int
       distinct: PetScalarFieldEnum
     ): [Pet!]!
+    ads(
+      where: AdWhereInput
+      orderBy: [AdOrderByWithRelationInput]
+      cursor: AdWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: [AdScalarFieldEnum]
+    ): [Ad!]!
     _count: UserCountOutputType!
   }
 

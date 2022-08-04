@@ -12,8 +12,10 @@ export const FIND_UNIQUE_AD = gql`
 			updatedAt
 			publish
 			delete
-			tite
+			title
 			description
+			viewCount
+			images
 			pet{
 				id
 				createdAt
@@ -44,6 +46,19 @@ export const FIND_UNIQUE_AD = gql`
 				}
 			}
 			petId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+			}
+			userId
 			price
 		}
 	}
@@ -70,8 +85,10 @@ export const FIND_FIRST_AD = gql`
 			updatedAt
 			publish
 			delete
-			tite
+			title
 			description
+			viewCount
+			images
 			pet{
 				id
 				createdAt
@@ -102,6 +119,19 @@ export const FIND_FIRST_AD = gql`
 				}
 			}
 			petId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+			}
+			userId
 			price
 		}
 	}
@@ -128,8 +158,10 @@ export const FIND_MANY_AD = gql`
 			updatedAt
 			publish
 			delete
-			tite
+			title
 			description
+			viewCount
+			images
 			pet{
 				id
 				createdAt
@@ -160,6 +192,19 @@ export const FIND_MANY_AD = gql`
 				}
 			}
 			petId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+			}
+			userId
 			price
 		}
 	}
@@ -176,8 +221,10 @@ export const CREATE_ONE_AD = gql`
 			updatedAt
 			publish
 			delete
-			tite
+			title
 			description
+			viewCount
+			images
 			pet{
 				id
 				createdAt
@@ -208,6 +255,19 @@ export const CREATE_ONE_AD = gql`
 				}
 			}
 			petId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+			}
+			userId
 			price
 		}
 	}
@@ -226,8 +286,10 @@ export const UPDATE_ONE_AD = gql`
 			updatedAt
 			publish
 			delete
-			tite
+			title
 			description
+			viewCount
+			images
 			pet{
 				id
 				createdAt
@@ -258,6 +320,19 @@ export const UPDATE_ONE_AD = gql`
 				}
 			}
 			petId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+			}
+			userId
 			price
 		}
 	}
@@ -274,8 +349,10 @@ export const DELETE_ONE_AD = gql`
 			updatedAt
 			publish
 			delete
-			tite
+			title
 			description
+			viewCount
+			images
 			pet{
 				id
 				createdAt
@@ -306,6 +383,19 @@ export const DELETE_ONE_AD = gql`
 				}
 			}
 			petId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+			}
+			userId
 			price
 		}
 	}
@@ -326,8 +416,10 @@ export const UPSERT_ONE_AD = gql`
 			updatedAt
 			publish
 			delete
-			tite
+			title
 			description
+			viewCount
+			images
 			pet{
 				id
 				createdAt
@@ -358,6 +450,19 @@ export const UPSERT_ONE_AD = gql`
 				}
 			}
 			petId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+			}
+			userId
 			price
 		}
 	}
