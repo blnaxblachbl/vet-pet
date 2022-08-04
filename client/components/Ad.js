@@ -43,17 +43,17 @@ const Container = styled.div`
 
 export const Ad = ({ item }) => {
     if (!item) return null
-    
+
     return (
-        <Container>
-            <Link href={`/ad/${item.id}`}>
+        <Link href={`/ad/${item.id}`}>
+            <Container>
                 <Image src={item.images[0]} className='image' />
-            </Link>
-            <div className="info">
-                <div className="price">{item.price ? item.price : 'Бесплатно'}</div>
-                <div className="title number-of-lines-2">{item.title}</div>
-                <div className="date">Добавлено {useRealetiveDate(DateTime.fromISO(item.createdAt))}</div>
-            </div>
-        </Container>
+                <div className="info">
+                    <div className="price">{item.price ? item.price : 'Бесплатно'}</div>
+                    <div className="title number-of-lines-2">{item.title}</div>
+                    <div className="date">Добавлено {useRealetiveDate(DateTime.fromISO(item.createdAt))}</div>
+                </div>
+            </Container>
+        </Link>
     )
 }
