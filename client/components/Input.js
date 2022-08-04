@@ -10,7 +10,7 @@ const Container = styled.div`
     border: 1px solid #f1f1f1;
     height: 50px;
     background: ${COLORS.secondary.lightGray};
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 0 15px;
     box-sizing: border-box;
 

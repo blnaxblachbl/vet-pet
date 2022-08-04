@@ -39,7 +39,7 @@ const Inner = styled(props => <Padding {...props} />)`
                 stroke: ${COLORS.primary.camel};
             }
             border: solid 2px ${COLORS.primary.camel};
-            border-radius: 30%;
+            border-radius: 12px;
             padding: 3px;
         }
         .name {

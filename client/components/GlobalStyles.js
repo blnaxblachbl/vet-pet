@@ -10,7 +10,8 @@ export const GlobalStyles = createGlobalStyle`
         margin: 0;
         padding: 0;
         font-family: 'Hind', sans-serif;
-        background-color: ${COLORS.secondary.lightGray};
+        font-weight: 400;
+        background-color: #fafafa;
 
         svg {
             width: 24px;

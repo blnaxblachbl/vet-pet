@@ -15,7 +15,7 @@ export const ORG_ADMIN_TYPES = {
     // "org-moder": "Модератор"
 }
 export const ORG_CATEGORIES = {
-    vat: 'Ветеринарная клиника',
+    vet: 'Ветеринарная клиника',
     shop: 'Магазин для животных',
     'pet-shop': 'Зоомагазин'
 }

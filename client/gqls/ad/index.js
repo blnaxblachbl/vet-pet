@@ -34,40 +34,8 @@ export const FIND_UNIQUE_AD = gql`
 					block
 					delete
 					avatar
-					orders
-					_count
 				}
 				userId
-				parents{
-					id
-					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					owner
-					userId
-					images
-					ads
-					_count
-				}
-				childrens{
-					id
-					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					owner
-					userId
-					images
-					ads
-					_count
-				}
 				images
 				_count{
 					parents
@@ -124,40 +92,8 @@ export const FIND_FIRST_AD = gql`
 					block
 					delete
 					avatar
-					orders
-					_count
 				}
 				userId
-				parents{
-					id
-					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					owner
-					userId
-					images
-					ads
-					_count
-				}
-				childrens{
-					id
-					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					owner
-					userId
-					images
-					ads
-					_count
-				}
 				images
 				_count{
 					parents
@@ -214,40 +150,8 @@ export const FIND_MANY_AD = gql`
 					block
 					delete
 					avatar
-					orders
-					_count
 				}
 				userId
-				parents{
-					id
-					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					owner
-					userId
-					images
-					ads
-					_count
-				}
-				childrens{
-					id
-					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					owner
-					userId
-					images
-					ads
-					_count
-				}
 				images
 				_count{
 					parents
@@ -294,40 +198,8 @@ export const CREATE_ONE_AD = gql`
 					block
 					delete
 					avatar
-					orders
-					_count
 				}
 				userId
-				parents{
-					id
-					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					owner
-					userId
-					images
-					ads
-					_count
-				}
-				childrens{
-					id
-					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					owner
-					userId
-					images
-					ads
-					_count
-				}
 				images
 				_count{
 					parents
@@ -376,40 +248,8 @@ export const UPDATE_ONE_AD = gql`
 					block
 					delete
 					avatar
-					orders
-					_count
 				}
 				userId
-				parents{
-					id
-					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					owner
-					userId
-					images
-					ads
-					_count
-				}
-				childrens{
-					id
-					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					owner
-					userId
-					images
-					ads
-					_count
-				}
 				images
 				_count{
 					parents
@@ -456,40 +296,8 @@ export const DELETE_ONE_AD = gql`
 					block
 					delete
 					avatar
-					orders
-					_count
 				}
 				userId
-				parents{
-					id
-					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					owner
-					userId
-					images
-					ads
-					_count
-				}
-				childrens{
-					id
-					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					owner
-					userId
-					images
-					ads
-					_count
-				}
 				images
 				_count{
 					parents
@@ -540,40 +348,8 @@ export const UPSERT_ONE_AD = gql`
 					block
 					delete
 					avatar
-					orders
-					_count
 				}
 				userId
-				parents{
-					id
-					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					owner
-					userId
-					images
-					ads
-					_count
-				}
-				childrens{
-					id
-					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					owner
-					userId
-					images
-					ads
-					_count
-				}
 				images
 				_count{
 					parents
