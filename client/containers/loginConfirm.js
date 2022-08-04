@@ -29,7 +29,7 @@ const Form = styled.form`
         margin-top: 24px;
 
         .time {
-            color: ${COLORS.primary.orange};
+            color: ${COLORS.primary.yellow};
         }
     }
     .button {
@@ -51,7 +51,7 @@ const Code = styled.div`
     width: 50px;
     border-radius: 12px;
     border: solid 1px;
-    border-color: ${({ fill }) => fill ? COLORS.primary.orange : COLORS.secondary.lightGray};
+    border-color: ${({ fill }) => fill ? COLORS.primary.yellow : COLORS.secondary.lightGray};
     display: flex;
     align-items: center;
     justify-content: center;

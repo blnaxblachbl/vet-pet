@@ -1,13 +1,69 @@
 import styled from "styled-components"
+import Link from 'next/link'
+
+import LogoReactangle from '../public/logo-rectangle.svg'
+
+import { Padding } from "./Padding"
+import { COLORS } from "../utils/const"
 
 const Container = styled.div`
-    background-color: #f1f1f1;
-    height: 55px;
+    background-color: ${COLORS.primary.white};
+`
+const Inner = styled(Padding)`
+    min-height: auto;
+    display: flex;
+    justify-content: space-between;
+    .logo {
+        border-radius: 50%;
+        width: 70px;
+        height: 70px;
+        overflow: hidden;
+        svg {
+            width: 70px;
+            height: 70px;
+        }
+    }
+    .left {
+        width: calc(50% - 9px);
+        margin-right: auto;
+        text-align: left;
+    }
+    .right {
+        width: calc(50% - 9px);
+        margin-left: auto;
+        text-align: right;
+        .link {
+            margin-bottom: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            :last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
 `
 
 export const Footer = () => {
     return (
         <Container>
+            <Inner>
+                <div className="left">
+                    <div className="logo">
+                        <LogoReactangle />
+                    </div>
+                </div>
+                <div className="right">
+                    <Link href={'/organization?type=shop'}>
+                        <div className="link">Магазины</div>
+                    </Link>
+                    <Link href={'/organization?type=vet'}>
+                        <div className="link">Клиники</div>
+                    </Link>
+                    <Link href={'/ad'}>
+                        <div className="link">Объявления</div>
+                    </Link>
+                </div>
+            </Inner>
         </Container>
     )
 }

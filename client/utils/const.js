@@ -1,9 +1,11 @@
 export const COLORS = {
     primary: {
-        orange: "#FF6501",
-        yellow: "#FFC120",
+        purple: "#8675FF",
+        yellow: "#F7DDA4",
         white: "#FFFFFF",
-        black: "#383533"
+        black: "#383533",
+        red: "#FC626F",
+        camel: '#B89068'
     },
     secondary: {
         green: "#1BB480",
@@ -12,19 +14,44 @@ export const COLORS = {
         darkGray: "#808080",
         gray: "#ABABAB",
         lightGray: "#F1F1F1"
-    },
-    label: {
-        green: "#EEFAF6",
-        red: "#FCECEF"
-    },
-    gradients: {
-        orange: 'linear-gradient(282.78deg, #FFE259 0%, #FFA751 100%)',
-        purple: 'linear-gradient(102.78deg, #FC67FA 0%, #F4C4F3 100%)',
-        green: `linear-gradient(102.78deg, #6EE162 0%, #46D6EA 79.69%)`
     }
 }
-export const AD_CATEGORIES = [
-    'Услуги',
-    'Находки',
-    'Прочее',
+export const ORG_CATEGORIES = {
+    vat: 'Ветеринарная клиника',
+    shop: 'Магазин для животных',
+    'pet-shop': 'Зоомагазин'
+}
+export const WEEK_DAYS = [
+    {
+        name: 'moday',
+        value: 'Понедельник'
+    },
+    {
+        name: 'tuesday',
+        value: 'Вторник'
+    },
+    {
+        name: 'wednesday',
+        value: 'Среда'
+    },
+    {
+        name: 'thursday',
+        value: 'Четверг'
+    },
+    {
+        name: 'friday',
+        value: 'Пятница'
+    },
+    {
+        name: 'saturday',
+        value: 'Суббота'
+    },
+    {
+        name: 'sunday',
+        value: 'Воскресенье'
+    },
 ]
+export const GOOD_TYPES = {
+    service: 'Услуга',
+    product: "Товар"
+}

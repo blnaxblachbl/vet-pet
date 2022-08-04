@@ -8,24 +8,23 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     border: 1px solid #f1f1f1;
-    height: 56px;
+    height: 50px;
     background: ${COLORS.secondary.lightGray};
     border-radius: 16px;
     padding: 0 15px;
-    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.03);
     box-sizing: border-box;
 
     &:focus-within {
         input {
             outline: none;  
-            caret-color: ${COLORS.primary.orange};
+            caret-color: ${COLORS.primary.camel};
         }
         textarea {
             outline: none;  
-            caret-color: ${COLORS.primary.orange};
+            caret-color: ${COLORS.primary.camel};
         }
         .label {
-            color: ${COLORS.primary.orange};
+            color: ${COLORS.primary.yellow};
         }
     }
 

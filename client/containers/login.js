@@ -2,6 +2,7 @@ import { useMemo, useState } from "react"
 import styled from "styled-components"
 import IMask from 'imask'
 import { useMutation } from "@apollo/client"
+import { toast } from "react-toastify"
 
 import {
     Input,
@@ -9,7 +10,6 @@ import {
 } from "../components"
 import { COLORS } from "../utils/const"
 import { SEND_USER_PHONE } from "../gqls"
-import { toast } from "react-toastify"
 
 const Form = styled.form`
     max-width: 600px;

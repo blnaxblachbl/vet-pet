@@ -12,11 +12,12 @@ const Container = styled.button`
     width: fit-content;
     padding: 0 20px;
     border-radius: 12px;
-    background-color: ${COLORS.primary.orange};
+    background-color: ${COLORS.primary.purple};
     border: none;
     color: ${COLORS.primary.white};
     font-weight: 600;
     cursor: pointer;
+    box-sizing: border-box;
 
     svg {
         path: {

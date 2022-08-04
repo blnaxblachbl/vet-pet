@@ -51,20 +51,34 @@ const User = {
         },
     },
     Mutation: {
-        sendUserPhone: async (_parent, { data: { phone } }, { prisma, verify }) => {
+        sendUserPhone: async (_parent, { data: { phone } }, { prisma }) => {
             const user = await prisma.user.findUnique({ where: { phone } })
 
             let code = null
             if (phone === '79991234567') {
                 code = '1234'
             } else {
-                code = await sendCodeToPhone(phone)
+                if (process.env.NODE_ENV === 'production') {
+                    code = await sendCodeToPhone(phone)
+                } else {
+                    code = '1234'
+                }
+            }
+            if (process.env.NODE_ENV !== 'production'){
+                console.log(code)
             }
 
             const hashCode = await bcrypt.hash(`${code}`, 10)
 
             if (!user) {
-                throw new Error('user not found')
+                // throw new Error('user not found')
+                await prisma.user.create({
+                    data: {
+                        code: hashCode,
+                        phone
+                    }
+                })
+                return true
             }
             if (user.delete) {
                 throw new Error('user deleted')
@@ -72,9 +86,9 @@ const User = {
             if (user.block) {
                 return new Error(`user blocked`)
             }
-            if (verify) {
-                throw new Error('invalid token')
-            }
+            // if (verify) {
+            //     throw new Error('invalid token')
+            // }
             await prisma.user.update({
                 where: {
                     id: user.id
@@ -133,7 +147,7 @@ const User = {
             const { id } = args.where
             if (verify && verify.role === 'user') {
                 const user = await prisma.user.findUnique({ where: { id: verify.id } })
-                if (phone.set !== user.phone) {
+                if (phone && phone.set !== user.phone) {
                     let code = await sendCodeToPhone(phone.set)
                     const hashCode = await bcrypt.hash(`${code}`, 10)
                     await prisma.user.update({

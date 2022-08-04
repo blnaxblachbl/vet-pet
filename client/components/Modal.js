@@ -4,9 +4,10 @@ import ReactModal from 'react-modal'
 import CloseIcon from '../public/icons/close.svg'
 
 const Top = styled.div`
-    display: flex;
+    /* display: flex; */
     margin-bottom: 15px;
     width: 100%;
+    position: relative;
 
     .modal-title {
         width: 100%;
@@ -21,6 +22,9 @@ const Top = styled.div`
         margin-left: auto;
         height: 24px;
         cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 0;
         path {
             fill: ${({ closeColor }) => closeColor};
         }
@@ -73,8 +77,8 @@ export const Modal = ({
             {...props}
         >
             <Top closeColor={closeColor} style={headerStyle}>
-                <CloseIcon onClick={onRequestClose} />
                 <div className={`modal-title`} style={headerTitleStyle}>{title}</div>
+                <CloseIcon onClick={onRequestClose} />
             </Top>
             {children}
         </ReactModal>

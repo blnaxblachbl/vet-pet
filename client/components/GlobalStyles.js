@@ -9,8 +9,13 @@ export const GlobalStyles = createGlobalStyle`
     body {
         margin: 0;
         padding: 0;
-        font-family: 'Rubik', sans-serif;
-        background-color: #fafafa;
+        font-family: 'Hind', sans-serif;
+        background-color: ${COLORS.secondary.lightGray};
+
+        svg {
+            width: 24px;
+            height: 24px;
+        }
     }
 
     input {
