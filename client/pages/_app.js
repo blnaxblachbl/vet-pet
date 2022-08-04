@@ -11,7 +11,9 @@ import {
     Padding,
     Header,
     Footer,
-    AuthComponent
+    AuthComponent,
+    Menu,
+    TabBar
 } from '../components'
 import { initApollo } from "../utils/apollo"
 import { useMobile } from '../utils/hooks'
@@ -35,9 +37,11 @@ function MyApp({ Component, pageProps, token, headers }) {
             <ApolloProvider client={client}>
                 <Header isMobile={isMobile} />
                 <Padding isMobile={isMobile}>
+                    <Menu />
                     <Component isMobile={isMobile} {...pageProps} />
                 </Padding>
                 <Footer />
+                <TabBar />
                 <AuthComponent />
             </ApolloProvider>
             <ToastContainer

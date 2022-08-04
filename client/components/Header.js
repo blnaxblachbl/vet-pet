@@ -63,6 +63,15 @@ const Inner = styled(props => <Padding {...props} />)`
             margin-right: 12px;
         }
     }
+
+    @media only screen and (max-width: 700px) {
+        .profile-button {            
+            display: none;
+        }
+        .search-container {
+            margin-right: 0;
+        }
+    }
 `
 // const Login = styled(Button)``
 

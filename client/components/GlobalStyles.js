@@ -79,4 +79,10 @@ export const GlobalStyles = createGlobalStyle`
     .enable-scroll {
         overflow: auto;
     }
+
+    @media only screen and (max-width: 600px) {
+        body {
+            padding-bottom: 65px;
+        }
+    }
 `

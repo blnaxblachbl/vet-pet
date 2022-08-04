@@ -8,6 +8,9 @@ import { COLORS } from "../utils/const"
 
 const Container = styled.div`
     background-color: ${COLORS.primary.white};
+    @media only screen and (max-width: 700px) {
+        display: none;
+    }
 `
 const Inner = styled(Padding)`
     min-height: auto;
