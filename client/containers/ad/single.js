@@ -12,7 +12,7 @@ import {
 } from "../../components"
 
 import { COLORS } from "../../utils/const"
-import { useRealetiveDate } from "../../utils/hooks"
+import { useRealetiveDate, useUser } from "../../utils/hooks"
 
 const Container = styled.div`
     display: grid;
@@ -134,6 +134,9 @@ const User = styled.div`
         font-size: 14px;
         color: ${COLORS.secondary.gray};
     }
+    .edit-button {
+        width: 100%;
+    }
     @media only screen and (max-width: 800px) {
         padding: 12px;
     }
@@ -146,6 +149,7 @@ const CreatedAt = styled.div`
 
 const SingleAdContainer = ({ ad }) => {
     const imagesRef = useRef()
+    const { user } = useUser()
     const [selectedIndex, setSelectedIndex] = useState(0)
 
     if (!ad || ad.deleted || !ad.publish) {
@@ -207,7 +211,7 @@ const SingleAdContainer = ({ ad }) => {
                 </div>
                 <div className="info">
                     <Info>
-                        <div className="price">{ad.price ? ad.price : 'Бесплатно'}</div>
+                        <div className="price">{ad.price ? ad.price + ' ₽' : 'Бесплатно'}</div>
                         <div className="desc">{ad.description}</div>
                     </Info>
                 </div>
@@ -220,16 +224,28 @@ const SingleAdContainer = ({ ad }) => {
                                 <div className="user-date">Зарегистрирован {useRealetiveDate(DateTime.fromISO(ad.user.createdAt))}</div>
                             </div>
                         </div>
-                        <a href={`https://api.whatsapp.com/send?phone=${ad.user.phone}`} target='_blank' rel="noreferrer">
-                            <Button className={'message-button'} ouline>
-                                Написать в WhatsApp
-                            </Button>
-                        </a>
-                        <a href={`tel:${ad.user.phone}`}>
-                            <Button className={'call-button'}>
-                                Позвонить
-                            </Button>
-                        </a>
+                        {
+                            user && user.id === ad.user.id ? (
+                                <Link href={`/ad/edit/${ad.id}`}>
+                                    <Button className={'edit-button'} ouline>
+                                        Редактировать
+                                    </Button>
+                                </Link>
+                            ) : (
+                                <>
+                                    <a href={`https://api.whatsapp.com/send?phone=${ad.user.phone}`} target='_blank' rel="noreferrer">
+                                        <Button className={'message-button'} ouline>
+                                            Написать в WhatsApp
+                                        </Button>
+                                    </a>
+                                    <a href={`tel:${ad.user.phone}`}>
+                                        <Button className={'call-button'}>
+                                            Позвонить
+                                        </Button>
+                                    </a>
+                                </>
+                            )
+                        }
                     </User>
                 </div>
             </Container>

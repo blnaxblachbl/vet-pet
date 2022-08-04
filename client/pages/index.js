@@ -80,6 +80,7 @@ const AllButton = styled(Button)`
 
 const Home = () => {
     const { data, loading } = useQuery(HOME, {
+        fetchPolicy: 'network-only',
         ssr: typeof window === 'undefined',
         skip: false
     })

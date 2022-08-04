@@ -49,7 +49,7 @@ export const Ad = ({ item }) => {
             <Container>
                 <Image src={item.images[0]} className='image' />
                 <div className="info">
-                    <div className="price">{item.price ? item.price : 'Бесплатно'}</div>
+                    <div className="price">{item.price ? item.price + ' ₽': 'Бесплатно'}</div>
                     <div className="title number-of-lines-2">{item.title}</div>
                     <div className="date">Добавлено {useRealetiveDate(DateTime.fromISO(item.createdAt))}</div>
                 </div>

@@ -20,7 +20,8 @@ const Ads = () => {
             },
             take: limit * parseInt(page),
             skip: 0
-        }
+        },
+        fetchPolicy: 'network-only'
     })
 
     const prevAds = useMemo(() => previousData ? previousData.findManyAd : [], [previousData])
