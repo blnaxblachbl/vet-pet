@@ -6,11 +6,13 @@ import { COLORS, ORG_CATEGORIES } from "../utils/const"
 const Container = styled.div`
     width: 100%;
     border: solid 1px ${COLORS.secondary.lightGray};
+    background-color: ${COLORS.primary.white};
     border-radius: 6px;
     padding: 6px;
     box-sizing: border-box;
     cursor: pointer;
     overflow: hidden;
+    /* box-shadow: 0px 6px 30px rgba(77, 77, 77, 0.06), 0px 12px 30px rgba(77, 77, 77, 0.06); */
     
     .logo {
         width: 100%;
@@ -21,18 +23,20 @@ const Container = styled.div`
     }
     .info {
         white-space: pre-wrap;
+        line-height: 24px;
+        height: 72px;
         .name {
             font-size: 18px;
-            font-weight: 500;
+            font-weight: 600;
         }
         .desc {
             font-size: 14px;
             color: ${COLORS.secondary.gray};
+            /* color: ${COLORS.secondary.gray}; */
         }
     }
     :hover {
-        /* box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.03); */
-        box-shadow: 0px 6px 30px rgba(77, 77, 77, 0.06), 0px 12px 30px rgba(77, 77, 77, 0.06);
+        box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.03);
     }
 `
 

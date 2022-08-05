@@ -28,7 +28,7 @@ const Organizations = styled.div`
         display: inline-block;
         margin-right: 12px;
         margin-bottom: auto;
-        width: 23%;
+        width: 28%;
         :last-child {
             margin-right: 0;
         }
@@ -41,7 +41,8 @@ const Organizations = styled.div`
     }
     @media only screen and (max-width: 700px) {
         .organizatioin {
-            width: 80%;
+            margin-right: 24px;
+            width: 70%;
         }
     }
 `
@@ -49,7 +50,7 @@ const Goods = styled(Organizations)`
     .good {
         vertical-align: top;
         display: inline-block;
-        margin-right: 12px;
+        margin-right: 24px;
         width: 20%;
         :last-child {
             margin-right: 0;
@@ -62,6 +63,7 @@ const Goods = styled(Organizations)`
         }
     }
     @media only screen and (max-width: 800px) {
+        margin-right: 12px;
         .good {
             width: 35%;
         }

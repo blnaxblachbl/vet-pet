@@ -9,6 +9,7 @@ import { useRealetiveDate } from "../utils/hooks"
 const Container = styled.div`
     width: 100%;
     border: solid 1px ${COLORS.secondary.lightGray};
+    background-color: ${COLORS.primary.white};
     border-radius: 6px;
     box-sizing: border-box;
     cursor: pointer;
@@ -16,12 +17,12 @@ const Container = styled.div`
     
     .image {
         width: 100%;
-        aspect-ratio: 3/2;
+        aspect-ratio: 3/2.5;
         object-fit: cover;
         background-color: ${COLORS.secondary.lightGray};
     }
     .info {
-        padding: 12px;
+        padding: 6px;
         white-space: pre-wrap;
         .price {
             font-size: 18px;
@@ -30,6 +31,8 @@ const Container = styled.div`
         .title {
             font-size: 16px;
             font-weight: 500;
+            line-height: 24px;
+            height: 48px;
         }
         .date {
             font-size: 14px;

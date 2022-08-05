@@ -65,9 +65,9 @@ const Inner = styled(props => <Padding {...props} />)`
         .mobile-logo-container {
             display: block;
         }
-        .logo-container {
+        /* .logo-container {
             display: none;
-        }
+        } */
         .profile-button {            
             display: none;
         }
@@ -85,14 +85,17 @@ export const Header = ({ isMobile }) => {
         <Container>
             <Inner>
                 <Link href='/'>
-                    <div>
+                    <div className='logo-container'>
+                        <Logo />
+                    </div>
+                    {/* <div>
                         <div className='logo-container'>
                             <Logo />
                         </div>
                         <div className='mobile-logo-container'>
                             <Paw />
                         </div>
-                    </div>
+                    </div> */}
                 </Link>
                 <div className='buttons-container'>
                     <Link href='/ad/create'>

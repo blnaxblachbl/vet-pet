@@ -78,6 +78,10 @@ export const HOME = gql`
 				id
 				address
 			}
+			organization {
+				id
+				name
+			}
 		} 
         findManyAd(
 			where: {
