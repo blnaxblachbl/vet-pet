@@ -20,6 +20,10 @@ export const FIND_UNIQUE_ORGANIZATION = gql`
 			email
 			links
 			categories
+			branchs {
+				id
+				address
+			}
 			_count{
 				admins
 				goods
@@ -59,6 +63,10 @@ export const FIND_FIRST_ORGANIZATION = gql`
 			email
 			links
 			categories
+			branchs {
+				id
+				address
+			}
 			_count{
 				admins
 				goods
@@ -97,6 +105,10 @@ export const FIND_MANY_ORGANIZATION = gql`
 			email
 			links
 			categories
+			branchs {
+				id
+				address
+			}
 			_count{
 				admins
 				goods
@@ -125,6 +137,10 @@ export const CREATE_ONE_ORGANIZATION = gql`
 			email
 			links
 			categories
+			branchs {
+				id
+				address
+			}
 			_count{
 				admins
 				goods
@@ -155,6 +171,10 @@ export const UPDATE_ONE_ORGANIZATION = gql`
 			email
 			links
 			categories
+			branchs {
+				id
+				address
+			}
 			_count{
 				admins
 				goods
@@ -183,6 +203,10 @@ export const DELETE_ONE_ORGANIZATION = gql`
 			email
 			links
 			categories
+			branchs {
+				id
+				address
+			}
 			_count{
 				admins
 				goods
@@ -215,6 +239,10 @@ export const UPSERT_ONE_ORGANIZATION = gql`
 			email
 			links
 			categories
+			branchs {
+				id
+				address
+			}
 			_count{
 				admins
 				goods

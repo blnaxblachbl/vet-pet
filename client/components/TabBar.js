@@ -4,7 +4,7 @@ import { useRouter } from "next/router"
 
 import { COLORS } from "../utils/const"
 
-import HomeIcon from '../public/icons/home.svg'
+import HomeIcon from '../public/icons/paw.svg'
 import MedicalIcon from '../public/icons/medical.svg'
 import GoodsIcon from '../public/icons/shopping-bags.svg'
 import NoteIcon from '../public/icons/note.svg'
@@ -94,7 +94,7 @@ export const TabBar = () => {
             <Link href="/profile">
                 <TabBarButton
                     selected={pathname.includes('/profile')}
-                    // profile
+                // profile
                 >
                     <ProfileIcon />
                     <div>Профиль</div>

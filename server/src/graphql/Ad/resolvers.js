@@ -1,7 +1,15 @@
 const Ad = {
   Query: {
-    findUniqueAd: (_parent, args, { prisma }) => {
-      return prisma.ad.findUnique(args)
+    findUniqueAd: (_parent, { where, select }, { prisma }) => {
+      return prisma.ad.update({
+        where,
+        data: {
+          viewCount: {
+            increment: 1
+          }
+        },
+        select
+      })
     },
     findFirstAd: (_parent, args, { prisma }) => {
       return prisma.ad.findFirst(args)

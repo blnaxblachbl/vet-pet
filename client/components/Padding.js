@@ -9,7 +9,7 @@ const View = styled.div`
     box-sizing: border-box;
 
     @media only screen and (max-width: 1200px) {
-        padding: 24px 15px;
+        padding: 15px 15px;
     }
 `
 

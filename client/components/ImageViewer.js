@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useImperativeHandle, useRef, useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import Close from '../public/icons/close.svg'
@@ -85,6 +85,26 @@ const ImageViewerComponent = forwardRef(({ }, ref) => {
         setInitIndex(0)
         setImages([])
     }
+
+    const onKeyPress = (event) => {
+        if (event.code === 'ArrowRight') {
+            carousel.current.slickNext()
+        }
+        if (event.code === 'ArrowLeft') {
+            carousel.current.slickPrev()
+        }
+    }
+
+    useEffect(() => {
+        console.log(isOpen)
+        if (isOpen) {
+            document.addEventListener('keydown', onKeyPress, true)
+            document.addEventListener('keydown', onKeyPress, false)
+        } else {
+            document.removeEventListener('keydown', onKeyPress, true)
+            document.removeEventListener('keydown', onKeyPress, false)
+        }
+    }, [isOpen])
 
     return (
         <Modal

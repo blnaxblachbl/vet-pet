@@ -7,6 +7,7 @@ const Container = styled.div`
     width: 100%;
     border: solid 1px ${COLORS.secondary.lightGray};
     border-radius: 6px;
+    padding: 6px;
     box-sizing: border-box;
     cursor: pointer;
     overflow: hidden;
@@ -14,11 +15,11 @@ const Container = styled.div`
     .logo {
         width: 100%;
         aspect-ratio: 3/2;
-        object-fit: contain;
+        object-fit: cover;
         background-color: ${COLORS.secondary.lightGray};
+        border-radius: 6px;
     }
     .info {
-        padding: 12px;
         white-space: pre-wrap;
         .name {
             font-size: 18px;
@@ -30,7 +31,8 @@ const Container = styled.div`
         }
     }
     :hover {
-        box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.03);
+        /* box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.03); */
+        box-shadow: 0px 6px 30px rgba(77, 77, 77, 0.06), 0px 12px 30px rgba(77, 77, 77, 0.06);
     }
 `
 

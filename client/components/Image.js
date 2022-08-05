@@ -1,7 +1,7 @@
 import { host } from "../utils/apollo"
 
 export const Image = ({ src = '', ...props }) => {
-    const url = src && src.includes('http') ? src : `${host}/uploads/${src}`
+    const url = src && src.includes('/') ? src : `${host}/uploads/${src}`
     return (
         <img
             src={url}

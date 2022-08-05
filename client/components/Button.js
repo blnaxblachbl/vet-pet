@@ -8,11 +8,11 @@ const Container = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
+    height: 36px;
     width: fit-content;
     padding: 0 20px;
-    border-radius: 12px;
-    background-color: ${COLORS.primary.purple};
+    border-radius: 18px;
+    background-color: ${COLORS.primary.camel};
     border: none;
     color: ${COLORS.primary.white};
     font-weight: 600;

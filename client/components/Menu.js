@@ -3,8 +3,9 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 import ArrowLeft from '../public/icons/arrow-left.svg'
+import SearchIcon from '../public/icons/search.svg'
 
-import { Button } from '.'
+import { Button, Input } from '.'
 import { COLORS } from '../utils/const'
 import { useMemo } from 'react'
 
@@ -12,7 +13,10 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 24px;
-
+    
+    .input-container {
+        margin-left: auto;
+    }
     .button {
         margin-right: 12px;
         :last-child {
@@ -20,12 +24,13 @@ const Container = styled.div`
         }
     }
     @media only screen and (max-width: 700px) {
-        display: none;
+        .button {
+            display: none;
+        }
     }
 `
 const MobileContainer = styled.div`
     display: none;
-    margin-bottom: 24px;
     .back-button {
         padding-right: 15px;
         padding-left: 6px;
@@ -35,7 +40,7 @@ const MobileContainer = styled.div`
         height: 20px;
         margin-right: 6px;
         path {
-            fill: ${COLORS.primary.purple};
+            fill: ${COLORS.primary.camel};
         }
     }
     @media only screen and (max-width: 700px) {
@@ -48,13 +53,13 @@ export const Menu = () => {
 
     return (
         <>
-            <MobileContainer display={pathname.split('/').length > 2}>
-                <Button onClick={() => window.history.back()} ouline className={'back-button'}>
-                    <ArrowLeft />
-                    Назад
-                </Button>
-            </MobileContainer>
             <Container>
+                <MobileContainer display={pathname.split('/').length > 2}>
+                    <Button onClick={() => window.history.back()} ouline className={'back-button'}>
+                        <ArrowLeft />
+                        Назад
+                    </Button>
+                </MobileContainer>
                 <Link href='/organization'>
                     <Button ouline={!(pathname === '/organization')} className={'button'}>
                         Клиники и магазины
@@ -70,6 +75,11 @@ export const Menu = () => {
                         Объявления
                     </Button>
                 </Link>
+                <Input
+                    placeholder="Поиск"
+                    RightComponent={<SearchIcon />}
+                    containerClassName='input-container'
+                />
             </Container>
         </>
     )

@@ -29,9 +29,9 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     .button-ouline {
-        border: solid 1px ${COLORS.primary.purple};
+        border: solid 1px ${COLORS.primary.black};
         background-color: transparent;
-        color: ${COLORS.primary.purple};
+        color: ${COLORS.primary.black};
     }
 
     a {

@@ -8,9 +8,9 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     border: 1px solid #f1f1f1;
-    height: 50px;
-    background: ${COLORS.secondary.lightGray};
-    border-radius: 12px;
+    height: 36px;
+    background: ${COLORS.primary.white};
+    border-radius: 18px;
     padding: 0 12px;
     box-sizing: border-box;
 

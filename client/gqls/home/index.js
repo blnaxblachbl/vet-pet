@@ -32,6 +32,10 @@ export const HOME = gql`
 			email
 			links
 			categories
+			branchs {
+				id
+				address
+			}
 			_count{
 				admins
 				goods
