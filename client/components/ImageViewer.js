@@ -11,6 +11,8 @@ import { COLORS } from '../utils/const'
 const Container = styled(Carousel)`
     width: 100%;
     margin: 0 auto;
+    padding: 15px;
+    box-sizing: border-box;
     .viewer-item {
         width: 100%;
         height: 60vh;
@@ -22,8 +24,8 @@ const Container = styled(Carousel)`
 const CloseButton = styled(Close)`
     cursor: pointer;
     position: absolute;
-    top: -20%;
-    right: 30px;
+    top: 15px;
+    right: 15px;
     path {
         fill: ${COLORS.primary.white};
     }
@@ -34,12 +36,13 @@ const Right = styled.div`
     justify-content: center;
     align-items: center;
     padding: 0 12px;
-    right: 15px;
-    top: 0;
-    height: 100%;
+    right: 0;
+    top: 20vh;
+    height: 60vh;
     background-color: rgba(255,255,255,0.1);
     z-index: 3;
     cursor: pointer;
+    box-sizing: border-box;
     svg {   
         width: 24px;
         height: 24px;
@@ -56,7 +59,7 @@ const Right = styled.div`
     }
 `
 const Left = styled(Right)`
-    left: 15px;
+    left: 0;
     right: auto;
 `
 
@@ -91,17 +94,16 @@ const ImageViewerComponent = forwardRef(({ }, ref) => {
             contentStyle={{
                 maxWidth: "100%",
                 overflow: 'visible',
-                padding: 15,
                 backgroundColor: 'transparent',
                 border: "none",
-                borderRadius: 0
+                borderRadius: 0,
+                position: 'unset'
             }}
             overlayStyle={{
-                padding: 0,
+                padding: 0
             }}
         >
             <CloseButton onClick={closeModal} />
-            {/* <ArrowRight /> */}
             <Right onClick={() => carousel.current.slickNext()}>
                 <ArrowRight />
             </Right>

@@ -223,7 +223,7 @@ const SingleAdContainer = ({ ad }) => {
                             <Image src={ad.user.avatar} className='avatar' />
                             <div>
                                 <div className="name">{ad.user.name}</div>
-                                <div className="user-date">Зарегистрирован {useRealetiveDate(DateTime.fromISO(ad.user.createdAt))}</div>
+                                <div className="user-date">{user.status}</div>
                             </div>
                         </div>
                         {

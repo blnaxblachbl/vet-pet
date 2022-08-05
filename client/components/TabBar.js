@@ -38,7 +38,7 @@ const TabBarButton = styled.div`
     height: 100%;
     align-items: center;
     justify-content: center;
-    color: ${({ selected }) => selected ? COLORS.primary.purple : COLORS.primary.gray};
+    color: ${({ selected }) => selected ? COLORS.primary.purple : COLORS.secondary.gray};
     font-size: 12px;
     width: 100%;
     box-sizing: border-box;
@@ -46,7 +46,8 @@ const TabBarButton = styled.div`
 
     svg {
         path {
-            fill: ${({ selected }) => selected ? COLORS.primary.purple : COLORS.primary.gray};
+            fill: ${({ selected }) => selected ? COLORS.primary.purple : COLORS.secondary.gray};
+            /* stroke: ${({ selected, profile }) => profile && selected ? COLORS.primary.purple : COLORS.secondary.gray}; */
         }
         margin-bottom: 5px;
     }
@@ -93,6 +94,7 @@ export const TabBar = () => {
             <Link href="/profile">
                 <TabBarButton
                     selected={pathname.includes('/profile')}
+                    // profile
                 >
                     <ProfileIcon />
                     <div>Профиль</div>
