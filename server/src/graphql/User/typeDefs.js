@@ -26,6 +26,7 @@ const User = gql`
     block: Boolean!
     delete: Boolean!
     avatar: String
+    status: String!
     orders(
       where: OrderWhereInput
       orderBy: OrderOrderByWithRelationInput
@@ -34,14 +35,22 @@ const User = gql`
       skip: Int
       distinct: OrderScalarFieldEnum
     ): [Order!]!
-    pets(
-      where: PetWhereInput
-      orderBy: PetOrderByWithRelationInput
-      cursor: PetWhereUniqueInput
+    # pets(
+    #   where: PetWhereInput
+    #   orderBy: PetOrderByWithRelationInput
+    #   cursor: PetWhereUniqueInput
+    #   take: Int
+    #   skip: Int
+    #   distinct: PetScalarFieldEnum
+    # ): [Pet!]!
+    adopts(
+      where: AdoptWhereInput
+      orderBy: [AdoptOrderByWithRelationInput]
+      cursor: AdoptWhereUniqueInput
       take: Int
       skip: Int
-      distinct: PetScalarFieldEnum
-    ): [Pet!]!
+      distinct: [AdoptScalarFieldEnum]
+    ): [Adopt!]!
     ads(
       where: AdWhereInput
       orderBy: [AdOrderByWithRelationInput]

@@ -13,7 +13,8 @@ import {
     Footer,
     AuthComponent,
     Menu,
-    TabBar
+    TabBar,
+    ImageViewer
 } from '../components'
 import { initApollo } from "../utils/apollo"
 import { useMobile } from '../utils/hooks'
@@ -48,6 +49,7 @@ function MyApp({ Component, pageProps, token, headers }) {
                 position='top-center'
             />
             <GlobalStyles />
+            <ImageViewer />
         </>
     )
 }

@@ -1,3 +1,4 @@
+const { Adopt } = require('./Adopt/resolvers')
 const { Branch } = require('./Branch/resolvers')
 const { Ad } = require('./Ad/resolvers')
 const { Pet } = require('./Pet/resolvers')
@@ -21,6 +22,8 @@ const resolvers = [
   Ad,
   Upload,
   Branch,
+  ,
+  Adopt,
 ]
 
 module.exports = { resolvers }

@@ -7,7 +7,7 @@ import { COLORS } from "../utils/const"
 import HomeIcon from '../public/icons/home.svg'
 import MedicalIcon from '../public/icons/medical.svg'
 import GoodsIcon from '../public/icons/shopping-bags.svg'
-// import CameraIcon from '../public/icons/broadcast.svg'
+import NoteIcon from '../public/icons/note.svg'
 import ProfileIcon from '../public/icons/profile.svg'
 
 const Container = styled.div`
@@ -19,9 +19,9 @@ const Container = styled.div`
     height: 65px;
     width: 100%;
     box-sizing: border-box;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 10px;
-    padding: 0 12px;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 6px;
+    /* padding: 0 12px; */
     border-top: solid 2px ${COLORS.secondary.lightGray};
 
     /* -webkit-box-shadow: 0px -5px 8px 0px rgba(34, 60, 80, 0.2);
@@ -68,7 +68,7 @@ export const TabBar = () => {
             </Link>
             <Link href={'/organization'}>
                 <TabBarButton
-                    selected={pathname === '/organization'}
+                    selected={pathname.includes('/organization')}
                 >
                     <MedicalIcon />
                     <div>Клиники</div>
@@ -76,15 +76,23 @@ export const TabBar = () => {
             </Link>
             <Link href={'/good'}>
                 <TabBarButton
-                    selected={pathname === '/good'}
+                    selected={pathname.includes('/good')}
                 >
                     <GoodsIcon />
                     <div>Товары</div>
                 </TabBarButton>
             </Link>
+            <Link href={'/ad'}>
+                <TabBarButton
+                    selected={pathname.includes('/ad')}
+                >
+                    <NoteIcon />
+                    <div>Объявления</div>
+                </TabBarButton>
+            </Link>
             <Link href="/profile">
                 <TabBarButton
-                    selected={pathname === '/profile'}
+                    selected={pathname.includes('/profile')}
                 >
                     <ProfileIcon />
                     <div>Профиль</div>

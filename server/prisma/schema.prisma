@@ -35,8 +35,10 @@ model User {
     delete    Boolean  @default(false)
     avatar    String?
     orders    Order[] // заказы пользователя
-    pets      Pet[] // питомцы пользователя
+    // pets      Pet[] // питомцы пользователя
     ads       Ad[] // объявления пользователя
+    status    String   @default("Пользователь") // Пользователь, Заводчик
+    adopts    Adopt[]
 }
 
 //Ветеринарная оргианизация
@@ -162,12 +164,24 @@ model Pet {
     kind      String // вид животного: кошка, собака и.т.д
     breed     String // порода животного
     gender    String // пол животного
-    owner     User     @relation(fields: [userId], references: [id])
-    userId    String
+    // owner     User     @relation(fields: [ownerId], references: [id])
+    // ownerId   String
     parents   Pet[]    @relation("ChildParents") // родителя пиотомца
     childrens Pet[]    @relation("ChildParents") // дети питомца
     images    String[] // изображения питомца или его документов
     ads       Ad[]
+    adopts    Adopt[]
+}
+
+model Adopt {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    pet       Pet      @relation(fields: [petId], references: [id])
+    petId     String
+    user      User     @relation(fields: [userId], references: [id])
+    userId    String
+    status    String   @default("new") // new, confirmed, canceled
 }
 
 // Объявления

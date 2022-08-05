@@ -8,7 +8,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     padding-top: 15%;
-    color: ${COLORS.secondary.red};
+    color: ${COLORS.primary.camel};
 
     img {
         height: 180px;

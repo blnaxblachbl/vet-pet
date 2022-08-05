@@ -1,3 +1,4 @@
+const { Adopt } = require('./Adopt/typeDefs')
 const { Branch } = require('./Branch/typeDefs')
 const { Ad } = require('./Ad/typeDefs')
 const { Pet } = require('./Pet/typeDefs')
@@ -25,6 +26,8 @@ const typeDefs = mergeTypeDefs([
   Ad,
   Upload,
   Branch,
+  ,
+  Adopt,
 ])
 
 module.exports = { typeDefs }

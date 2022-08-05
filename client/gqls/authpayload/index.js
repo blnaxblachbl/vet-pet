@@ -18,21 +18,25 @@ export const SEND_USER_CODE = gql`
 				block
 				delete
 				avatar
-				pets{
+				status
+				adopts {
 					id
 					createdAt
-					updatedAt
-					birthday
-					name
-					kind
-					breed
-					gender
-					userId
-					images
+					status
+					pet {
+						id
+						createdAt
+						updatedAt
+						birthday
+						name
+						kind
+						breed
+						gender
+					}
 				}
 				_count{
 					orders
-					pets
+					adopts
 				}
 			}
 			token

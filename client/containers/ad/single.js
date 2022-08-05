@@ -8,7 +8,8 @@ import {
     Empty,
     Top,
     Carousel,
-    Image
+    Image,
+    viewerRef
 } from "../../components"
 
 import { COLORS } from "../../utils/const"
@@ -184,11 +185,12 @@ const SingleAdContainer = ({ ad }) => {
                         }}
                     >
                         {
-                            ad.images.map(item => (
+                            ad.images.map((item, index) => (
                                 <Image
                                     key={item}
                                     src={item}
                                     className='image-item'
+                                    onClick={() => viewerRef.current.openModal(ad.images, index)}
                                 />
                             ))
                         }

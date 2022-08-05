@@ -19,7 +19,10 @@ const Ads = () => {
                 publish: { equals: true }
             },
             take: limit * parseInt(page),
-            skip: 0
+            skip: 0,
+            orderBy: {
+                createdAt: 'desc'
+            }
         },
         fetchPolicy: 'network-only'
     })

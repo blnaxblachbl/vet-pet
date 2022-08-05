@@ -41,7 +41,7 @@ const Organizations = styled.div`
     }
     @media only screen and (max-width: 700px) {
         .organizatioin {
-            width: 75%;
+            width: 80%;
         }
     }
 `
@@ -68,7 +68,7 @@ const Goods = styled(Organizations)`
     }
     @media only screen and (max-width: 700px) {
         .good {
-            width: 55%;
+            width: 60%;
         }
     }
 `

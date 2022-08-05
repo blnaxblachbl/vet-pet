@@ -15,19 +15,23 @@ export const FIND_UNIQUE_PET = gql`
 			kind
 			breed
 			gender
-			owner{
+			adopts {
 				id
 				createdAt
-				updatedAt
-				name
-				phone
-				code
-				email
-				block
-				delete
-				avatar
+				status
+				user {
+					id
+					createdAt
+					updatedAt
+					name
+					phone
+					code
+					email
+					block
+					delete
+					avatar
+				}
 			}
-			userId
 			parents{
 				id
 				createdAt
@@ -83,19 +87,23 @@ export const FIND_FIRST_PET = gql`
 			kind
 			breed
 			gender
-			owner{
+			adopts {
 				id
 				createdAt
-				updatedAt
-				name
-				phone
-				code
-				email
-				block
-				delete
-				avatar
+				status
+				user {
+					id
+					createdAt
+					updatedAt
+					name
+					phone
+					code
+					email
+					block
+					delete
+					avatar
+				}
 			}
-			userId
 			parents{
 				id
 				createdAt
@@ -151,19 +159,23 @@ export const FIND_MANY_PET = gql`
 			kind
 			breed
 			gender
-			owner{
+			adopts {
 				id
 				createdAt
-				updatedAt
-				name
-				phone
-				code
-				email
-				block
-				delete
-				avatar
+				status
+				user {
+					id
+					createdAt
+					updatedAt
+					name
+					phone
+					code
+					email
+					block
+					delete
+					avatar
+				}
 			}
-			userId
 			parents{
 				id
 				createdAt
@@ -209,19 +221,23 @@ export const CREATE_ONE_PET = gql`
 			kind
 			breed
 			gender
-			owner{
+			adopts {
 				id
 				createdAt
-				updatedAt
-				name
-				phone
-				code
-				email
-				block
-				delete
-				avatar
+				status
+				user {
+					id
+					createdAt
+					updatedAt
+					name
+					phone
+					code
+					email
+					block
+					delete
+					avatar
+				}
 			}
-			userId
 			parents{
 				id
 				createdAt
@@ -269,19 +285,23 @@ export const UPDATE_ONE_PET = gql`
 			kind
 			breed
 			gender
-			owner{
+			adopts {
 				id
 				createdAt
-				updatedAt
-				name
-				phone
-				code
-				email
-				block
-				delete
-				avatar
+				status
+				user {
+					id
+					createdAt
+					updatedAt
+					name
+					phone
+					code
+					email
+					block
+					delete
+					avatar
+				}
 			}
-			userId
 			parents{
 				id
 				createdAt
@@ -327,19 +347,23 @@ export const DELETE_ONE_PET = gql`
 			kind
 			breed
 			gender
-			owner{
+			adopts {
 				id
 				createdAt
-				updatedAt
-				name
-				phone
-				code
-				email
-				block
-				delete
-				avatar
+				status
+				user {
+					id
+					createdAt
+					updatedAt
+					name
+					phone
+					code
+					email
+					block
+					delete
+					avatar
+				}
 			}
-			userId
 			parents{
 				id
 				createdAt
@@ -389,19 +413,23 @@ export const UPSERT_ONE_PET = gql`
 			kind
 			breed
 			gender
-			owner{
+			adopts {
 				id
 				createdAt
-				updatedAt
-				name
-				phone
-				code
-				email
-				block
-				delete
-				avatar
+				status
+				user {
+					id
+					createdAt
+					updatedAt
+					name
+					phone
+					code
+					email
+					block
+					delete
+					avatar
+				}
 			}
-			userId
 			parents{
 				id
 				createdAt

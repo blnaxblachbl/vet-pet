@@ -14,21 +14,25 @@ export const FIND_ME_USER = gql`
 			block
 			delete
 			avatar
-			pets{
+			status
+			adopts {
 				id
 				createdAt
-				updatedAt
-				birthday
-				name
-				kind
-				breed
-				gender
-				userId
-				images
+				status
+				pet {
+					id
+					createdAt
+					updatedAt
+					birthday
+					name
+					kind
+					breed
+					gender
+				}
 			}
 			_count{
 				orders
-				pets
+				adopts
 			}
 		}
 	}
@@ -50,21 +54,25 @@ export const FIND_UNIQUE_USER = gql`
 			block
 			delete
 			avatar
-			pets{
+			status
+			adopts {
 				id
 				createdAt
-				updatedAt
-				birthday
-				name
-				kind
-				breed
-				gender
-				userId
-				images
+				status
+				pet {
+					id
+					createdAt
+					updatedAt
+					birthday
+					name
+					kind
+					breed
+					gender
+				}
 			}
 			_count{
 				orders
-				pets
+				adopts
 			}
 		}
 	}
@@ -96,21 +104,25 @@ export const FIND_FIRST_USER = gql`
 			block
 			delete
 			avatar
-			pets{
+			status
+			adopts {
 				id
 				createdAt
-				updatedAt
-				birthday
-				name
-				kind
-				breed
-				gender
-				userId
-				images
+				status
+				pet {
+					id
+					createdAt
+					updatedAt
+					birthday
+					name
+					kind
+					breed
+					gender
+				}
 			}
 			_count{
 				orders
-				pets
+				adopts
 			}
 		}
 	}
@@ -142,21 +154,25 @@ export const FIND_MANY_USER = gql`
 			block
 			delete
 			avatar
-			pets{
+			status
+			adopts {
 				id
 				createdAt
-				updatedAt
-				birthday
-				name
-				kind
-				breed
-				gender
-				userId
-				images
+				status
+				pet {
+					id
+					createdAt
+					updatedAt
+					birthday
+					name
+					kind
+					breed
+					gender
+				}
 			}
 			_count{
 				orders
-				pets
+				adopts
 			}
 		}
 	}
@@ -178,21 +194,25 @@ export const CREATE_ONE_USER = gql`
 			block
 			delete
 			avatar
-			pets{
+			status
+			adopts {
 				id
 				createdAt
-				updatedAt
-				birthday
-				name
-				kind
-				breed
-				gender
-				userId
-				images
+				status
+				pet {
+					id
+					createdAt
+					updatedAt
+					birthday
+					name
+					kind
+					breed
+					gender
+				}
 			}
 			_count{
 				orders
-				pets
+				adopts
 			}
 		}
 	}
@@ -216,21 +236,25 @@ export const UPDATE_ONE_USER = gql`
 			block
 			delete
 			avatar
-			pets{
+			status
+			adopts {
 				id
 				createdAt
-				updatedAt
-				birthday
-				name
-				kind
-				breed
-				gender
-				userId
-				images
+				status
+				pet {
+					id
+					createdAt
+					updatedAt
+					birthday
+					name
+					kind
+					breed
+					gender
+				}
 			}
 			_count{
 				orders
-				pets
+				adopts
 			}
 		}
 	}
@@ -252,25 +276,30 @@ export const DELETE_ONE_USER = gql`
 			block
 			delete
 			avatar
-			pets{
+			status
+			adopts {
 				id
 				createdAt
-				updatedAt
-				birthday
-				name
-				kind
-				breed
-				gender
-				userId
-				images
+				status
+				pet {
+					id
+					createdAt
+					updatedAt
+					birthday
+					name
+					kind
+					breed
+					gender
+				}
 			}
 			_count{
 				orders
-				pets
+				adopts
 			}
 		}
 	}
 `
+
 export const UPSERT_ONE_USER = gql`
 	mutation(
 		$where: UserWhereUniqueInput!
@@ -292,21 +321,25 @@ export const UPSERT_ONE_USER = gql`
 			block
 			delete
 			avatar
-			pets{
+			status
+			adopts {
 				id
 				createdAt
-				updatedAt
-				birthday
-				name
-				kind
-				breed
-				gender
-				userId
-				images
+				status
+				pet {
+					id
+					createdAt
+					updatedAt
+					birthday
+					name
+					kind
+					breed
+					gender
+				}
 			}
 			_count{
 				orders
-				pets
+				adopts
 			}
 		}
 	}

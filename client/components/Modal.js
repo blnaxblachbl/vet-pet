@@ -43,6 +43,8 @@ export const Modal = ({
     isOpen = false,
     headerStyle = {},
     headerTitleStyle = {},
+    showHeader = true,
+    headerClassName = '',
     ...props
 }) => {
     return (
@@ -76,10 +78,14 @@ export const Modal = ({
             onRequestClose={onRequestClose}
             {...props}
         >
-            <Top closeColor={closeColor} style={headerStyle}>
-                <div className={`modal-title`} style={headerTitleStyle}>{title}</div>
-                <CloseIcon onClick={onRequestClose} />
-            </Top>
+            {
+                showHeader && (
+                    <Top closeColor={closeColor} style={headerStyle} className={headerClassName}>
+                        <div className={`modal-title`} style={headerTitleStyle}>{title}</div>
+                        <CloseIcon onClick={onRequestClose} />
+                    </Top>
+                )
+            }
             {children}
         </ReactModal>
     )
