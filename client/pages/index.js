@@ -8,7 +8,8 @@ import {
     Top,
     Organization,
     Button,
-    Good
+    Good,
+    Pagination
 } from '../components'
 import AdsContainer from '../containers/ad'
 import { HOME } from '../gqls'
@@ -82,7 +83,6 @@ const AllButton = styled(Button)`
 
 const Home = () => {
     const { data, loading } = useQuery(HOME, {
-        fetchPolicy: 'network-only',
         ssr: typeof window === 'undefined',
         skip: false
     })
@@ -90,8 +90,9 @@ const Home = () => {
     const {
         findManyAd,
         findManyOrganization,
-        findManyGood
-    } = useMemo(() => data ? data : { findManyAd: [], findManyOrganization: [], findManyGood: [] }, [data])
+        findManyGood,
+        findManyAdCount
+    } = useMemo(() => data ? data : { findManyAd: [], findManyOrganization: [], findManyGood: [], findManyAdCount: 0 }, [data])
 
     if (loading) {
         return <LoadingView loading />
@@ -163,6 +164,11 @@ const Home = () => {
                             }
                         />
                         <AdsContainer ads={findManyAd} />
+                        <Pagination 
+                            limit={20}
+                            maxCount={findManyAdCount}
+                            pathname='/ad'
+                        />
                     </>
                 )
             }

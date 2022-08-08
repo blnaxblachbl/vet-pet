@@ -113,7 +113,7 @@ export const Good = ({ item, ...props }) => {
 
     return (
         <Container {...props}>
-            <Link href={`/product/${item.id}`}>
+            <Link href={`/good/${item.id}`}>
                 <ImageBackground src={`${host}/uploads/${item.images[0]}`}>
                     <div className="tags-container hide-scroll-indicator">
                         {

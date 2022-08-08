@@ -56,10 +56,10 @@ export const Pagination = ({ limit = 20, maxCount = 0, pathname }) => {
     const router = useRouter()
     const { query: { page = 1 } } = router
     const _pathname = useMemo(() => pathname ? pathname : router.pathname, [router, pathname])
+    const pagesCount = Math.ceil(maxCount / limit)
 
     const RenderCounters = useMemo(() => {
         // const pagesCount = 11
-        const pagesCount = Math.ceil(maxCount / limit)
         const Counters = []
         const _page = parseInt(page)
         if (pagesCount <= 5) {
@@ -156,7 +156,7 @@ export const Pagination = ({ limit = 20, maxCount = 0, pathname }) => {
         return Counters
     }, [maxCount, limit, page])
 
-    if (maxCount === 0) return null
+    if (maxCount === 0 || pagesCount === 1) return null
 
     return (
         <Container>

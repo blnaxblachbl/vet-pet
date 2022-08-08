@@ -92,7 +92,7 @@ export const HOME = gql`
                 createdAt: desc
             }
             skip: 0
-            take: 10
+            take: 20
 		){
 			id
 			createdAt
@@ -133,7 +133,27 @@ export const HOME = gql`
 				}
 			}
 			petId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+				status
+			}
+			userId
 			price
-		}  
+		}
+		findManyAdCount(
+			where: {
+                delete: { equals: false }
+                publish: { equals: true }
+            }
+		)
     }
 `

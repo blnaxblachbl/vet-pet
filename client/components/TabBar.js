@@ -28,7 +28,7 @@ const Container = styled.div`
     -moz-box-shadow: 0px -5px 8px 0px rgba(34, 60, 80, 0.2);
     box-shadow: 0px -5px 8px 0px rgba(34, 60, 80, 0.2); */
 
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 700px) {
         display: grid;
     }
 `

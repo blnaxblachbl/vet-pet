@@ -36,6 +36,7 @@ export const FIND_UNIQUE_AD = gql`
 					block
 					delete
 					avatar
+					status
 				}
 				userId
 				images
@@ -57,6 +58,7 @@ export const FIND_UNIQUE_AD = gql`
 				block
 				delete
 				avatar
+				status
 			}
 			userId
 			price
@@ -109,6 +111,7 @@ export const FIND_FIRST_AD = gql`
 					block
 					delete
 					avatar
+					status
 				}
 				userId
 				images
@@ -130,6 +133,7 @@ export const FIND_FIRST_AD = gql`
 				block
 				delete
 				avatar
+				status
 			}
 			userId
 			price
@@ -182,6 +186,7 @@ export const FIND_MANY_AD = gql`
 					block
 					delete
 					avatar
+					status
 				}
 				userId
 				images
@@ -203,6 +208,7 @@ export const FIND_MANY_AD = gql`
 				block
 				delete
 				avatar
+				status
 			}
 			userId
 			price
@@ -248,6 +254,7 @@ export const CREATE_ONE_AD = gql`
 					block
 					delete
 					avatar
+					status
 				}
 				userId
 				images
@@ -269,6 +276,7 @@ export const CREATE_ONE_AD = gql`
 				block
 				delete
 				avatar
+				status
 			}
 			userId
 			price
@@ -313,6 +321,7 @@ export const UPDATE_ONE_AD = gql`
 					block
 					delete
 					avatar
+					status
 				}
 				userId
 				images
@@ -334,6 +343,7 @@ export const UPDATE_ONE_AD = gql`
 				block
 				delete
 				avatar
+				status
 			}
 			userId
 			price
@@ -376,6 +386,7 @@ export const DELETE_ONE_AD = gql`
 					block
 					delete
 					avatar
+					status
 				}
 				userId
 				images
@@ -397,6 +408,7 @@ export const DELETE_ONE_AD = gql`
 				block
 				delete
 				avatar
+				status
 			}
 			userId
 			price
@@ -443,6 +455,7 @@ export const UPSERT_ONE_AD = gql`
 					block
 					delete
 					avatar
+					status
 				}
 				userId
 				images
@@ -464,6 +477,7 @@ export const UPSERT_ONE_AD = gql`
 				block
 				delete
 				avatar
+				status
 			}
 			userId
 			price

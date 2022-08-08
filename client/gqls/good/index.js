@@ -27,6 +27,10 @@ export const FIND_UNIQUE_GOOD = gql`
 				id
 				address
 			}
+			organization {
+				id
+				name
+			}
 		}
 	}
 `
@@ -61,6 +65,10 @@ export const FIND_FIRST_GOOD = gql`
 			branchs {
 				id
 				address
+			}
+			organization {
+				id
+				name
 			}
 		}
 	}
@@ -97,7 +105,14 @@ export const FIND_MANY_GOOD = gql`
 				id
 				address
 			}
+			organization {
+				id
+				name
+			}
 		}
+		findManyGoodCount(
+			where: $where
+		)
 	}
 `
 export const CREATE_ONE_GOOD = gql`
@@ -121,6 +136,10 @@ export const CREATE_ONE_GOOD = gql`
 			branchs {
 				id
 				address
+			}
+			organization {
+				id
+				name
 			}
 		}
 	}
@@ -149,6 +168,10 @@ export const UPDATE_ONE_GOOD = gql`
 				id
 				address
 			}
+			organization {
+				id
+				name
+			}
 		}
 	}
 `
@@ -173,6 +196,10 @@ export const DELETE_ONE_GOOD = gql`
 			branchs {
 				id
 				address
+			}
+			organization {
+				id
+				name
 			}
 		}
 	}
@@ -202,6 +229,10 @@ export const UPSERT_ONE_GOOD = gql`
 			branchs {
 				id
 				address
+			}
+			organization {
+				id
+				name
 			}
 		}
 	}

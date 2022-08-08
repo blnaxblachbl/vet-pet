@@ -14,15 +14,17 @@ const Container = styled.div`
     box-sizing: border-box;
     cursor: pointer;
     overflow: hidden;
+    padding: 6px;
     
     .image {
         width: 100%;
         aspect-ratio: 3/2.5;
         object-fit: cover;
         background-color: ${COLORS.secondary.lightGray};
+        border-radius: 6px;
     }
     .info {
-        padding: 6px;
+        /* padding: 6px; */
         white-space: pre-wrap;
         .price {
             font-size: 18px;

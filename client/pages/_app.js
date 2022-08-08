@@ -14,7 +14,8 @@ import {
     AuthComponent,
     Menu,
     TabBar,
-    ImageViewer
+    ImageViewer,
+    ScrollToTop
 } from '../components'
 import { initApollo } from "../utils/apollo"
 import { useMobile } from '../utils/hooks'
@@ -50,6 +51,7 @@ function MyApp({ Component, pageProps, token, headers }) {
             />
             <GlobalStyles />
             <ImageViewer />
+            <ScrollToTop />
         </>
     )
 }

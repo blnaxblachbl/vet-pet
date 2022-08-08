@@ -7,7 +7,7 @@ import { Button, LoadingView, Top, Pagination } from "../../components"
 import AdsContainer from "../../containers/ad"
 import { FIND_MANY_AD } from "../../gqls"
 
-const limit = 1
+const limit = 20
 
 const Ads = () => {
     const { query: { page = 1 } } = useRouter()
@@ -57,7 +57,7 @@ const Ads = () => {
                             ads={ads}
                         />
                         <Pagination 
-                            maxCount={6}
+                            maxCount={adsCount}
                             limit={limit}
                         />
                     </>

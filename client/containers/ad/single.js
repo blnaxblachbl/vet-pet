@@ -223,7 +223,7 @@ const SingleAdContainer = ({ ad }) => {
                             <Image src={ad.user.avatar} className='avatar' />
                             <div>
                                 <div className="name">{ad.user.name}</div>
-                                <div className="user-date">{user.status}</div>
+                                <div className="user-date">{ad.user.status}</div>
                             </div>
                         </div>
                         {

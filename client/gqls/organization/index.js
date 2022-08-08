@@ -115,6 +115,9 @@ export const FIND_MANY_ORGANIZATION = gql`
 				orders
 			}
 		}
+		findManyOrganizationCount(
+			where: $where
+		)
 	}
 `
 export const CREATE_ONE_ORGANIZATION = gql`
