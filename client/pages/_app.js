@@ -22,9 +22,9 @@ import { useMobile } from '../utils/hooks'
 
 Settings.defaultLocale = "ru"
 
-function MyApp({ Component, pageProps, token, headers }) {
+function MyApp({ Component, pageProps, token, headers, userAgent }) {
     const client = useMemo(() => initApollo(token, false, headers), [token, headers])
-    const isMobile = useMobile()
+    const isMobile = useMobile(userAgent)
 
     return (
         <>
@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps, token, headers }) {
             <ApolloProvider client={client}>
                 <Header isMobile={isMobile} />
                 <Padding isMobile={isMobile}>
-                    <Menu />
+                    <Menu isMobile={isMobile} />
                     <Component isMobile={isMobile} {...pageProps} />
                 </Padding>
                 <Footer />
@@ -62,6 +62,7 @@ MyApp.getInitialProps = async (appContext) => {
     const { req } = appContext.ctx
     if (req && req.headers) {
         try {
+            appProps['userAgent'] = req.headers['user-agent']
             appProps['headers'] = req.headers
         } catch (e) {
             console.error(e)

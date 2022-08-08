@@ -106,6 +106,9 @@ const ImageBackground = styled.div`
         white-space: nowrap;
         overflow-x: scroll;
     }
+    @media only screen and (max-width: 700px) {
+        /* aspect-ratio: 1/1; */
+    }
 `
 
 export const Good = ({ item, ...props }) => {

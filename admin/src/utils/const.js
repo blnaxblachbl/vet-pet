@@ -21,7 +21,7 @@ export const ORG_CATEGORIES = {
 }
 export const WEEK_DAYS = [
     {
-        name: 'moday',
+        name: 'monday',
         value: 'Понедельник'
     },
     {

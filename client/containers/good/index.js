@@ -36,11 +36,11 @@ const GoodsContainer = ({ goods = [] }) => {
     if (goods.length === 0) {
         return (
             <Empty
-                text="Нет объявлений"
+                text="Нет товаров или услуг"
                 button={
-                    <Link href='/ad/create'>
+                    <Link href='/good'>
                         <Button>
-                            Добавить своё
+                            К товарам
                         </Button>
                     </Link>
                 }

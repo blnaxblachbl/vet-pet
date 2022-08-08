@@ -10,16 +10,18 @@ import { FIND_MANY_AD } from "../../gqls"
 const limit = 20
 
 const Ads = () => {
-    const { query: { page = 1 } } = useRouter()
+    const { query: { page = 1, search } } = useRouter()
 
     const { data, previousData, loading } = useQuery(FIND_MANY_AD, {
         variables: {
             where: {
                 delete: { equals: false },
-                publish: { equals: true }
+                publish: { equals: true },
+                OR: search ? [
+                    { title: { contains: search, mode: 'insensitive' } },
+                    { description: { contains: search, mode: 'insensitive' } }
+                ] : undefined
             },
-            // take: limit * parseInt(page),
-            // skip: 0,
             take: limit,
             skip: (parseInt(page) - 1) * limit,
             orderBy: {
@@ -37,7 +39,7 @@ const Ads = () => {
     return (
         <>
             <Top
-                label="Объявления"
+                label={`Объявления${search ? ` по запросу "${search}"` : ''}`}
                 value={
                     ads.length > 0 && (
                         <Link href='/ad/create'>
@@ -57,7 +59,7 @@ const Ads = () => {
                         <AdsContainer
                             ads={ads}
                         />
-                        <Pagination 
+                        <Pagination
                             maxCount={adsCount}
                             limit={limit}
                         />

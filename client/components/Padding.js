@@ -10,6 +10,7 @@ const View = styled.div`
 
     @media only screen and (max-width: 1200px) {
         padding: 15px 15px;
+        padding-bottom: 85px;
     }
 `
 

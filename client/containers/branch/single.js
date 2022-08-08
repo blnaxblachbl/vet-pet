@@ -1,60 +1,81 @@
+import { useMemo } from "react"
 import styled from "styled-components"
 import Link from "next/link"
-import { useMemo } from "react"
+import { DateTime } from 'luxon'
+import { useQuery } from "@apollo/client"
+
+import Location from '../../public/icons/location.svg'
+import Clock from '../../public/icons/clock.svg'
+import Phone from '../../public/icons/phone.svg'
 
 import { Empty, Button, Image, Top, Branch, LoadingView, viewerRef } from "../../components"
 import { COLORS, ORG_CATEGORIES } from "../../utils/const"
-import { useQuery } from "@apollo/client"
 import { FIND_MANY_BRANCH } from "../../gqls"
+import { timeFromDuration } from "../../utils/hooks"
 
 const Container = styled.div`
     .org-info {
         display: flex;
+        justify-content: space-between;
         font-size: 16px;
-        a {
-            color: ${COLORS.primary.purple};
+        margin-bottom: 24px;
+        .content {
+            display: flex;
         }
         .logo {
-            width: 150px;
-            height: 150px;
-            border-radius: 6px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
             object-fit: cover;
             margin-right: 24px;
         }
         .name {
-            font-size: 24px;
+            font-size: 21px;
             font-weight: 600;
-            margin-bottom: 6px;
-        }
-        .phone {
-            margin-bottom: 6px;
-            color: ${COLORS.secondary.gray};
-        }
-        .email {
-            margin-bottom: 6px;
-            color: ${COLORS.secondary.gray};
-        }
-        .address {
-            margin-bottom: 6px;
-            color: ${COLORS.secondary.gray};
         }
         .categories {
-            .category {
-                display: inline-block;
-                padding: 3px 12px;
-                font-size: 14px;
-                background-color: ${COLORS.primary.camel};
-                color: ${COLORS.primary.white};
-                border-radius: 18px;
-                /* border: solid 1px ${COLORS.secondary.lightGray}; */
-                width: fit-content;
-                margin-right: 12px;
+            color: ${COLORS.secondary.gray};
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+        .org-row {
+            display: flex;
+            .org-row-item {
+                color: ${COLORS.primary.black};
+                cursor: pointer;
+                margin-right: 12px; 
+                white-space: nowrap;
                 :last-child {
                     margin-right: 0;
                 }
+                svg {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-right: 6px;
+                    path {
+                        fill: ${COLORS.primary.black};
+                    }
+                }
+                a {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-top: 3px;
+                    color: ${COLORS.primary.purple};
+                    margin-right: 6px;
+                    :last-child {
+                        margin-right: 0;
+                    }
+                }
+                span {
+                    margin-top: 3px;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
             }
         }
-        margin-bottom: 24px;
+        .bay-button {
+            background-color: ${COLORS.primary.camel};
+        }
     }
     .desc {
         line-height: 1.7em;
@@ -62,14 +83,33 @@ const Container = styled.div`
         text-align: justify;
         margin-bottom: 24px;
     }
-    @media only screen and (max-width: 700px) {
-        .info {
+    @media only screen and (max-width: 800px) {
+        .org-info {
             flex-direction: column;
+            .content {
+                flex-direction: column;
+                margin-bottom: 24px;
+            }
+            .org-row {
+                flex-direction: column;
+                .org-row-item {
+                    margin-right: 0;
+                    margin-bottom: 6px;
+                    :last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
             .logo {
                 margin-bottom: 12px;
-                width: 100%;
+                width: 70%;
+                align-self: center;
                 height: auto;
                 aspect-ratio: 1/1;
+                margin-right: 0;
+            }
+            .bay-button {
+                width: 100%;
             }
         }
         .desc {
@@ -117,7 +157,27 @@ const OtherBranchs = styled.div`
 `
 
 const SingleBranchContainer = ({ branch }) => {
-    const organization = branch ? branch.organization : null
+    const organization = useMemo(() => branch ? branch.organization : null, [branch])
+    const time = useMemo(() => {
+        if (branch) {
+            const dayOfWeek = DateTime.now().setLocale("en").weekdayLong.toLowerCase()
+            const {
+                allTime,
+                dayOff,
+                startTime,
+                endTime
+            } = branch.schedule.find(item => item.day === dayOfWeek)
+
+            if (allTime) {
+                return 'Круглосуточно'
+            }
+            if (dayOff) {
+                return 'Выходной'
+            }
+            return `${timeFromDuration(startTime)} - ${timeFromDuration(endTime)}`
+        }
+        return '-'
+    }, [branch])
 
     const { data, loading } = useQuery(FIND_MANY_BRANCH, {
         variables: {
@@ -153,41 +213,51 @@ const SingleBranchContainer = ({ branch }) => {
         <Container>
             {/* <Top label={organization.name} /> */}
             <div className="org-info">
-                <Image src={organization.logo} className='logo' />
-                <div>
-                    <div className="name">{organization.name}</div>
-                    <div className="email">
-                        Почта -{' '}
-                        <a href={`mailto:${organization.email}`}>
-                            {organization.email}
-                        </a>
-                    </div>
-                    <div className="phone">
-                        Кол центр -{' '}
-                        <a href={`tel:${organization.phone}`}>
-                            {organization.phone}
-                        </a>
-                    </div>
-                    <div className="phone">
-                        Номер филиала -{' '}
-                        <a href={`tel:${branch.phone}`}>
-                            {branch.phone}
-                        </a>
-                    </div>
-                    <div className="address">
-                        Адрес филиала -{' '}
-                        <a href={`https://2gis.ru/yakutsk/search/${branch.address}`} target='_blank' rel="noreferrer">
-                            {branch.address}
-                        </a>
-                    </div>
-                    <div className="categories">
-                        {
-                            organization.categories.map(item => (
-                                <div className="category">{ORG_CATEGORIES[item]}</div>
-                            ))
-                        }
+                <div className="content">
+                    <Image src={organization.logo} className='logo' />
+                    <div>
+                        <div className="name">{organization.name}</div>
+                        <div className="categories">
+                            {organization.categories.map(item => ORG_CATEGORIES[item]).join(", ")}
+                        </div>
+                        <div className="org-row">
+                            <div className="org-row-item">
+                                <Location />
+                                <a
+                                    href={`https://2gis.ru/yakutsk/search/${branch.address}`}
+                                    target='_blank'
+                                    rel='noreferrer'
+                                >
+                                    {branch.address}
+                                </a>
+                            </div>
+                            <div className="org-row-item">
+                                <Clock />
+                                <span>
+                                    {time}
+                                </span>
+                            </div>
+                            <div className="org-row-item">
+                                <Phone />
+                                <a href={`tel:${branch.phone}`}>
+                                    {branch.phone}
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <Link
+                    href={{
+                        pathname: '/good',
+                        query: {
+                            branch: branch.id
+                        }
+                    }}
+                >
+                    <Button className={'bay-button'}>
+                        Товары и услуги
+                    </Button>
+                </Link>
             </div>
             <div className="desc">{organization.description}</div>
             <Top label="Фото" />

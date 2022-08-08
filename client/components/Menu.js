@@ -9,7 +9,7 @@ import { Button, Input } from '.'
 import { COLORS } from '../utils/const'
 import { useMemo } from 'react'
 
-const Container = styled.div`
+const Container = styled.form`
     display: flex;
     align-items: center;
     margin-bottom: 24px;
@@ -50,11 +50,35 @@ const MobileContainer = styled.div`
 `
 
 export const Menu = () => {
-    const { pathname } = useRouter()
+    const router = useRouter()
+    const { pathname, query } = router
+    const { search } = query
+
+    const onSubmit = e => {
+        e.preventDefault()
+        const { search } = e.target
+        if (pathname === '/branch' || pathname === '/good' || pathname === '/ad') {
+            router.push({
+                pathname,
+                query: {
+                    ...query,
+                    search: search.value
+                }
+            })
+        } else {
+            router.push({
+                pathname: '/search',
+                query: {
+                    ...query,
+                    search: search.value
+                }
+            })
+        }
+    }
 
     return (
         <>
-            <Container>
+            <Container onSubmit={onSubmit}>
                 <MobileContainer display={pathname.split('/').length > 2}>
                     <Button onClick={() => window.history.back()} ouline className={'back-button'}>
                         <ArrowLeft />
@@ -77,9 +101,22 @@ export const Menu = () => {
                     </Button>
                 </Link>
                 <Input
+                    name='search'
                     placeholder="Поиск"
                     RightComponent={<SearchIcon />}
                     containerClassName='input-container'
+                    required
+                    onChange={e => {
+                        if (!e.target.value){
+                            const newQuery = structuredClone(query)
+                            delete newQuery['search']
+                            router.push({
+                                pathname,
+                                query: newQuery
+                            })
+                        }
+                    }}
+                    defaultValue={search ? search : ""}
                 />
             </Container>
         </>
