@@ -207,6 +207,9 @@ export const FIND_MANY_AD = gql`
 			userId
 			price
 		}
+		findManyAdCount(
+			where: $where
+		)
 	}
 `
 export const CREATE_ONE_AD = gql`

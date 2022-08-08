@@ -3,11 +3,11 @@ import { useQuery } from "@apollo/client"
 import { useRouter } from "next/router"
 import Link from "next/link"
 
-import { Button, LoadingView, Top } from "../../components"
+import { Button, LoadingView, Top, Pagination } from "../../components"
 import AdsContainer from "../../containers/ad"
 import { FIND_MANY_AD } from "../../gqls"
 
-const limit = 20
+const limit = 1
 
 const Ads = () => {
     const { query: { page = 1 } } = useRouter()
@@ -18,8 +18,10 @@ const Ads = () => {
                 delete: { equals: false },
                 publish: { equals: true }
             },
-            take: limit * parseInt(page),
-            skip: 0,
+            // take: limit * parseInt(page),
+            // skip: 0,
+            take: limit,
+            skip: (parseInt(page) - 1) * limit,
             orderBy: {
                 createdAt: 'desc'
             }
@@ -29,6 +31,7 @@ const Ads = () => {
 
     const prevAds = useMemo(() => previousData ? previousData.findManyAd : [], [previousData])
     const ads = useMemo(() => data ? data.findManyAd : prevAds, [data])
+    const adsCount = useMemo(() => data ? data.findManyAdCount : 0, [data])
 
     return (
         <>
@@ -49,7 +52,15 @@ const Ads = () => {
             <LoadingView loading={loading} />
             {
                 (!loading || prevAds.length > 0) && (
-                    <AdsContainer ads={ads} />
+                    <>
+                        <AdsContainer
+                            ads={ads}
+                        />
+                        <Pagination 
+                            maxCount={6}
+                            limit={limit}
+                        />
+                    </>
                 )
             }
         </>

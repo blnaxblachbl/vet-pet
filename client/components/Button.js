@@ -12,6 +12,7 @@ const Container = styled.button`
     width: fit-content;
     padding: 0 20px;
     border-radius: 18px;
+    font-size: 14px;
     background-color: ${COLORS.primary.camel};
     border: none;
     color: ${COLORS.primary.white};

@@ -40,12 +40,11 @@ const Container = styled.div`
     }
 
     input {
-        font-size: 16px;
+        font-size: 14px;
         display: flex;
         width: 100%;
         background-color: transparent;
         border: none;
-        font-size: 16px;
         color: ${COLORS.primary.black};
         box-sizing: border-box;
         caret-color: auto;
@@ -54,12 +53,11 @@ const Container = styled.div`
         }
     }
     textarea {
-        font-size: 16px;
+        font-size: 14px;
         display: flex;
         width: 100%;
         background-color: transparent;
         border: none;
-        font-size: 16px;
         color: ${COLORS.primary.black};
         box-sizing: border-box;
         caret-color: auto;

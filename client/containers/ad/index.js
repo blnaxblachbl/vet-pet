@@ -1,7 +1,11 @@
 import Link from "next/link"
 import styled from "styled-components"
 
-import { Ad, Button, Empty } from "../../components"
+import {
+    Ad,
+    Button,
+    Empty
+} from "../../components"
 
 const Container = styled.div`
     width: 100%;

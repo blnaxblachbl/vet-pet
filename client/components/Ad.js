@@ -29,7 +29,7 @@ const Container = styled.div`
             font-weight: 600;
         }
         .title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 500;
             line-height: 24px;
             height: 48px;
