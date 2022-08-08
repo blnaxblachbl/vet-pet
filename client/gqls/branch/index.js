@@ -168,6 +168,9 @@ export const FIND_MANY_BRANCH = gql`
 				goods
 			}
 		}
+		findManyBranchCount(
+			where: $where
+		)
 	}
 `
 export const CREATE_ONE_BRANCH = gql`

@@ -2,7 +2,7 @@ import Link from "next/link"
 import styled from "styled-components"
 
 import {
-    Organization,
+    Branch,
     Button,
     Empty
 } from "../../components"
@@ -53,7 +53,7 @@ const OrgContainer = ({ orgs = [] }) => {
                 {
                     orgs.map(item => (
                         <div key={item.id} className="org-item">
-                            <Organization item={item} />
+                            <Branch item={item} />
                         </div>
                     ))
                 }

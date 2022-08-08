@@ -2,15 +2,13 @@ import { gql } from "@apollo/client"
 
 export const HOME = gql`
     query{
-        findManyOrganization(
+        findManyBranch(
 			where: {
                 delete: { equals: false }
                 publish: { equals: true }
-				branchs: {
-					some: {
-						delete: { equals: false }
-						publish: { equals: true }
-					}
+				organization: {
+					delete: { equals: false }
+					publish: { equals: true }
 				}
             }
             orderBy: {
@@ -18,28 +16,47 @@ export const HOME = gql`
             }
             skip: 0
             take: 10
+			distinct: [organizationId]
 		){
 			id
 			createdAt
 			updatedAt
 			publish
 			delete
-			name
-			logo
-			description
-			city
-			phone
-			email
-			links
-			categories
-			branchs {
+			organization{
 				id
-				address
+				createdAt
+				updatedAt
+				publish
+				delete
+				name
+				logo
+				description
+				city
+				email
+				phone
+				links
+				categories
 			}
+			organizationId
+			schedule{
+				id
+				createdAt
+				updatedAt
+				branchId
+				day
+				startTime
+				endTime
+				allTime
+				dayOff
+			}
+			address
+			phone
+			images
 			_count{
-				admins
-				goods
 				orders
+				schedule
+				goods
 			}
 		} 
         findManyGood(

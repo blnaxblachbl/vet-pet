@@ -56,10 +56,10 @@ export const Footer = () => {
                     </div>
                 </div>
                 <div className="right">
-                    <Link href={'/organization?type=shop'}>
+                    <Link href={'/branch?type=shop'}>
                         <div className="link">Магазины</div>
                     </Link>
-                    <Link href={'/organization?type=vet'}>
+                    <Link href={'/branch?type=vet'}>
                         <div className="link">Клиники</div>
                     </Link>
                     <Link href={'/ad'}>

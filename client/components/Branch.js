@@ -1,6 +1,7 @@
 import styled from "styled-components"
+import Link from "next/link"
 
-import { Image } from '../components'
+import { Image } from '.'
 import { COLORS, ORG_CATEGORIES } from "../utils/const"
 
 const Container = styled.div`
@@ -23,8 +24,8 @@ const Container = styled.div`
     }
     .info {
         white-space: pre-wrap;
-        line-height: 24px;
-        height: 72px;
+        /* line-height: 24px;
+        height: 72px; */
         .name {
             font-size: 18px;
             font-weight: 600;
@@ -40,19 +41,22 @@ const Container = styled.div`
     }
 `
 
-export const Organization = ({ item, ...props }) => {
+export const Branch = ({ item, ...props }) => {
     if (!item) return null
 
     return (
-        <Container {...props}>
-            <Image
-                src={item.logo}
-                className='logo'
-            />
-            <div className="info">
-                <div className="name">{item.name}</div>
-                <div className="desc number-of-lines-2">{item.categories.map(item => ORG_CATEGORIES[item]).join(", ")}</div>
-            </div>
-        </Container>
+        <Link href={`/branch/${item.id}`}>
+            <Container {...props}>
+                <Image
+                    src={item.images[0]}
+                    className='logo'
+                />
+                <div className="info">
+                    <div className="name">{item.organization.name}</div>
+                    <div className="desc number-of-lines-2">{item.address}</div>
+                    {/* <div className="desc number-of-lines-2">{item.organization.categories.map(item => ORG_CATEGORIES[item]).join(", ")}</div> */}
+                </div>
+            </Container>
+        </Link>
     )
 }

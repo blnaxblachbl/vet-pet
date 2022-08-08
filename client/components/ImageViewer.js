@@ -96,7 +96,6 @@ const ImageViewerComponent = forwardRef(({ }, ref) => {
     }
 
     useEffect(() => {
-        console.log(isOpen)
         if (isOpen) {
             document.addEventListener('keydown', onKeyPress, true)
             document.addEventListener('keydown', onKeyPress, false)

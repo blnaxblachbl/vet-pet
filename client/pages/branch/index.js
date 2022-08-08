@@ -2,16 +2,16 @@ import { useQuery } from "@apollo/client"
 import { useRouter } from "next/router"
 import { useMemo } from "react"
 
-import OrgContainer from "../../containers/organization"
+import BranchContainer from "../../containers/branch"
 import { LoadingView, Pagination, Top } from "../../components"
-import { FIND_MANY_ORGANIZATION } from "../../gqls"
+import { FIND_MANY_BRANCH } from "../../gqls"
 
 const limit = 20
 
 const Organizations = () => {
     const { query: { page = 1 } } = useRouter()
 
-    const { previousData, data, loading } = useQuery(FIND_MANY_ORGANIZATION, {
+    const { previousData, data, loading } = useQuery(FIND_MANY_BRANCH, {
         variables: {
             where: {
                 delete: { equals: false },
@@ -23,15 +23,16 @@ const Organizations = () => {
             skip: (parseInt(page) - 1) * limit,
             orderBy: {
                 createdAt: 'desc'
-            }
+            },
+            // distinct: ['organizationId']
         },
         ssr: typeof window === 'undefined',
         skip: false
     })
 
-    const prevOrganizations = useMemo(() => previousData ? previousData.findManyOrganization : [], [previousData])
-    const organizations = useMemo(() => data ? data.findManyOrganization : prevOrganizations, [data])
-    const organizationsCount = useMemo(() => data ? data.findManyOrganizationCount : 0, [data])
+    const prevOrganizations = useMemo(() => previousData ? previousData.findManyBranch : [], [previousData])
+    const organizations = useMemo(() => data ? data.findManyBranch : prevOrganizations, [data])
+    const organizationsCount = useMemo(() => data ? data.findManyBranchCount : 0, [data])
 
     return (
         <>
@@ -40,7 +41,7 @@ const Organizations = () => {
             {
                 (!loading || prevOrganizations.length > 0) && (
                     <>
-                        <OrgContainer
+                        <BranchContainer
                             orgs={organizations}
                         />
                         <Pagination

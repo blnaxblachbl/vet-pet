@@ -67,9 +67,9 @@ export const TabBar = () => {
                     <div>Главная</div>
                 </TabBarButton>
             </Link>
-            <Link href={'/organization'}>
+            <Link href={'/branch'}>
                 <TabBarButton
-                    selected={pathname.includes('/organization')}
+                    selected={pathname.includes('/branch')}
                 >
                     <MedicalIcon />
                     <div>Клиники</div>

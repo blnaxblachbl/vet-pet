@@ -6,7 +6,7 @@ import Link from 'next/link'
 import {
     LoadingView,
     Top,
-    Organization,
+    Branch,
     Button,
     Good,
     Pagination
@@ -89,10 +89,10 @@ const Home = () => {
 
     const {
         findManyAd,
-        findManyOrganization,
+        findManyBranch,
         findManyGood,
         findManyAdCount
-    } = useMemo(() => data ? data : { findManyAd: [], findManyOrganization: [], findManyGood: [], findManyAdCount: 0 }, [data])
+    } = useMemo(() => data ? data : { findManyAd: [], findManyBranch: [], findManyGood: [], findManyAdCount: 0 }, [data])
 
     if (loading) {
         return <LoadingView loading />
@@ -101,12 +101,12 @@ const Home = () => {
     return (
         <>
             {
-                findManyOrganization.length > 0 && (
+                findManyBranch.length > 0 && (
                     <>
                         <Top
                             label='Клиники и магазины'
                             value={
-                                <Link href='/organization'>
+                                <Link href='/branch'>
                                     <AllButton>
                                         Все
                                     </AllButton>
@@ -115,9 +115,9 @@ const Home = () => {
                         />
                         <Organizations className='hide-scroll-indicator'>
                             {
-                                findManyOrganization.map(item => (
+                                findManyBranch.map(item => (
                                     <div key={item.id} className='organizatioin'>
-                                        <Organization item={item} />
+                                        <Branch item={item} />
                                     </div>
                                 ))
                             }

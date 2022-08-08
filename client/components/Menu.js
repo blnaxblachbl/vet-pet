@@ -61,8 +61,8 @@ export const Menu = () => {
                         Назад
                     </Button>
                 </MobileContainer>
-                <Link href='/organization'>
-                    <Button ouline={!(pathname === '/organization')} className={'button'}>
+                <Link href='/branch'>
+                    <Button ouline={!(pathname === '/branch')} className={'button'}>
                         Клиники и магазины
                     </Button>
                 </Link>
