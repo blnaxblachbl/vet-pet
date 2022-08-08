@@ -58,7 +58,6 @@ const LoginForm = ({
             <Input
                 name='phone'
                 placeholder='Номер телефона'
-                label='Номер телефона'
                 containerClassName='phone-input'
                 type='tel'
                 pattern='\+7 \([0-9]{3}\) [0-9]{3}-[0-9]{2}-[0-9]{2}'

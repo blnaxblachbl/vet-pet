@@ -32,7 +32,7 @@ const Container = styled.div`
     }
 `
 
-const AdsContainer = ({ ads = [] }) => {
+const AdsContainer = ({ ads = [], ...props }) => {
     if (ads.length === 0) {
         return (
             <Empty
@@ -48,17 +48,15 @@ const AdsContainer = ({ ads = [] }) => {
         )
     }
     return (
-        <>
-            <Container>
-                {
-                    ads.map(item => (
-                        <div key={item.id} className="advert-item">
-                            <Ad item={item} />
-                        </div>
-                    ))
-                }
-            </Container>
-        </>
+        <Container {...props}>
+            {
+                ads.map(item => (
+                    <div key={item.id} className="advert-item">
+                        <Ad item={item} />
+                    </div>
+                ))
+            }
+        </Container>
     )
 }
 

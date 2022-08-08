@@ -84,7 +84,7 @@ export const initApollo = (token = '', forceNew = false, nextHeaders = null) => 
                             break
                         }
                         case "user exist": {
-                            toast.error("Такой пользователь уже существует")
+                            toast.error("Пользователь с таким номером телефона уже зарегистрирован")
                             break
                         }
                         case "user not found": {
@@ -113,6 +113,10 @@ export const initApollo = (token = '', forceNew = false, nextHeaders = null) => 
                         }
                         case "code incorrect": {
                             toast.error("Не верный код")
+                            break
+                        }
+                        case "cant send code": {
+                            toast.error("Не удалось отправить сообщение")
                             break
                         }
                         default: {

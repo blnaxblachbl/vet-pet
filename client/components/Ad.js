@@ -15,6 +15,7 @@ const Container = styled.div`
     cursor: pointer;
     overflow: hidden;
     padding: 6px;
+    position: relative;
     
     .image {
         width: 100%;
@@ -41,6 +42,24 @@ const Container = styled.div`
             color: ${COLORS.secondary.gray};
         }
     }
+    .unpublish {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255,255,255,0.5);
+        padding: 12px;
+        font-size: 18px;
+        font-weight: 600;
+        display: flex;
+
+        .text {
+            text-align: center;
+            color: ${COLORS.secondary.red};
+            margin: auto;
+        }
+    }
     :hover {
         box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.03);
     }
@@ -54,10 +73,19 @@ export const Ad = ({ item }) => {
             <Container>
                 <Image src={item.images[0]} className='image' />
                 <div className="info">
-                    <div className="price">{item.price ? item.price + ' ₽': 'Бесплатно'}</div>
+                    <div className="price">{item.price ? item.price + ' ₽' : 'Бесплатно'}</div>
                     <div className="title number-of-lines-2">{item.title}</div>
                     <div className="date">Добавлено {useRealetiveDate(DateTime.fromISO(item.createdAt))}</div>
                 </div>
+                {
+                    !item.publish && (
+                        <div className="unpublish">
+                            <div className="text">
+                                Снято с публикации
+                            </div>
+                        </div>
+                    )
+                }
             </Container>
         </Link>
     )

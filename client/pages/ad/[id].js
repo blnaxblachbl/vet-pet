@@ -12,7 +12,9 @@ const SingleAd = () => {
     const { data, loading } = useQuery(FIND_UNIQUE_AD, {
         variables: {
             where: { id }
-        }
+        },
+        ssr: typeof window === 'undefined',
+        skip: false
     })
 
     const ad = useMemo(() => data ? data.findUniqueAd : null, [data])

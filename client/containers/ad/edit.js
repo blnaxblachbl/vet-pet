@@ -150,7 +150,7 @@ const EditAdForm = ({ ad }) => {
     const [updateAd, { loading }] = useMutation(UPDATE_ONE_AD, {
         onCompleted: () => {
             toast.success("Объявление обновлено")
-            router.push("/ad")
+            router.push("/profile/ad")
         },
         onError: e => { }
     })

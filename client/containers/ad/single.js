@@ -1,7 +1,8 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import styled from "styled-components"
 import { DateTime } from "luxon"
+import { toast } from "react-toastify"
 
 import {
     Button,
@@ -153,7 +154,13 @@ const SingleAdContainer = ({ ad }) => {
     const { user } = useUser()
     const [selectedIndex, setSelectedIndex] = useState(0)
 
-    if (!ad || ad.deleted || !ad.publish) {
+    useEffect(() => {
+        if (ad && !ad.delete && !ad.publish) {
+            toast.warning("Объявление снято с публикации")
+        }
+    }, [ad])
+
+    if (!ad || ad.delete) {
         return (
             <Empty
                 text="Объявление не найдено"
@@ -227,7 +234,11 @@ const SingleAdContainer = ({ ad }) => {
                             </div>
                         </div>
                         {
-                            user && user.id === ad.user.id ? (
+                            !ad.publish ? (
+                                <Button disabled className={'call-button'}>
+                                    Снято с публикации
+                                </Button>
+                            ) : user && user.id === ad.user.id ? (
                                 <Link href={`/ad/edit/${ad.id}`}>
                                     <Button className={'edit-button'} ouline>
                                         Редактировать

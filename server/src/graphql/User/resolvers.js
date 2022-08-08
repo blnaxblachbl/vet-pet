@@ -64,7 +64,7 @@ const User = {
                     code = '1234'
                 }
             }
-            if (process.env.NODE_ENV !== 'production'){
+            if (process.env.NODE_ENV !== 'production') {
                 console.log(code)
             }
 
@@ -148,7 +148,19 @@ const User = {
             if (verify && verify.role === 'user') {
                 const user = await prisma.user.findUnique({ where: { id: verify.id } })
                 if (phone && phone.set !== user.phone) {
-                    let code = await sendCodeToPhone(phone.set)
+                    const existUser = await prisma.user.findUnique({ where: { phone: phone.set } })
+                    if (existUser){
+                        throw new Error("user exist")
+                    }
+                    let code = ''
+                    if (process.env.NODE_ENV === 'production') {
+                        code = await sendCodeToPhone(phone.set)
+                    } else {
+                        code = '1234'
+                    }
+                    if (!code) {
+                        throw new Error("cant send code")
+                    }
                     const hashCode = await bcrypt.hash(`${code}`, 10)
                     await prisma.user.update({
                         where: {

@@ -72,6 +72,11 @@ const Container = styled.div`
         }
     }
 `
+const Label = styled.label`
+    font-size: 14px;
+    padding-left: 12px;
+    color: ${COLORS.secondary.darkGray};
+`
 
 const Components = {
     input: `input`,
@@ -95,6 +100,7 @@ export const Input = forwardRef(({
     onChange,
     defaultValue = undefined,
     element = 'input',
+    label = '',
     ...props
 }, ref) => {
     const [focused, setFocused] = useState(false)
@@ -108,37 +114,40 @@ export const Input = forwardRef(({
     const _value = useMemo(() => value ? value : innerValue, [value, innerValue])
 
     return (
-        <Container
-            className={containerClassName}
-            style={containerStyle}
-        >
-            <div className="row">
-                {LeftComponent}
-                <Element
-                    ref={ref}
-                    value={_value}
-                    className={inputClassName}
-                    style={style}
-                    placeholder={focused ? undefined : placeholder}
-                    onFocus={(e) => {
-                        setFocused(true)
-                        onFocus(e)
-                    }}
-                    onBlur={(e) => {
-                        setFocused(false)
-                        onBlur(e)
-                    }}
-                    onChange={(e) => {
-                        if (onChange) {
-                            onChange(e)
-                        }
-                        setInnerValue(e.target.value)
-                    }}
-                    disabled={disabled}
-                    {...props}
-                />
-                {RightComponent}
-            </div>
-        </Container>
+        <>
+            {label && <Label>{label}</Label>}
+            <Container
+                className={containerClassName}
+                style={containerStyle}
+            >
+                <div className="row">
+                    {LeftComponent}
+                    <Element
+                        ref={ref}
+                        value={_value}
+                        className={inputClassName}
+                        style={style}
+                        placeholder={focused ? undefined : placeholder}
+                        onFocus={(e) => {
+                            setFocused(true)
+                            onFocus(e)
+                        }}
+                        onBlur={(e) => {
+                            setFocused(false)
+                            onBlur(e)
+                        }}
+                        onChange={(e) => {
+                            if (onChange) {
+                                onChange(e)
+                            }
+                            setInnerValue(e.target.value)
+                        }}
+                        disabled={disabled}
+                        {...props}
+                    />
+                    {RightComponent}
+                </div>
+            </Container>
+        </>
     )
 })
