@@ -98,6 +98,8 @@ export const HOME = gql`
 			organization {
 				id
 				name
+				logo
+				categories
 			}
 		} 
         findManyAd(

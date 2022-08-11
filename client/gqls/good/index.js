@@ -30,6 +30,8 @@ export const FIND_UNIQUE_GOOD = gql`
 			organization {
 				id
 				name
+				logo
+				categories
 			}
 		}
 	}
@@ -69,6 +71,8 @@ export const FIND_FIRST_GOOD = gql`
 			organization {
 				id
 				name
+				logo
+				categories
 			}
 		}
 	}
@@ -108,6 +112,8 @@ export const FIND_MANY_GOOD = gql`
 			organization {
 				id
 				name
+				logo
+				categories
 			}
 		}
 		findManyGoodCount(
@@ -140,6 +146,8 @@ export const CREATE_ONE_GOOD = gql`
 			organization {
 				id
 				name
+				logo
+				categories
 			}
 		}
 	}
@@ -171,6 +179,8 @@ export const UPDATE_ONE_GOOD = gql`
 			organization {
 				id
 				name
+				logo
+				categories
 			}
 		}
 	}
@@ -200,6 +210,8 @@ export const DELETE_ONE_GOOD = gql`
 			organization {
 				id
 				name
+				logo
+				categories
 			}
 		}
 	}
@@ -233,6 +245,8 @@ export const UPSERT_ONE_GOOD = gql`
 			organization {
 				id
 				name
+				logo
+				categories
 			}
 		}
 	}
