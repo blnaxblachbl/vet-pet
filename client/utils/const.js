@@ -17,7 +17,7 @@ export const COLORS = {
     }
 }
 export const ORG_CATEGORIES = {
-    vat: 'Ветеринарная клиника',
+    vet: 'Ветеринарная клиника',
     shop: 'Магазин для животных',
     'pet-shop': 'Зоомагазин'
 }

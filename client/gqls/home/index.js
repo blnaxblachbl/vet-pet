@@ -53,6 +53,7 @@ export const HOME = gql`
 			address
 			phone
 			images
+			rating
 			_count{
 				orders
 				schedule

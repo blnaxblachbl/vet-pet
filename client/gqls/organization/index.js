@@ -23,6 +23,7 @@ export const FIND_UNIQUE_ORGANIZATION = gql`
 			branchs {
 				id
 				address
+				rating
 			}
 			_count{
 				admins
@@ -66,6 +67,7 @@ export const FIND_FIRST_ORGANIZATION = gql`
 			branchs {
 				id
 				address
+				rating
 			}
 			_count{
 				admins
@@ -108,6 +110,7 @@ export const FIND_MANY_ORGANIZATION = gql`
 			branchs {
 				id
 				address
+				rating
 			}
 			_count{
 				admins
@@ -143,6 +146,7 @@ export const CREATE_ONE_ORGANIZATION = gql`
 			branchs {
 				id
 				address
+				rating
 			}
 			_count{
 				admins
@@ -177,6 +181,7 @@ export const UPDATE_ONE_ORGANIZATION = gql`
 			branchs {
 				id
 				address
+				rating
 			}
 			_count{
 				admins
@@ -209,6 +214,7 @@ export const DELETE_ONE_ORGANIZATION = gql`
 			branchs {
 				id
 				address
+				rating
 			}
 			_count{
 				admins
@@ -245,6 +251,7 @@ export const UPSERT_ONE_ORGANIZATION = gql`
 			branchs {
 				id
 				address
+				rating
 			}
 			_count{
 				admins

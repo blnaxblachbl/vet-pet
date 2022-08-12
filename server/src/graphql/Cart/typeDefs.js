@@ -8,6 +8,8 @@ const Cart = gql`
     count: Int!
     good: Good!
     goodId: String!
+    user: User
+    userId: String
   }
 
   type Query {

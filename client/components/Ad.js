@@ -2,7 +2,9 @@ import styled from "styled-components"
 import Link from "next/link"
 import { DateTime } from "luxon"
 
-import { Button, Image } from "."
+import Eye from '../public/icons/eye.svg'
+
+import { Image } from "."
 import { COLORS } from "../utils/const"
 import { useRealetiveDate } from "../utils/hooks"
 
@@ -63,6 +65,23 @@ const Container = styled.div`
     :hover {
         box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.03);
     }
+    .view-count {
+        display: flex;
+        position: absolute;
+        align-items: center;
+        top: 15px;
+        right: 15px;
+        vertical-align: middle;
+        font-size: 16px;
+        padding: 0 6px;
+        box-sizing: border-box;
+        background-color: ${COLORS.primary.white};
+        border-radius: 12px;
+        height: fit-content;
+        svg {
+            margin-right: 3px;
+        }
+    }
 `
 
 export const Ad = ({ item }) => {
@@ -86,6 +105,10 @@ export const Ad = ({ item }) => {
                         </div>
                     )
                 }
+                <div className="view-count">
+                    <Eye />
+                    {item.viewCount}
+                </div>
             </Container>
         </Link>
     )

@@ -42,6 +42,7 @@ export const FIND_UNIQUE_BRANCH = gql`
 			address
 			phone
 			images
+			rating
 			_count{
 				orders
 				schedule
@@ -102,6 +103,7 @@ export const FIND_FIRST_BRANCH = gql`
 			address
 			phone
 			images
+			rating
 			_count{
 				orders
 				schedule
@@ -162,6 +164,7 @@ export const FIND_MANY_BRANCH = gql`
 			address
 			phone
 			images
+			rating
 			_count{
 				orders
 				schedule
@@ -215,6 +218,7 @@ export const CREATE_ONE_BRANCH = gql`
 			address
 			phone
 			images
+			rating
 			_count{
 				orders
 				schedule
@@ -267,6 +271,7 @@ export const UPDATE_ONE_BRANCH = gql`
 			address
 			phone
 			images
+			rating
 			_count{
 				orders
 				schedule
@@ -317,6 +322,7 @@ export const DELETE_ONE_BRANCH = gql`
 			address
 			phone
 			images
+			rating
 			_count{
 				orders
 				schedule
@@ -371,6 +377,7 @@ export const UPSERT_ONE_BRANCH = gql`
 			address
 			phone
 			images
+			rating
 			_count{
 				orders
 				schedule

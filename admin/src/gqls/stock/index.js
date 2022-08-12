@@ -13,9 +13,9 @@ export const FIND_UNIQUE_STOCK = gql`
 			publish
 			delete
 			deadline
-			name
+			title
 			description
-			code
+			image
 			organization{
 				id
 				createdAt
@@ -26,12 +26,18 @@ export const FIND_UNIQUE_STOCK = gql`
 				logo
 				description
 				city
-				address
-				phone
 				email
+				phone
 				links
-				images
 				categories
+				admins{
+				rating
+				_count{
+					goods
+					branchs
+					orders
+					stocks
+				}
 			}
 			organizationId
 		}
@@ -60,9 +66,9 @@ export const FIND_FIRST_STOCK = gql`
 			publish
 			delete
 			deadline
-			name
+			title
 			description
-			code
+			image
 			organization{
 				id
 				createdAt
@@ -73,12 +79,18 @@ export const FIND_FIRST_STOCK = gql`
 				logo
 				description
 				city
-				address
-				phone
 				email
+				phone
 				links
-				images
 				categories
+				admins{
+				rating
+				_count{
+					goods
+					branchs
+					orders
+					stocks
+				}
 			}
 			organizationId
 		}
@@ -107,9 +119,9 @@ export const FIND_MANY_STOCK = gql`
 			publish
 			delete
 			deadline
-			name
+			title
 			description
-			code
+			image
 			organization{
 				id
 				createdAt
@@ -120,12 +132,18 @@ export const FIND_MANY_STOCK = gql`
 				logo
 				description
 				city
-				address
-				phone
 				email
+				phone
 				links
-				images
 				categories
+				admins{
+				rating
+				_count{
+					goods
+					branchs
+					orders
+					stocks
+				}
 			}
 			organizationId
 		}
@@ -144,9 +162,9 @@ export const CREATE_ONE_STOCK = gql`
 			publish
 			delete
 			deadline
-			name
+			title
 			description
-			code
+			image
 			organization{
 				id
 				createdAt
@@ -157,12 +175,18 @@ export const CREATE_ONE_STOCK = gql`
 				logo
 				description
 				city
-				address
-				phone
 				email
+				phone
 				links
-				images
 				categories
+				admins{
+				rating
+				_count{
+					goods
+					branchs
+					orders
+					stocks
+				}
 			}
 			organizationId
 		}
@@ -183,9 +207,9 @@ export const UPDATE_ONE_STOCK = gql`
 			publish
 			delete
 			deadline
-			name
+			title
 			description
-			code
+			image
 			organization{
 				id
 				createdAt
@@ -196,12 +220,18 @@ export const UPDATE_ONE_STOCK = gql`
 				logo
 				description
 				city
-				address
-				phone
 				email
+				phone
 				links
-				images
 				categories
+				admins{
+				rating
+				_count{
+					goods
+					branchs
+					orders
+					stocks
+				}
 			}
 			organizationId
 		}
@@ -220,9 +250,9 @@ export const DELETE_ONE_STOCK = gql`
 			publish
 			delete
 			deadline
-			name
+			title
 			description
-			code
+			image
 			organization{
 				id
 				createdAt
@@ -233,12 +263,18 @@ export const DELETE_ONE_STOCK = gql`
 				logo
 				description
 				city
-				address
-				phone
 				email
+				phone
 				links
-				images
 				categories
+				admins{
+				rating
+				_count{
+					goods
+					branchs
+					orders
+					stocks
+				}
 			}
 			organizationId
 		}
@@ -261,9 +297,9 @@ export const UPSERT_ONE_STOCK = gql`
 			publish
 			delete
 			deadline
-			name
+			title
 			description
-			code
+			image
 			organization{
 				id
 				createdAt
@@ -274,12 +310,18 @@ export const UPSERT_ONE_STOCK = gql`
 				logo
 				description
 				city
-				address
-				phone
 				email
+				phone
 				links
-				images
 				categories
+				admins{
+				rating
+				_count{
+					goods
+					branchs
+					orders
+					stocks
+				}
 			}
 			organizationId
 		}

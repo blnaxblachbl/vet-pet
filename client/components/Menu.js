@@ -27,7 +27,6 @@ const Container = styled.form`
         .button {
             display: none;
         }
-        margin-bottom: 12px;
     }
 `
 const MobileContainer = styled.div`

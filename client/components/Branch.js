@@ -1,8 +1,10 @@
 import styled from "styled-components"
 import Link from "next/link"
 
+import Star from '../public/icons/star.svg'
+
 import { Image } from '.'
-import { COLORS, ORG_CATEGORIES } from "../utils/const"
+import { COLORS } from "../utils/const"
 
 const Container = styled.div`
     width: 100%;
@@ -23,17 +25,32 @@ const Container = styled.div`
         border-radius: 6px;
     }
     .info {
-        white-space: pre-wrap;
-        /* line-height: 24px;
-        height: 72px; */
         .name {
             font-size: 18px;
             font-weight: 600;
+            margin-bottom: 6px;
         }
         .desc {
-            font-size: 14px;
-            color: ${COLORS.secondary.gray};
-            /* color: ${COLORS.secondary.gray}; */
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            color: ${COLORS.primary.black};
+            margin: 0;
+            .rating {
+                font-size: 18px;
+                font-weight: 600;
+                margin-right: 6px;
+            }
+            .address {
+                font-size: 14px;
+            }
+            svg {
+                margin-top: -5px;
+                margin-right: 6px;
+                path {
+                    fill: #FFD600;
+                }
+            }
         }
     }
     :hover {
@@ -53,7 +70,15 @@ export const Branch = ({ item, ...props }) => {
                 />
                 <div className="info">
                     <div className="name">{item.organization.name}</div>
-                    <div className="desc number-of-lines-2">{item.address}</div>
+                    <div className="desc">
+                        <Star />
+                        <span className="rating">
+                            {item.rating},
+                        </span>
+                        <span className="address">
+                            {item.address}
+                        </span>
+                    </div>
                     {/* <div className="desc number-of-lines-2">{item.organization.categories.map(item => ORG_CATEGORIES[item]).join(", ")}</div> */}
                 </div>
             </Container>

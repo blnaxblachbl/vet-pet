@@ -102,7 +102,7 @@ const Container = styled.div`
             }
             .logo {
                 margin-bottom: 12px;
-                width: 70%;
+                width: 50%;
                 align-self: center;
                 height: auto;
                 aspect-ratio: 1/1;

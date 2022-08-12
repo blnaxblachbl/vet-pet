@@ -9,6 +9,7 @@ const Branch = gql`
     delete: Boolean!
     organization: Organization!
     organizationId: String!
+    rating: Float!
     orders(
       where: OrderWhereInput
       orderBy: OrderOrderByWithRelationInput

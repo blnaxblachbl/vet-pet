@@ -47,6 +47,14 @@ const Organization = gql`
       skip: Int
       distinct: OrderScalarFieldEnum
     ): [Order!]!
+    stocks(
+      where: StockWhereInput
+      orderBy: StockOrderByWithRelationInput
+      cursor: StockWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: StockScalarFieldEnum
+    ): [Stock!]!
     _count: OrganizationCountOutputType!
   }
 

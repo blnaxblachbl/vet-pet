@@ -39,6 +39,7 @@ model User {
     ads       Ad[] // объявления пользователя
     status    String   @default("Пользователь") // Пользователь, Заводчик
     adopts    Adopt[]
+    carts     Cart[]
 }
 
 //Ветеринарная оргианизация
@@ -60,6 +61,7 @@ model Organization {
     goods       Good[] // товары и услуги которые предоставляет организация
     branchs     Branch[]
     orders      Order[] // список заказов организации
+    stocks      Stock[] // акции организации
 }
 
 model Branch {
@@ -76,6 +78,7 @@ model Branch {
     address        String // адрес физического расположения
     phone          String // контактный телефон филиала
     images         String[] // массив изображений
+    rating         Float        @default(4)
 }
 
 // Расписание работы
@@ -112,19 +115,19 @@ model Good {
 }
 
 // Акция 
-// model Stock {
-//     id             String       @id @default(cuid())
-//     createdAt      DateTime     @default(now())
-//     updatedAt      DateTime     @updatedAt
-//     publish        Boolean      @default(true) // статус публикации
-//     delete         Boolean      @default(false) // статус удаления
-//     deadline       DateTime // срок действия акции до конца дня
-//     name           String // название акции
-//     description    String // описание акции
-//     code           String? // промокод* данный параметр пока не будет использоваться. это на будущее 
-//     organization   Organization @relation(fields: [organizationId], references: [id])
-//     organizationId String
-// }
+model Stock {
+    id             String       @id @default(cuid())
+    createdAt      DateTime     @default(now())
+    updatedAt      DateTime     @updatedAt
+    publish        Boolean      @default(true) // статус публикации
+    delete         Boolean      @default(false) // статус удаления
+    deadline       DateTime // срок действия акции до конца дня
+    title          String // название акции
+    description    String // описание акции
+    image          String // баннер акции
+    organization   Organization @relation(fields: [organizationId], references: [id])
+    organizationId String
+}
 
 // Корзина
 model Cart {
@@ -134,6 +137,8 @@ model Cart {
     count     Int      @default(1) // количестов товара, на услуги не используется
     good      Good     @relation(fields: [goodId], references: [id]) //товар или услуга в корзине
     goodId    String
+    user      User?    @relation(fields: [userId], references: [id])
+    userId    String?
 }
 
 // Заказы

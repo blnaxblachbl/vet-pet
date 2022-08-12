@@ -1,3 +1,4 @@
+const { Stock } = require('./Stock/resolvers')
 const { Adopt } = require('./Adopt/resolvers')
 const { Branch } = require('./Branch/resolvers')
 const { Ad } = require('./Ad/resolvers')
@@ -24,6 +25,8 @@ const resolvers = [
   Branch,
   ,
   Adopt,
+  ,
+  Stock,
 ]
 
 module.exports = { resolvers }

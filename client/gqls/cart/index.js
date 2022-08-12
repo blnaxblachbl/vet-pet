@@ -43,6 +43,19 @@ export const FIND_UNIQUE_CART = gql`
 				type
 			}
 			goodId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+			}
+			userId
 		}
 	}
 `
@@ -99,6 +112,19 @@ export const FIND_FIRST_CART = gql`
 				type
 			}
 			goodId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+			}
+			userId
 		}
 	}
 `
@@ -155,6 +181,19 @@ export const FIND_MANY_CART = gql`
 				type
 			}
 			goodId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+			}
+			userId
 		}
 	}
 `
@@ -201,6 +240,19 @@ export const CREATE_ONE_CART = gql`
 				type
 			}
 			goodId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+			}
+			userId
 		}
 	}
 `
@@ -249,6 +301,19 @@ export const UPDATE_ONE_CART = gql`
 				type
 			}
 			goodId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+			}
+			userId
 		}
 	}
 `
@@ -295,6 +360,19 @@ export const DELETE_ONE_CART = gql`
 				type
 			}
 			goodId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+			}
+			userId
 		}
 	}
 `
@@ -345,6 +423,19 @@ export const UPSERT_ONE_CART = gql`
 				type
 			}
 			goodId
+			user {
+				id
+				createdAt
+				updatedAt
+				name
+				phone
+				code
+				email
+				block
+				delete
+				avatar
+			}
+			userId
 		}
 	}
 `

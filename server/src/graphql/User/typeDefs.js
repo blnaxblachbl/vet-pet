@@ -35,14 +35,6 @@ const User = gql`
       skip: Int
       distinct: OrderScalarFieldEnum
     ): [Order!]!
-    # pets(
-    #   where: PetWhereInput
-    #   orderBy: PetOrderByWithRelationInput
-    #   cursor: PetWhereUniqueInput
-    #   take: Int
-    #   skip: Int
-    #   distinct: PetScalarFieldEnum
-    # ): [Pet!]!
     adopts(
       where: AdoptWhereInput
       orderBy: [AdoptOrderByWithRelationInput]
@@ -59,6 +51,14 @@ const User = gql`
       skip: Int
       distinct: [AdScalarFieldEnum]
     ): [Ad!]!
+    carts(
+      where: CartWhereInput
+      orderBy: [CartOrderByWithRelationInput]
+      cursor: CartWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: [CartScalarFieldEnum]
+    ): [Cart!]!
     _count: UserCountOutputType!
   }
 
