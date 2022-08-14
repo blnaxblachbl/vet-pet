@@ -3,9 +3,12 @@ import { useQuery } from "@apollo/client"
 import { useRouter } from "next/router"
 import styled from "styled-components"
 
-import { Top, Pagination, LoadingView, Select } from "../../components"
+import CloseIcon from '../../public/icons/close.svg'
+
+import { Top, Pagination, LoadingView, Select, Button } from "../../components"
 import { FIND_MANY_GOOD, FIND_MANY_BRANCH } from "../../gqls"
 import GoodsContainer from "../../containers/good"
+import { COLORS } from "../../utils/const"
 
 const Filters = styled.div`
     margin-bottom: 24px;
@@ -20,6 +23,21 @@ const Filters = styled.div`
             margin: 0;
         }
     }
+    .category-button {
+        font-weight: normal;
+        border: solid 1px ${COLORS.secondary.lightGray};
+        background-color: ${COLORS.primary.white};
+        color: ${COLORS.primary.black};
+        span {
+            font-weight: bold;
+            margin-left: 6px;
+        }
+        svg {
+            width: 18px;
+            height: 18px;
+            margin-left: 6px;
+        }
+    }
 `
 
 const limit = 20
@@ -27,7 +45,7 @@ const limit = 20
 const Goods = () => {
     const router = useRouter()
     const { query, pathname } = router
-    const { page = 1, branch, search, type } = query
+    const { page = 1, branch, search, type, category } = query
 
     const { previousData, data, loading } = useQuery(FIND_MANY_GOOD, {
         variables: {
@@ -39,7 +57,8 @@ const Goods = () => {
                 OR: search ? [
                     { name: { contains: search, mode: 'insensitive' } },
                     { description: { contains: search, mode: 'insensitive' } }
-                ] : undefined
+                ] : undefined,
+                categories: category ? { has: category } : undefined
             },
             take: limit,
             skip: (parseInt(page) - 1) * limit,
@@ -95,6 +114,18 @@ const Goods = () => {
         })
     }
 
+    const clearCategory = () => {
+        const newQuery = structuredClone(query)
+        delete newQuery['category']
+        router.push({
+            pathname,
+            query: newQuery,
+
+        }, undefined, {
+            scroll: false
+        })
+    }
+
     return (
         <>
             <Top label={`Товары и услуги${search ? ` по запросу "${search}"` : ''}`} />
@@ -122,6 +153,19 @@ const Goods = () => {
                         ))
                     }
                 </Select>
+                {
+                    category && (
+                        <div className="filter-item">
+                            <Button onClick={clearCategory} className='category-button'>
+                                Категория
+                                <span>
+                                    {category}
+                                </span>
+                                <CloseIcon />
+                            </Button>
+                        </div>
+                    )
+                }
             </Filters>
             <LoadingView loading={loading || branchLoading} />
             {

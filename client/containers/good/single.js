@@ -3,7 +3,7 @@ import Link from "next/link"
 import styled from "styled-components"
 
 import { Button, Empty, Top, Image, Carousel, viewerRef } from "../../components"
-import { COLORS, ORG_CATEGORIES } from "../../utils/const"
+import { COLORS, ORG_CATEGORIES, GOOD_TYPES } from "../../utils/const"
 
 const Container = styled.div`
     display: grid;
@@ -138,6 +138,47 @@ const OrgInfo = styled.div`
         padding: 12px;
     }
 `
+const LabledValue = styled.div`
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: solid 1px ${COLORS.secondary.lightGray};
+    margin-bottom: 12px;
+    padding: 6px 0;
+    :last-child {
+        margin-bottom: 0;
+    }
+
+    .label {
+        color: ${COLORS.secondary.gray};
+        font-size: 14px;
+        margin-right: 6px;
+    }
+    .value {
+        color: ${COLORS.primary.black};
+        font-size: 16px;
+        text-align: right;
+        white-space: pre-wrap;
+    }
+    .bold {
+        font-weight: bold;
+    }
+    a {
+        color: ${COLORS.primary.purple};
+    }
+    .link {
+        color: ${COLORS.primary.purple};
+        cursor: pointer;
+        ::after {
+            content: ", "
+        }
+        :last-child {
+            ::after {
+                content: ""
+            }
+        }
+    }
+`
 
 const SingleGoodContainer = ({ good }) => {
     const imagesRef = useRef()
@@ -216,6 +257,22 @@ const SingleGoodContainer = ({ good }) => {
                                 <div className="branchs">{good.organization.categories.map(item => ORG_CATEGORIES[item]).join(", ")}</div>
                             </div>
                         </div>
+                        <LabledValue>
+                            <div className="label">Категории</div>
+                            <div className="value">
+                                {good.categories.map(item => (
+                                    <Link href={`/good?category=${item}`}>
+                                        <span className="link">{item}</span>
+                                    </Link>
+                                ))}
+                            </div>
+                        </LabledValue>
+                        <LabledValue>
+                            <div className="label">Тип</div>
+                            <div className="value">
+                                {GOOD_TYPES[good.type]}
+                            </div>
+                        </LabledValue>
                         <div className="row price-container">
                             <div>Цена</div>
                             <div className='price'>{good.price ? good.price + ' ₽' : 'Бесплатно'}</div>
