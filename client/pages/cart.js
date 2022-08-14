@@ -6,6 +6,7 @@ import { useContext } from "../context"
 import { DELETE_MANY_CART } from "../gqls"
 
 import { COLORS } from "../utils/const"
+import CartContainer from "../containers/cart"
 
 const ClearButton = styled(Button)`
     padding: 0;
@@ -20,7 +21,7 @@ const CartPage = () => {
     const [deleteManyCart] = useMutation(DELETE_MANY_CART)
 
     const clearCart = () => {
-        if (window.confirm("Очистить корзину?")){
+        if (window.confirm("Очистить корзину?")) {
             deleteManyCart({
                 variables: { where: { id: { in: cart.map(item => item.id) } } }
             })
@@ -42,6 +43,9 @@ const CartPage = () => {
                         Очистить
                     </ClearButton>
                 }
+            />
+            <CartContainer 
+                cart={cart}
             />
         </>
     )
