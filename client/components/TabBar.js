@@ -3,6 +3,8 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 
 import { COLORS } from "../utils/const"
+import { Badge } from "./Badge"
+import { useContext } from "../context"
 
 import HomeIcon from '../public/icons/paw.svg'
 import MedicalIcon from '../public/icons/medical.svg'
@@ -43,6 +45,13 @@ const TabBarButton = styled.div`
     width: 100%;
     box-sizing: border-box;
     text-align: center;
+    position: relative;
+
+    .tabbar-badge {
+        position: absolute;
+        top: 0;
+        right: 6px;
+    }
 
     svg {
         path {
@@ -55,6 +64,7 @@ const TabBarButton = styled.div`
 
 export const TabBar = () => {
     const router = useRouter()
+    const { state: { cart } } = useContext()
     const { pathname } = router
 
     return (
@@ -81,6 +91,10 @@ export const TabBar = () => {
                 >
                     <GoodsIcon />
                     <div>Товары</div>
+                    <Badge 
+                        count={cart.length}
+                        className='tabbar-badge'
+                    />
                 </TabBarButton>
             </Link>
             <Link href={'/ad'}>

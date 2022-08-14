@@ -30,6 +30,38 @@ export const FIND_ME_USER = gql`
 					gender
 				}
 			}
+			carts {
+				id
+				createdAt
+				updatedAt
+				count
+				good{
+					id
+					createdAt
+					updatedAt
+					publish
+					delete
+					name
+					description
+					price
+					images
+					organization{
+						id
+						publish
+						delete
+						name
+						logo
+						description
+					}
+					organizationId
+					type
+					branchs {
+						id
+						address
+					}
+				}
+				goodId
+			}
 			_count{
 				orders
 				adopts
@@ -69,6 +101,38 @@ export const FIND_UNIQUE_USER = gql`
 					breed
 					gender
 				}
+			}
+			carts {
+				id
+				createdAt
+				updatedAt
+				count
+				good{
+					id
+					createdAt
+					updatedAt
+					publish
+					delete
+					name
+					description
+					price
+					images
+					organization{
+						id
+						publish
+						delete
+						name
+						logo
+						description
+					}
+					organizationId
+					type
+					branchs {
+						id
+						address
+					}
+				}
+				goodId
 			}
 			_count{
 				orders
@@ -120,6 +184,38 @@ export const FIND_FIRST_USER = gql`
 					gender
 				}
 			}
+			carts {
+				id
+				createdAt
+				updatedAt
+				count
+				good{
+					id
+					createdAt
+					updatedAt
+					publish
+					delete
+					name
+					description
+					price
+					images
+					organization{
+						id
+						publish
+						delete
+						name
+						logo
+						description
+					}
+					organizationId
+					type
+					branchs {
+						id
+						address
+					}
+				}
+				goodId
+			}
 			_count{
 				orders
 				adopts
@@ -170,6 +266,38 @@ export const FIND_MANY_USER = gql`
 					gender
 				}
 			}
+			carts {
+				id
+				createdAt
+				updatedAt
+				count
+				good{
+					id
+					createdAt
+					updatedAt
+					publish
+					delete
+					name
+					description
+					price
+					images
+					organization{
+						id
+						publish
+						delete
+						name
+						logo
+						description
+					}
+					organizationId
+					type
+					branchs {
+						id
+						address
+					}
+				}
+				goodId
+			}
 			_count{
 				orders
 				adopts
@@ -209,6 +337,38 @@ export const CREATE_ONE_USER = gql`
 					breed
 					gender
 				}
+			}
+			carts {
+				id
+				createdAt
+				updatedAt
+				count
+				good{
+					id
+					createdAt
+					updatedAt
+					publish
+					delete
+					name
+					description
+					price
+					images
+					organization{
+						id
+						publish
+						delete
+						name
+						logo
+						description
+					}
+					organizationId
+					type
+					branchs {
+						id
+						address
+					}
+				}
+				goodId
 			}
 			_count{
 				orders
@@ -252,6 +412,38 @@ export const UPDATE_ONE_USER = gql`
 					gender
 				}
 			}
+			carts {
+				id
+				createdAt
+				updatedAt
+				count
+				good{
+					id
+					createdAt
+					updatedAt
+					publish
+					delete
+					name
+					description
+					price
+					images
+					organization{
+						id
+						publish
+						delete
+						name
+						logo
+						description
+					}
+					organizationId
+					type
+					branchs {
+						id
+						address
+					}
+				}
+				goodId
+			}
 			_count{
 				orders
 				adopts
@@ -291,6 +483,38 @@ export const DELETE_ONE_USER = gql`
 					breed
 					gender
 				}
+			}
+			carts {
+				id
+				createdAt
+				updatedAt
+				count
+				good{
+					id
+					createdAt
+					updatedAt
+					publish
+					delete
+					name
+					description
+					price
+					images
+					organization{
+						id
+						publish
+						delete
+						name
+						logo
+						description
+					}
+					organizationId
+					type
+					branchs {
+						id
+						address
+					}
+				}
+				goodId
 			}
 			_count{
 				orders
@@ -336,6 +560,38 @@ export const UPSERT_ONE_USER = gql`
 					breed
 					gender
 				}
+			}
+			carts {
+				id
+				createdAt
+				updatedAt
+				count
+				good{
+					id
+					createdAt
+					updatedAt
+					publish
+					delete
+					name
+					description
+					price
+					images
+					organization{
+						id
+						publish
+						delete
+						name
+						logo
+						description
+					}
+					organizationId
+					type
+					branchs {
+						id
+						address
+					}
+				}
+				goodId
 			}
 			_count{
 				orders

@@ -19,6 +19,7 @@ import {
 } from '../components'
 import { initApollo } from "../utils/apollo"
 import { useMobile } from '../utils/hooks'
+import ContextProvider from '../context'
 
 Settings.defaultLocale = "ru"
 
@@ -37,14 +38,16 @@ function MyApp({ Component, pageProps, token, headers, userAgent }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
             </Head>
             <ApolloProvider client={client}>
-                <Header isMobile={isMobile} />
-                <Padding isMobile={isMobile}>
-                    <Menu isMobile={isMobile} />
-                    <Component isMobile={isMobile} {...pageProps} />
-                </Padding>
-                <Footer />
-                <TabBar />
-                <AuthComponent />
+                <ContextProvider>
+                    <Header isMobile={isMobile} />
+                    <Padding isMobile={isMobile}>
+                        <Menu isMobile={isMobile} />
+                        <Component isMobile={isMobile} {...pageProps} />
+                    </Padding>
+                    <Footer />
+                    <TabBar />
+                    <AuthComponent />
+                </ContextProvider>
             </ApolloProvider>
             <ToastContainer
                 position='top-center'

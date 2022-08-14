@@ -9,8 +9,10 @@ import {
     authRef,
     Padding,
     Button,
-    Avatar
+    Avatar,
+    Badge
 } from '.'
+import { useContext } from '../context'
 import { useUser } from '../utils/hooks'
 import { COLORS } from '../utils/const'
 
@@ -38,8 +40,18 @@ const Inner = styled(props => <Padding {...props} />)`
         .header-create-ad {
             
         }
+        .avatar-container {
+            position: relative;
+            height: 36px;
+        }
+        .badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+        }
         .avatar {
             cursor: pointer;
+            height: fit-content;
         }
     }
     .logo-container {
@@ -74,12 +86,19 @@ const Inner = styled(props => <Padding {...props} />)`
         .search-container {
             margin-right: 0;
         }
+        .buttons-container {
+            .badge {
+                display: none;
+            }
+        }
     }
 `
 
 export const Header = ({ isMobile }) => {
     const { user } = useUser()
     const router = useRouter()
+    // const { state } = useContext()
+    const { state: { cart } } = useContext()
 
     return (
         <Container>
@@ -88,14 +107,6 @@ export const Header = ({ isMobile }) => {
                     <div className='logo-container'>
                         <Logo />
                     </div>
-                    {/* <div>
-                        <div className='logo-container'>
-                            <Logo />
-                        </div>
-                        <div className='mobile-logo-container'>
-                            <Paw />
-                        </div>
-                    </div> */}
                 </Link>
                 <div className='buttons-container'>
                     <Link href='/ad/create'>
@@ -117,11 +128,17 @@ export const Header = ({ isMobile }) => {
                             </Button>
                         )
                     }
-                    <Avatar
-                        onClick={() => router.push('/profile')}
-                        user={user}
-                        className='avatar'
-                    />
+                    <div className='avatar-container'>
+                        <Badge
+                            count={cart.length}
+                            className='badge'
+                        />
+                        <Avatar
+                            onClick={() => router.push('/profile')}
+                            user={user}
+                            className='avatar'
+                        />
+                    </div>
                 </div>
             </Inner>
         </Container>

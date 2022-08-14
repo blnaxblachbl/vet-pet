@@ -34,6 +34,38 @@ export const SEND_USER_CODE = gql`
 						gender
 					}
 				}
+				carts {
+					id
+					createdAt
+					updatedAt
+					count
+					good{
+						id
+						createdAt
+						updatedAt
+						publish
+						delete
+						name
+						description
+						price
+						images
+						organization{
+							id
+							publish
+							delete
+							name
+							logo
+							description
+						}
+						organizationId
+						type
+						branchs {
+							id
+							address
+						}
+					}
+					goodId
+				}
 				_count{
 					orders
 					adopts

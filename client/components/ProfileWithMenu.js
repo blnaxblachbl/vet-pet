@@ -5,9 +5,10 @@ import styled from "styled-components"
 import Link from "next/link"
 import cookie from 'cookie'
 
-import { COLORS } from "../utils/const"
+import { Badge, Modal } from "."
 import { FIND_ME_USER } from "../gqls"
-import { Modal } from "./Modal"
+import { COLORS } from "../utils/const"
+import { useContext } from "../context"
 
 const MenuContainer = styled.div`
     border-radius: 18px;
@@ -27,6 +28,10 @@ const MenuContainer = styled.div`
         :last-child {
             margin-bottom: 0;
         }
+    }
+    .link-badge {
+        display: inline-block;
+        margin-left: 6px;
     }
     .logout {
         color: ${COLORS.secondary.gray};
@@ -84,6 +89,7 @@ const ProfileMenu = (props) => {
     const router = useRouter()
     const { pathname } = router
     const client = useApolloClient()
+    const { state: { cart } } = useContext()
 
     const logOut = () => {
         if (window.confirm("Выйти из аккаунта?")) {
@@ -110,6 +116,16 @@ const ProfileMenu = (props) => {
                 </Link>
                 <Link href='/ad/create'>
                     <div className={`link`}>Разместить объявления</div>
+                </Link>
+                <Link href='/cart'>
+                    <div className={`link`}>
+                        Корзина
+                        <div className='link-badge'>
+                            <Badge
+                                count={cart.length}
+                            />
+                        </div>
+                    </div>
                 </Link>
                 <Link href='/profile/order'>
                     <div className={`link ${pathname === '/profile/order' && 'selected'}`}>Мои Заказы</div>

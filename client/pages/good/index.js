@@ -9,6 +9,7 @@ import { Top, Pagination, LoadingView, Select, Button } from "../../components"
 import { FIND_MANY_GOOD, FIND_MANY_BRANCH } from "../../gqls"
 import GoodsContainer from "../../containers/good"
 import { COLORS } from "../../utils/const"
+import { useContext } from "../../context"
 
 const Filters = styled.div`
     margin-bottom: 24px;
@@ -39,11 +40,18 @@ const Filters = styled.div`
         }
     }
 `
+const ToCart = styled(Button)`
+    padding: 0;
+    height: auto;
+    background-color: transparent !important;
+    color: ${COLORS.primary.purple};
+`
 
 const limit = 20
 
 const Goods = () => {
     const router = useRouter()
+    const { state: { cart } } = useContext()
     const { query, pathname } = router
     const { page = 1, branch, search, type, category } = query
 
@@ -128,7 +136,14 @@ const Goods = () => {
 
     return (
         <>
-            <Top label={`Товары и услуги${search ? ` по запросу "${search}"` : ''}`} />
+            <Top
+                label={`Товары и услуги${search ? ` по запросу "${search}"` : ''}`}
+                value={
+                    <ToCart onClick={() => router.push("/cart")} disabled={cart.length === 0}>
+                        Корзина ({cart.length})
+                    </ToCart>
+                }
+            />
             <Filters>
                 <Select
                     placeholder={'Типы'}

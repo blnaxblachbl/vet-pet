@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import CartIcon from '../public/icons/cart.svg'
 
-import { Image, Button } from "."
+import { Button, CartButton } from "."
 import { host } from "../utils/apollo"
 import { COLORS } from "../utils/const"
 
@@ -61,11 +61,16 @@ const Container = styled.div`
         border-radius: 0;
         border-top-left-radius: 12px;
         border-bottom-right-radius: 12px;
+        padding: 0 24px;
         svg {
             path {
                 fill: ${COLORS.primary.white};
             }
         }
+    }
+    .cart-controls {
+        width: 50%;
+        margin-right: 6px;
     }
     .book {
         background-color: ${COLORS.secondary.green};
@@ -145,9 +150,13 @@ export const Good = ({ item, ...props }) => {
                 }
                 {
                     item.type === 'product' && (
-                        <Button className={'to-cart'}>
+                        <CartButton
+                            good={item}
+                            buttonClassName={'to-cart'}
+                            controllsContainerClassName='cart-controls'
+                        >
                             <CartIcon />
-                        </Button>
+                        </CartButton>
                     )
                 }
             </div>

@@ -31,15 +31,19 @@ export const FIND_UNIQUE_CART = gql`
 					logo
 					description
 					city
-					address
 					phone
 					email
 					links
-					images
 					categories
-					_count
 				}
 				organizationId
+				branchs {
+					id
+					address
+					images
+					publish
+					delete
+				}
 				type
 			}
 			goodId
@@ -100,15 +104,19 @@ export const FIND_FIRST_CART = gql`
 					logo
 					description
 					city
-					address
 					phone
 					email
 					links
-					images
 					categories
-					_count
 				}
 				organizationId
+				branchs {
+					id
+					address
+					images
+					publish
+					delete
+				}
 				type
 			}
 			goodId
@@ -169,15 +177,19 @@ export const FIND_MANY_CART = gql`
 					logo
 					description
 					city
-					address
 					phone
 					email
 					links
-					images
 					categories
-					_count
 				}
 				organizationId
+				branchs {
+					id
+					address
+					images
+					publish
+					delete
+				}
 				type
 			}
 			goodId
@@ -228,15 +240,19 @@ export const CREATE_ONE_CART = gql`
 					logo
 					description
 					city
-					address
 					phone
 					email
 					links
-					images
 					categories
-					_count
 				}
 				organizationId
+				branchs {
+					id
+					address
+					images
+					publish
+					delete
+				}
 				type
 			}
 			goodId
@@ -289,15 +305,19 @@ export const UPDATE_ONE_CART = gql`
 					logo
 					description
 					city
-					address
 					phone
 					email
 					links
-					images
 					categories
-					_count
 				}
 				organizationId
+				branchs {
+					id
+					address
+					images
+					publish
+					delete
+				}
 				type
 			}
 			goodId
@@ -348,15 +368,19 @@ export const DELETE_ONE_CART = gql`
 					logo
 					description
 					city
-					address
 					phone
 					email
 					links
-					images
 					categories
-					_count
 				}
 				organizationId
+				branchs {
+					id
+					address
+					images
+					publish
+					delete
+				}
 				type
 			}
 			goodId
@@ -411,15 +435,19 @@ export const UPSERT_ONE_CART = gql`
 					logo
 					description
 					city
-					address
 					phone
 					email
 					links
-					images
 					categories
-					_count
 				}
 				organizationId
+				branchs {
+					id
+					address
+					images
+					publish
+					delete
+				}
 				type
 			}
 			goodId

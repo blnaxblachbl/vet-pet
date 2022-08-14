@@ -5,8 +5,8 @@ import { COLORS } from "../utils/const"
 import { host } from "../utils/apollo"
 
 const Container = styled(Image)`
-    width: ${({ size }) => size + "px"};
-    height: ${({ size }) => size + "px"};
+    width: ${({ size }) => size + "px"} !important;
+    height: ${({ size }) => size + "px"} !important;
     border-radius: 50%;
     border: solid 1px ${COLORS.secondary.gray};
     object-fit: cover;

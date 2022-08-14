@@ -2,7 +2,15 @@ import { useRef, useState } from "react"
 import Link from "next/link"
 import styled from "styled-components"
 
-import { Button, Empty, Top, Image, Carousel, viewerRef } from "../../components"
+import {
+    Button,
+    Empty,
+    Top,
+    Image,
+    Carousel,
+    viewerRef,
+    CartButton
+} from "../../components"
 import { COLORS, ORG_CATEGORIES, GOOD_TYPES } from "../../utils/const"
 
 const Container = styled.div`
@@ -126,6 +134,10 @@ const OrgInfo = styled.div`
     }
     .product-button {
         width: 100%;
+    }
+    .cart-controls {
+        margin: 0 auto;
+        max-width: 70%;
     }
     .price {
         font-size: 24px;
@@ -279,9 +291,11 @@ const SingleGoodContainer = ({ good }) => {
                         </div>
                         {
                             good.type === 'product' ? (
-                                <Button className={'product-button'}>
-                                    В коорзину
-                                </Button>
+                                <CartButton
+                                    good={good}
+                                    buttonClassName={'product-button'}
+                                    controllsContainerClassName='cart-controls'
+                                />
                             ) : (
                                 <Link href={`/order/service/${good.id}`}>
                                     <Button className={'service-button'}>
