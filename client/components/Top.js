@@ -54,10 +54,11 @@ export const Top = ({
     containerClassName,
     valueClassName,
     labelClassName,
-    onValueClick = () => { }
+    onValueClick = () => { },
+    ...props
 }) => {
     return (
-        <Container className={containerClassName}>
+        <Container className={containerClassName} {...props}>
             <div className={`title ${labelClassName}`}>{label}</div>
             {
                 value && (

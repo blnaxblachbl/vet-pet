@@ -78,32 +78,26 @@ const ImageViewerComponent = forwardRef(({ }, ref) => {
         setIsOpen(true)
         setInitIndex(index)
         setImages(images)
+        document.addEventListener('keydown', onKeyPress)
     }
 
     const closeModal = () => {
         setIsOpen(false)
         setInitIndex(0)
         setImages([])
+        document.removeEventListener('keydown', onKeyPress)
     }
 
     const onKeyPress = (event) => {
-        if (event.code === 'ArrowRight') {
-            carousel.current.slickNext()
-        }
-        if (event.code === 'ArrowLeft') {
-            carousel.current.slickPrev()
+        if (carousel.current) {
+            if (event.code === 'ArrowRight') {
+                carousel.current.slickNext()
+            }
+            if (event.code === 'ArrowLeft') {
+                carousel.current.slickPrev()
+            }
         }
     }
-
-    useEffect(() => {
-        if (isOpen) {
-            document.addEventListener('keydown', onKeyPress, true)
-            document.addEventListener('keydown', onKeyPress, false)
-        } else {
-            document.removeEventListener('keydown', onKeyPress, true)
-            document.removeEventListener('keydown', onKeyPress, false)
-        }
-    }, [isOpen])
 
     return (
         <Modal

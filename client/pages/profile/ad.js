@@ -2,17 +2,25 @@ import styled from "styled-components"
 import { useMemo } from "react"
 import { useQuery } from "@apollo/client"
 import { useRouter } from "next/router"
-import Link from "next/link"
 
-import { Button, LoadingView, Top, Pagination, ProfileWithMenu } from "../../components"
+import Menu from '../../public/icons/burger.svg'
+
+import { LoadingView, Top, Pagination, ProfileWithMenu, profileMenuRef } from "../../components"
 import AdsContainer from "../../containers/ad"
 import { FIND_MANY_AD } from "../../gqls"
 import { useUser } from "../../utils/hooks"
+import { COLORS } from "../../utils/const"
 
-const AddButton = styled(Button)`
+const MenuIcon = styled(Menu)`
+    width: 36px;
+    height: 36px;
     display: none;
+    path {
+        fill: ${COLORS.primary.camel};
+    }
+
     @media only screen and (max-width: 700px) {
-        display: flex;
+        display: block;
     }
 `
 
@@ -62,17 +70,7 @@ const ProfileAds = () => {
         <>
             <Top
                 label="Мои объявления"
-                value={
-                    ads.length > 0 && (
-                        <Link href='/ad/create'>
-                            <AddButton
-                                ouline
-                            >
-                                Добавить
-                            </AddButton>
-                        </Link>
-                    )
-                }
+                value={<MenuIcon onClick={() => profileMenuRef.current.openModal()} />}
             />
             <LoadingView loading={loading || userLoading} />
 

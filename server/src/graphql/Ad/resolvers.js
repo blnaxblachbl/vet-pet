@@ -1,15 +1,19 @@
 const Ad = {
   Query: {
-    findUniqueAd: (_parent, { where, select }, { prisma }) => {
-      return prisma.ad.update({
-        where,
-        data: {
-          viewCount: {
-            increment: 1
-          }
-        },
-        select
-      })
+    findUniqueAd: async (_parent, { where, select }, { prisma }) => {
+      const ad = await prisma.ad.findUnique({ where, select })
+      if (!ad.delete && ad.publish) {
+        return prisma.ad.update({
+          where,
+          data: {
+            viewCount: {
+              increment: 1
+            }
+          },
+          select
+        })
+      }
+      return ad
     },
     findFirstAd: (_parent, args, { prisma }) => {
       return prisma.ad.findFirst(args)

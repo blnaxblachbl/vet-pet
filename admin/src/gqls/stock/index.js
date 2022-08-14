@@ -30,7 +30,6 @@ export const FIND_UNIQUE_STOCK = gql`
 				phone
 				links
 				categories
-				admins{
 				rating
 				_count{
 					goods
@@ -83,7 +82,6 @@ export const FIND_FIRST_STOCK = gql`
 				phone
 				links
 				categories
-				admins{
 				rating
 				_count{
 					goods
@@ -136,7 +134,6 @@ export const FIND_MANY_STOCK = gql`
 				phone
 				links
 				categories
-				admins{
 				rating
 				_count{
 					goods
@@ -179,7 +176,6 @@ export const CREATE_ONE_STOCK = gql`
 				phone
 				links
 				categories
-				admins{
 				rating
 				_count{
 					goods
@@ -224,7 +220,6 @@ export const UPDATE_ONE_STOCK = gql`
 				phone
 				links
 				categories
-				admins{
 				rating
 				_count{
 					goods
@@ -267,7 +262,6 @@ export const DELETE_ONE_STOCK = gql`
 				phone
 				links
 				categories
-				admins{
 				rating
 				_count{
 					goods
@@ -314,7 +308,6 @@ export const UPSERT_ONE_STOCK = gql`
 				phone
 				links
 				categories
-				admins{
 				rating
 				_count{
 					goods

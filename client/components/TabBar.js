@@ -69,7 +69,7 @@ export const TabBar = () => {
             </Link>
             <Link href={'/branch'}>
                 <TabBarButton
-                    selected={pathname.includes('/branch')}
+                    selected={pathname === '/branch'}
                 >
                     <MedicalIcon />
                     <div>Клиники</div>
@@ -77,7 +77,7 @@ export const TabBar = () => {
             </Link>
             <Link href={'/good'}>
                 <TabBarButton
-                    selected={pathname.includes('/good')}
+                    selected={pathname === '/good'}
                 >
                     <GoodsIcon />
                     <div>Товары</div>
@@ -85,7 +85,7 @@ export const TabBar = () => {
             </Link>
             <Link href={'/ad'}>
                 <TabBarButton
-                    selected={pathname.includes('/ad')}
+                    selected={pathname === '/ad'}
                 >
                     <NoteIcon />
                     <div>Объявления</div>
@@ -93,7 +93,7 @@ export const TabBar = () => {
             </Link>
             <Link href="/profile">
                 <TabBarButton
-                    selected={pathname.includes('/profile')}
+                    selected={pathname === '/profile'}
                 // profile
                 >
                     <ProfileIcon />

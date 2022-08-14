@@ -64,13 +64,14 @@ export const Modal = ({
                     width: '100%',
                     maxWidth: 400,
                     height: 'auto',
-                    maxHeight: '90%',
+                    maxHeight: '95%',
                     position: 'relative',
                     top: 'auto',
                     left: "auto",
                     right: 'auto',
                     bottom: 'auto',
                     borderRadius: 20,
+                    padding: 12,
                     ...contentStyle
                 }
             }}

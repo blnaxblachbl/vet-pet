@@ -68,7 +68,6 @@ export const Menu = () => {
             router.push({
                 pathname: '/search',
                 query: {
-                    ...query,
                     search: search.value
                 }
             })

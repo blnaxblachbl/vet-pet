@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useCallback, useMemo, useState } from "react"
 import styled from "styled-components"
 import Link from "next/link"
 import { DateTime } from 'luxon'
@@ -8,7 +8,7 @@ import Location from '../../public/icons/location.svg'
 import Clock from '../../public/icons/clock.svg'
 import Phone from '../../public/icons/phone.svg'
 
-import { Empty, Button, Image, Top, Branch, LoadingView, viewerRef } from "../../components"
+import { Empty, Button, Image, Top, Branch, LoadingView, viewerRef, Modal } from "../../components"
 import { COLORS, ORG_CATEGORIES } from "../../utils/const"
 import { FIND_MANY_BRANCH } from "../../gqls"
 import { timeFromDuration } from "../../utils/hooks"
@@ -73,8 +73,22 @@ const Container = styled.div`
                 }
             }
         }
+        .more-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
         .bay-button {
             background-color: ${COLORS.primary.camel};
+        }
+        .more-button {
+            border: none;
+            background-color: transparent;
+            color: ${COLORS.primary.purple};
+            margin-top: auto;
+            padding: 0;
+            font-weight: 500;
         }
     }
     .desc {
@@ -110,6 +124,11 @@ const Container = styled.div`
             }
             .bay-button {
                 width: 100%;
+            }
+            .more-button {
+                width: 100%;
+                margin-top: 12px;
+                border: solid 1px ${COLORS.primary.purple};
             }
         }
         .desc {
@@ -155,12 +174,42 @@ const OtherBranchs = styled.div`
         }
     }
 `
+const LabledValue = styled.div`
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-bottom: solid 1px ${COLORS.secondary.lightGray};
+    margin-bottom: 12px;
+    padding: 6px 0;
+    :last-child {
+        margin-bottom: 0;
+    }
+
+    .label {
+        color: ${COLORS.secondary.gray};
+        font-size: 14px;
+        margin-right: 6px;
+    }
+    .value {
+        color: ${COLORS.primary.black};
+        font-size: 16px;
+        text-align: right;
+        white-space: pre-wrap;
+    }
+    .bold {
+        font-weight: bold;
+    }
+    a {
+        color: ${COLORS.primary.purple};
+    }
+`
 
 const SingleBranchContainer = ({ branch }) => {
+    const [isOpen, setIsOpen] = useState(false)
     const organization = useMemo(() => branch ? branch.organization : null, [branch])
-    const time = useMemo(() => {
+
+    const getSchedule = useCallback((dayOfWeek = 'monday') => {
         if (branch) {
-            const dayOfWeek = DateTime.now().setLocale("en").weekdayLong.toLowerCase()
             const {
                 allTime,
                 dayOff,
@@ -177,7 +226,7 @@ const SingleBranchContainer = ({ branch }) => {
             return `${timeFromDuration(startTime)} - ${timeFromDuration(endTime)}`
         }
         return '-'
-    }, [branch])
+    }, [branch, timeFromDuration])
 
     const { data, loading } = useQuery(FIND_MANY_BRANCH, {
         variables: {
@@ -192,7 +241,19 @@ const SingleBranchContainer = ({ branch }) => {
         skip: false
     })
 
+    const closeModal = () => {
+        setIsOpen(false)
+    }
+
+    const openModal = () => {
+        setIsOpen(true)
+    }
+
     const otherBranchs = useMemo(() => data ? data.findManyBranch : [], [data])
+    const time = useMemo(() => {
+        const dayOfWeek = DateTime.now().setLocale("en").weekdayLong.toLowerCase()
+        return getSchedule(dayOfWeek)
+    }, [branch, getSchedule])
 
     if (!branch || branch.delete || !branch.publish || !organization || organization.delete || !organization.publish) {
         return (
@@ -231,7 +292,7 @@ const SingleBranchContainer = ({ branch }) => {
                                     {branch.address}
                                 </a>
                             </div>
-                            <div className="org-row-item">
+                            <div onClick={openModal} className="org-row-item">
                                 <Clock />
                                 <span>
                                     {time}
@@ -246,18 +307,23 @@ const SingleBranchContainer = ({ branch }) => {
                         </div>
                     </div>
                 </div>
-                <Link
-                    href={{
-                        pathname: '/good',
-                        query: {
-                            branch: branch.id
-                        }
-                    }}
-                >
-                    <Button className={'bay-button'}>
-                        Товары и услуги
+                <div className="more-container">
+                    <Link
+                        href={{
+                            pathname: '/good',
+                            query: {
+                                branch: branch.id
+                            }
+                        }}
+                    >
+                        <Button className={'bay-button'}>
+                            Товары и услуги
+                        </Button>
+                    </Link>
+                    <Button onClick={openModal} className={'more-button'}>
+                        Подробнее
                     </Button>
-                </Link>
+                </div>
             </div>
             <div className="desc">{organization.description}</div>
             <Top label="Фото" />
@@ -285,6 +351,117 @@ const SingleBranchContainer = ({ branch }) => {
                     ))
                 }
             </OtherBranchs>
+            <Modal
+                title="Подробнее"
+                isOpen={isOpen}
+                onRequestClose={closeModal}
+                contentStyle={{
+                    maxWidth: 600,
+                }}
+                overlayStyle={{
+                    padding: 0
+                }}
+            >
+                <LabledValue>
+                    <div className="label">Название</div>
+                    <div className="value bold">{organization.name}</div>
+                </LabledValue>
+                <LabledValue>
+                    <div className="label">Филиал</div>
+                    <div className="value">
+                        <a
+                            href={`https://2gis.ru/yakutsk/search/${branch.address}`}
+                            target='_blank'
+                            rel='noreferrer'
+                        >
+                            {branch.address}
+                        </a>
+                    </div>
+                </LabledValue>
+                <LabledValue>
+                    <div className="label">Emial организации</div>
+                    <div className="value">
+                        <a href={`mailto:${organization.email}`}>
+                            {organization.email}
+                        </a>
+                    </div>
+                </LabledValue>
+                <LabledValue>
+                    <div className="label">Телефон организации</div>
+                    <div className="value">
+                        <a href={`tel:${organization.phone}`}>
+                            {organization.phone}
+                        </a>
+                    </div>
+                </LabledValue>
+                <LabledValue>
+                    <div className="label">Телефон филиала</div>
+                    <div className="value">
+                        <a href={`tel:${branch.phone}`}>
+                            {branch.phone}
+                        </a>
+                    </div>
+                </LabledValue>
+                <LabledValue style={{ border: 'none', marginBottom: 0 }}>
+                    <div className="value bold">
+                        Расписание
+                    </div>
+                </LabledValue>
+                <LabledValue>
+                    <div className="label">Понедельник</div>
+                    <div className="value">{getSchedule("monday")}</div>
+                </LabledValue>
+                <LabledValue>
+                    <div className="label">Вторник</div>
+                    <div className="value">{getSchedule("tuesday")}</div>
+                </LabledValue>
+                <LabledValue>
+                    <div className="label">Среда</div>
+                    <div className="value">{getSchedule("wednesday")}</div>
+                </LabledValue>
+                <LabledValue>
+                    <div className="label">Четверг</div>
+                    <div className="value">{getSchedule("thursday")}</div>
+                </LabledValue>
+                <LabledValue>
+                    <div className="label">Пятница</div>
+                    <div className="value">{getSchedule("friday")}</div>
+                </LabledValue>
+                <LabledValue>
+                    <div className="label">Суббота</div>
+                    <div className="value">{getSchedule("saturday")}</div>
+                </LabledValue>
+                <LabledValue>
+                    <div className="label">Воскресенье</div>
+                    <div className="value">{getSchedule("sunday")}</div>
+                </LabledValue>
+                {
+                    organization.links.length > 0 && (
+                        <>
+                            <LabledValue style={{ border: 'none', marginBottom: 0 }}>
+                                <div className="value bold">
+                                    Ссылки
+                                </div>
+                            </LabledValue>
+                            {
+                                organization.links.map((item, index) => (
+                                    <LabledValue>
+                                        <div key={`link-${index}`} className="label">
+                                            <a
+                                                href={item}
+                                                target='_blank'
+                                                rel='noreferrer'
+                                            >
+                                                {item}
+                                            </a>
+                                        </div>
+                                    </LabledValue>
+                                ))
+                            }
+                        </>
+                    )
+                }
+            </Modal>
         </Container>
     )
 }

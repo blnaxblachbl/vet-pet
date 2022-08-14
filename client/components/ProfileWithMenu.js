@@ -66,14 +66,17 @@ export let profileMenuRef
 export const ProfileWithMenu = ({ children }) => {
     profileMenuRef = useRef()
     return (
-        <Container>
-            <div className="menu">
-                <ProfileMenu />
-            </div>
-            <div className="content">
-                {children}
-            </div>
-        </Container>
+        <>
+            <Container>
+                <div className="menu">
+                    <ProfileMenu />
+                </div>
+                <div className="content">
+                    {children}
+                </div>
+            </Container>
+            <ProfileModalMenu ref={profileMenuRef} />
+        </>
     )
 }
 
@@ -89,28 +92,31 @@ const ProfileMenu = (props) => {
                 query: FIND_ME_USER,
                 data: { findMeUser: null }
             })
-            // router.push('/')
             window.location = '/'
         }
     }
 
     return (
-        <MenuContainer {...props}>
-            <Link href='/profile'>
-                <div className={`link ${pathname === '/profile' && 'selected'}`}>Редактирование</div>
-            </Link>
-            <Link href='/profile/pet'>
-                <div className={`link ${pathname === '/profile/pet' && 'selected'}`}>Мои Питомцы</div>
-            </Link>
-            <Link href='/profile/ad'>
-                <div className={`link ${pathname === '/profile/ad' && 'selected'}`}>Мои Объявления</div>
-            </Link>
-            <Link href='/profile/order'>
-                <div className={`link ${pathname === '/profile/order' && 'selected'}`}>Мои Заказы</div>
-            </Link>
-            <div onClick={logOut} className={`logout link`}>Выйти</div>
-            <ProfileModalMenu ref={profileMenuRef} />
-        </MenuContainer>
+        <>
+            <MenuContainer {...props}>
+                <Link href='/profile'>
+                    <div className={`link ${pathname === '/profile' && 'selected'}`}>Редактирование</div>
+                </Link>
+                <Link href='/profile/pet'>
+                    <div className={`link ${pathname === '/profile/pet' && 'selected'}`}>Мои Питомцы</div>
+                </Link>
+                <Link href='/profile/ad'>
+                    <div className={`link ${pathname === '/profile/ad' && 'selected'}`}>Мои Объявления</div>
+                </Link>
+                <Link href='/ad/create'>
+                    <div className={`link`}>Разместить объявления</div>
+                </Link>
+                <Link href='/profile/order'>
+                    <div className={`link ${pathname === '/profile/order' && 'selected'}`}>Мои Заказы</div>
+                </Link>
+                <div onClick={logOut} className={`logout link`}>Выйти</div>
+            </MenuContainer>
+        </>
     )
 }
 
@@ -136,7 +142,7 @@ const ProfileModalMenu = forwardRef((props, ref) => {
             isOpen={isOpen}
             onRequestClose={closeModal}
         >
-            <ProfileMenu />
+            <ProfileMenu {...props} />
         </Modal>
     )
 })

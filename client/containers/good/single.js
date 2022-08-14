@@ -67,7 +67,7 @@ const Paginatioin = styled.div`
 const Info = styled.div`
     background-color: ${COLORS.primary.white};
     border-radius: 12px;
-    padding: 24px;
+    padding: 12px;
     box-sizing: border-box;
 
     .info-title {
@@ -77,34 +77,12 @@ const Info = styled.div`
         line-height: 1.7em;
         font-size: 14px;
         text-align: justify;
-        margin-bottom: 6px;
     }
     .date {
         font-size: 14px;
         color: ${COLORS.secondary.gray};
     }
-    .info-row {
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        .line {
-            width: 100%;
-            margin: 12px 0;
-            height: 1px;
-            background-color: ${COLORS.secondary.lightGray};
-            margin: 0;
-        }
-        .label {
-            color: ${COLORS.secondary.gray};
-            font-size: 14px;
-        }
-        .value {
-            color: ${COLORS.primary.black};
-            font-size: 16px;
-        }
-    }
     @media only screen and (max-width: 800px) {
-        padding: 12px;
         .price {
             font-size: 18px;
         }
@@ -181,7 +159,7 @@ const SingleGoodContainer = ({ good }) => {
     }
     return (
         <>
-            <Top label={good.name} />
+            <Top id='top' label={good.name} />
             <Container>
                 <div className="images">
                     <Images
@@ -214,6 +192,8 @@ const SingleGoodContainer = ({ good }) => {
                                     onClick={() => {
                                         setSelectedIndex(index)
                                         imagesRef.current.slickGoTo(index)
+                                        const top = document.getElementById("top")
+                                        top.scrollIntoView({ behavior: 'smooth' })
                                     }}
                                 />
                             ))
@@ -225,11 +205,6 @@ const SingleGoodContainer = ({ good }) => {
                         {/* <div className="info-title">{good.price ? good.price + ' ₽' : 'Бесплатно'}</div> */}
                         <Top label="Описание" containerClassName={'info-title'} />
                         <div className="desc">{good.description}</div>
-                        <div className="info-row">
-                            <div className="label">Категории</div>
-                            <div className="line" />
-                            <div className="value">{good.categories.join(", ")}</div>
-                        </div>
                     </Info>
                 </div>
                 <div className="organization">

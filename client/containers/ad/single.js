@@ -78,7 +78,7 @@ const Paginatioin = styled.div`
 const Info = styled.div`
     background-color: ${COLORS.primary.white};
     border-radius: 12px;
-    padding: 24px;
+    padding: 12px;
     box-sizing: border-box;
 
     .price {
@@ -92,12 +92,15 @@ const Info = styled.div`
         text-align: justify;
         margin-bottom: 6px;
     }
+    .view-count {
+        font-size: 14px;
+        color: ${COLORS.secondary.gray};
+    }
     .date {
         font-size: 14px;
         color: ${COLORS.secondary.gray};
     }
     @media only screen and (max-width: 800px) {
-        padding: 12px;
         .price {
             font-size: 18px;
         }
@@ -177,6 +180,7 @@ const SingleAdContainer = ({ ad }) => {
     return (
         <>
             <Top
+                id={'top'}
                 label={ad.title}
                 value={<CreatedAt>{useRealetiveDate(DateTime.fromISO(ad.createdAt))}</CreatedAt>}
             />
@@ -212,6 +216,8 @@ const SingleAdContainer = ({ ad }) => {
                                     onClick={() => {
                                         setSelectedIndex(index)
                                         imagesRef.current.slickGoTo(index)
+                                        const top = document.getElementById("top")
+                                        top.scrollIntoView({ behavior:'smooth' })
                                     }}
                                 />
                             ))
@@ -222,6 +228,7 @@ const SingleAdContainer = ({ ad }) => {
                     <Info>
                         <div className="price">{ad.price ? ad.price + ' ₽' : 'Бесплатно'}</div>
                         <div className="desc">{ad.description}</div>
+                        <div className="view-count">Просмотров: {ad.viewCount}</div>
                     </Info>
                 </div>
                 <div className="user">
