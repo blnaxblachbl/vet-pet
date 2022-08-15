@@ -1,10 +1,10 @@
-import Link from "next/link"
 import styled from "styled-components"
+import Link from "next/link"
 
 import {
     Good,
     Button,
-    Empty
+    Empty,
 } from "../../components"
 
 const Container = styled.div`

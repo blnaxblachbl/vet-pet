@@ -16,6 +16,7 @@ const Container = styled.div`
     bottom: 15px;
     right: 15px;
     cursor: pointer;
+    z-index: 5;
 
     svg {
         width: 24px;

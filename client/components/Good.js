@@ -116,7 +116,7 @@ const ImageBackground = styled.div`
     }
 `
 
-export const Good = ({ item, ...props }) => {
+export const Good = ({ item, onAddToCart = () => { }, ...props }) => {
     if (!item) return null
 
     return (
@@ -154,6 +154,7 @@ export const Good = ({ item, ...props }) => {
                             good={item}
                             buttonClassName={'to-cart'}
                             controllsContainerClassName='cart-controls'
+                            onAdd={onAddToCart}
                         >
                             <CartIcon />
                         </CartButton>

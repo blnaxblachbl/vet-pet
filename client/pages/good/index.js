@@ -186,7 +186,10 @@ const Goods = () => {
             {
                 (!loading || prevGoods.length > 0) && (
                     <>
-                        <GoodsContainer goods={goods} />
+                        <GoodsContainer
+                            goods={goods}
+                            branch={branchs.find(item => item.id === branch)}
+                        />
                         <Pagination
                             limit={limit}
                             maxCount={goodsCount}

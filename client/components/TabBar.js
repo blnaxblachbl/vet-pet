@@ -25,6 +25,7 @@ const Container = styled.div`
     grid-gap: 6px;
     /* padding: 0 12px; */
     border-top: solid 2px ${COLORS.secondary.lightGray};
+    z-index: 5;
 
     /* -webkit-box-shadow: 0px -5px 8px 0px rgba(34, 60, 80, 0.2);
     -moz-box-shadow: 0px -5px 8px 0px rgba(34, 60, 80, 0.2);

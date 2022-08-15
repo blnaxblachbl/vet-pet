@@ -1,3 +1,4 @@
+import { useMemo } from "react"
 import styled from "styled-components"
 import Link from "next/link"
 import { useMutation } from '@apollo/client'
@@ -14,6 +15,7 @@ const Container = styled.div`
     display: flex;
     padding: 6px 0;
     border-bottom: solid 1px ${COLORS.secondary.lightGray};
+    position: relative;
 
     .image {
         width: 100px;
@@ -44,6 +46,7 @@ const Container = styled.div`
         align-items: flex-end;
         justify-content: space-between;
         margin-left: auto;
+        z-index: 1;
         .remove {
             cursor: pointer;
             width: 18px;
@@ -53,39 +56,43 @@ const Container = styled.div`
             width: 120px;
         }
     }
+    .mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255,255,255,0.5);
+        padding: 12px;
+        font-size: 18px;
+        font-weight: 600;
+        display: flex;
+
+        .text {
+            text-align: center;
+            color: ${COLORS.secondary.red};
+            margin: auto;
+        }
+    }
     @media only screen and (max-width: 800px) {
-        flex-direction: column;
-        align-items: center;
-        .image {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 1/1;
-            margin-bottom: 12px;
-            margin-right: 0;
-        }
-        .good {
-            width: 100%;
-            margin-bottom: 12px;
-            .name {
-                line-height: 24px;
-                height: 48px;
-            }
-        }
+        flex-wrap: wrap;
         .controls {
             width: 100%;
-            align-items: center;
+            align-items: flex-end;
+            margin-top: 12px;
             .remove {
                 display: none;
             }
             .counter {
-                width: 80%;
+                max-width: 200px;
+                width: 50%;
                 margin: 0;
             }
         }
     }
 `
 
-export const CartItem = ({ item, ...props }) => {
+export const CartItem = ({ item, branch, ...props }) => {
     const { dispatch } = useContext()
 
     const [deleteCart] = useMutation(DELETE_ONE_CART)
@@ -103,6 +110,15 @@ export const CartItem = ({ item, ...props }) => {
         toast.warning("Товар удален из корзины")
     }
 
+    const inBrach = useMemo(() => {
+        if (branch && item) {
+            return !item.good.branchs.find(b => b.id === branch.id)
+        }
+        return false
+    }, [item, branch])
+
+    const deleted = useMemo(() => item.good.delete || !item.good.publish, [item])
+
     if (!item) return null
 
     return (
@@ -118,7 +134,7 @@ export const CartItem = ({ item, ...props }) => {
                     <div className='name number-of-lines-2'>{item.good.name}</div>
                 </Link>
                 <div className='price'>{item.good.price} ₽</div>
-                <div className='organization number-of-lines-1'>{item.good.organization.name}</div>
+                {/* <div className='organization number-of-lines-1'>{item.good.organization.name}</div> */}
                 <div className='branch number-of-lines-1'>{item.good.branchs.map(item => item.address).join(", ")}</div>
             </div>
             <div className='controls'>
@@ -128,6 +144,20 @@ export const CartItem = ({ item, ...props }) => {
                     controllsContainerClassName='counter'
                 />
             </div>
+            {
+                deleted && (
+                    <div className="mask">
+                        <div className="text">Товар больше не продается</div>
+                    </div>
+                )
+            }
+            {
+                !deleted && inBrach && (
+                    <div className="mask">
+                        <div className="text">Нет в выбраном филиале</div>
+                    </div>
+                )
+            }
         </Container>
     )
 }
