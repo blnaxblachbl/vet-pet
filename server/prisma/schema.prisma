@@ -146,10 +146,11 @@ model Order {
     id             String       @id @default(cuid())
     createdAt      DateTime     @default(now())
     updatedAt      DateTime     @updatedAt
-    status         String // статус заказа: new, confirmed, done, canceled
+    status         String       @default("new") // статус заказа: new, confirmed, done, canceled
     goods          Json[] // копися списка корзины(Cart) или услуг которые заказал клиент
     date           DateTime? // время записи, используется только на услуги
     comment        String? // комментарий к заказу
+    type           String // тип product, service
     user           User         @relation(fields: [userId], references: [id]) // пользователь сделавший заказ
     userId         String
     anotherUser    Json? // контактная информаци если пользователь делает заказ не для себя

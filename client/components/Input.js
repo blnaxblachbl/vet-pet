@@ -74,7 +74,6 @@ const Container = styled.div`
 `
 const Label = styled.label`
     font-size: 14px;
-    padding-left: 12px;
     color: ${COLORS.secondary.darkGray};
 `
 

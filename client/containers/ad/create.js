@@ -16,7 +16,7 @@ const Container = styled.form`
     background-color: ${COLORS.primary.white};
     max-width: 600px;
     margin: 0 auto;
-    padding: 24px;
+    padding: 12px;
     border-radius: 12px;
     box-shadow: 4px 4px 16px 4px rgba(32, 29, 27, 0.02);
 

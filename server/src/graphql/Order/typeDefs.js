@@ -2,6 +2,18 @@ const { default: gql } = require('graphql-tag')
 
 const Order = gql`
   scalar Json
+
+  enum OrderType {
+    product
+    service
+  }
+
+  input CustomOrderCreateInput {
+    comment: String
+    branchId: String!
+    date: DateTime
+    type: OrderType!
+  }
   
   type Order {
     id: String!
@@ -18,6 +30,7 @@ const Order = gql`
     branchId: String!
     organization: Organization!
     organizationId: String!
+    type: String!
   }
 
   type Query {
@@ -49,7 +62,7 @@ const Order = gql`
   }
 
   type Mutation {
-    createOneOrder(data: OrderCreateInput!): Order!
+    createOneOrder(data: CustomOrderCreateInput!): Order!
     updateOneOrder(
       data: OrderUpdateInput!
       where: OrderWhereUniqueInput!

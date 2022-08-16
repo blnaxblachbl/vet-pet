@@ -295,7 +295,7 @@ const CartContainer = ({ cart = [] }) => {
                             disabled={!branch || !total}
                             onClick={createOrder}
                         >
-                            Оформить
+                            Перейти к оформлению
                         </Button>
                     </div>
                 </div>

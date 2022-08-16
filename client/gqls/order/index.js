@@ -14,6 +14,7 @@ export const FIND_UNIQUE_ORDER = gql`
 			goods
 			date
 			comment
+			type
 			user{
 				id
 				createdAt
@@ -58,6 +59,7 @@ export const FIND_FIRST_ORDER = gql`
 			goods
 			date
 			comment
+			type
 			user{
 				id
 				createdAt
@@ -102,6 +104,7 @@ export const FIND_MANY_ORDER = gql`
 			goods
 			date
 			comment
+			type
 			user{
 				id
 				createdAt
@@ -136,6 +139,7 @@ export const CREATE_ONE_ORDER = gql`
 			goods
 			date
 			comment
+			type
 			user{
 				id
 				createdAt
@@ -172,6 +176,7 @@ export const UPDATE_ONE_ORDER = gql`
 			goods
 			date
 			comment
+			type
 			user{
 				id
 				createdAt
@@ -206,6 +211,7 @@ export const DELETE_ONE_ORDER = gql`
 			goods
 			date
 			comment
+			type
 			user{
 				id
 				createdAt
@@ -244,6 +250,7 @@ export const UPSERT_ONE_ORDER = gql`
 			goods
 			date
 			comment
+			type
 			user{
 				id
 				createdAt
