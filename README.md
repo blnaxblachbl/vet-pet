@@ -1,2 +1,10 @@
 # vet-pet
  
+----- server .env ----- 
+TOKEN_SECRET=TOKEN_SECRET
+MAIL_USER=MAIL_USER
+MAIL_PASSWORD=MAIL_PASSWORD
+SMS_API_ID=SMS.RU_API_ID
+
+----- prisma .env ----- 
+DATABASE_URL="DATABASE_URL"
